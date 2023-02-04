@@ -24,8 +24,8 @@
 | `web.background` | string | สีพื้นหลัง (Hex color) | จะกำหนดได้ก็ต่อเมื่อ `web.custom` เป็น `true` |
 | `web.background_url` | string| พื้นหลังเป็นรูป โดยรูปจะใช้ตามที่อยู่ URL | จะกำหนดได้ก็ต่อเมื่อ `web.custom` เป็น `true` |
 | `web.font_color`| number | สีตัวอักษร (Hex color) | จะกำหนดได้ก็ต่อเมื่อ `web.custom` เป็น `true` |
-| `web.font_size` | number | ขนาดตัวอักษร ||
 | `web.dark_mode` | boolean | โหมดมืด | จะกำหนดได้ก็ต่อเมื่อ `web.custom` เป็น `false` |
+| `web.language` | string | ภาษา รองรับแค่ `TH` / `EN` ||
 | `time.custom` | boolean | กำหนดเวลาด้วยตัวเอง (ไม่ใช้ NTP) ||
 | `time.timestamp` | number | เวลาที่กำหนดเอง หน่วย ms | จะกำหนดได้ก็ต่อเมื่อ `time.custom` เป็น `true` |
 | `time.ntp_server_1` | string | ที่อยู่ DNS server หลัก | จะกำหนดได้ก็ต่อเมื่อ `time.custom` เป็น `false` |
@@ -41,7 +41,7 @@
 #### send
 ```json
 {
-    "request": "REQUIRE_SETUP_LIST",
+    "request": "REQUIRE_CONFIG_LIST",
     "ref": <number>
 }
 ```
@@ -57,7 +57,7 @@
 |---|---|---|
 | "WIFI" | `wifi.enable` `wifi.ssid` `wifi.password` | ชื่อ ssid กับรหัสผ่าน wifi |
 | "NETWORK" | `network.dhcp` `network.ip` `network.subnet` `network.gateway` `network.dns_1` `network.dns_2` | การกำหนดค่าเครือข่าย |
-| "WEB" | `web.custom` `web.background` `web.background_url` `web.font_color` `web.font_size` `web.dark_mode` | การกำหนดค่าเว็บที่ใช้แสดงผล |
+| "WEB" | `web.custom` `web.background` `web.background_url` `web.font_color` `web.dark_mode` `web.language` | การกำหนดค่าเว็บที่ใช้แสดงผล |
 | "TIME" | `time.custom` `time.timestamp` `time.ntp_server_1` `time.ntp_server_2` `time.utc_offset` | การกำหนดค่าเวลา |
 
 ---
@@ -84,8 +84,8 @@
         "web.background": <string>,
         "web.background_url": <string>,
         "web.font_color": <string>,
-        "web.font_size": <number>,
         "web.dark_mode": <boolean>,
+        "web.language": <string>,
         "time.custom": <boolean>,
         "time.timestamp": <number>,
         "time.ntp_server_1": <string>,
@@ -115,7 +115,7 @@
 ```
 | error | คำอธิบาย |
 |---|---|
-| REQUIRE_CONFIG | ต้องกำหนดค่าก่อน สามารถเรียกดูได้จาก `REQUIRE_SETUP_LIST` |
+| REQUIRE_CONFIG | ต้องกำหนดค่าก่อน สามารถเรียกดูได้จาก `REQUIRE_CONFIG_LIST` |
 | BAD_REQUEST | คำข้อไม่ถูกต้อง หรือ server ไม่สามารถแก้ปัณหาได้ |
 | NO_INTERNET | ไม่สามารถเข้าถึง internet ได้ |
 | NTP_ERROR | ไม่สามารถเชื่อมต่อ ntp server ได้ |
@@ -156,7 +156,6 @@
         "web.background": <string>,
         "web.background_url": <string>,
         "web.font_color": <string>,
-        "web.font_size": <number>,
         "web.dark_mode": <boolean>,
         "time.custom": <boolean>,
         "time.ntp_server_1": <string>,
@@ -226,5 +225,26 @@
 {
     "response": "OK",
     "ref": <number>
+}
+```
+
+### ข้อมูลระบบ
+#### send
+```json
+{
+    "request": "SYSTEM_INFO",
+    "ref": <number>
+}
+```
+
+#### recv
+```json
+{
+    "response": "OK",
+    "ref": <number>,
+    "info": {
+        "version": <string>,
+        "build": <string>
+    }
 }
 ```

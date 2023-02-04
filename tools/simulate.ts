@@ -70,12 +70,12 @@ class simulate_config {
         "web.background": string | null,
         "web.background_url": string | null,
         "web.font_color": string | null,
-        "web.font_size": number,
         "web.dark_mode": boolean,
+        "web.language": string,
         "time.custom": boolean,
         "time.ntp_server_1": string | null,
         "time.ntp_server_2": string | null,
-        "time.utc_offset": number | null,
+        "time.utc_offset": number,
         "sensor.temperature_type": number,
         [key: string]: any
     };
@@ -95,53 +95,64 @@ class simulate_config {
             "web.background": null,
             "web.background_url": null,
             "web.font_color": null,
-            "web.font_size": 60,
             "web.dark_mode": false,
+            "web.language": "EN",
             "time.custom": false,
-            "time.ntp_server_1": null,
-            "time.ntp_server_2": null,
-            "time.utc_offset": null,
+            "time.ntp_server_1": "time.google.com",
+            "time.ntp_server_2": "time.cloudflare.com",
+            "time.utc_offset": 0,
             "sensor.temperature_type": 1
         };
     };
 
-    require_setup_list(): string[] {
+    require_config_list(): string[] {
         let list: string[] = [];
 
-        if ((this.data["wifi.ssid"] == null) || (this.data["wifi.password"] == null)) {
+        if (
+            (this.data["wifi.enable"] == true) &&
+            (
+                (this.data["wifi.ssid"] == null) ||
+                (this.data["wifi.password"] == null)
+            )
+        ) {
             list.push("WIFI")
         };
 
-        if (this.data["network.dhcp"] == false) {
-            if ((
+        if (
+            (this.data["network.dhcp"] == false) &&
+            (
                 (this.data["network.ip"] == null) ||
                 (this.data["network.subnet"] == null) ||
                 (this.data["network.gateway"] == null) ||
                 (this.data["network.dns_1"] == null) ||
                 (this.data["network.dns_2"] == null)
-            ) == null) {
-                list.push("NETWORK");
-            };
+            )
+        ) {
+            list.push("NETWORK");
         };
 
-        if (this.data["web.custom"] == true) {
-            if (
-                ((this.data["web.background"] == null) &&
-                (this.data["web.background_url"] == null)) ||
+        if (
+            (this.data["web.custom"] == true) &&
+            (
+                (
+                    (this.data["web.background"] == null) &&
+                    (this.data["web.background_url"] == null)
+                ) ||
                 (this.data["web.font_color"] == null)
-            ) {
-                list.push("WEB");
-            };
+            )
+        ) {
+            list.push("WEB");
         };
 
-        if (this.data["time.custom"] == false) {
-            if ((
+        if (
+            (this.data["time.custom"] == false) &&
+            (
                 (this.data["time.ntp_server_1"] == null) ||
                 (this.data["time.ntp_server_2"] == null) ||
                 (this.data["time.utc_offset"] == null)
-            ) == null) {
-                list.push("TIME");
-            };
+            )
+        ) {
+            list.push("TIME");
         };
 
         return list;
@@ -175,12 +186,12 @@ app.ws("/wsapi", (socket: WebSocket.WebSocket, req: http.IncomingMessage) => {
             socket.on("message", (message: WebSocket.RawData) => {
                 try {
                     let req = JSON.parse(message.toString());
-                    if (req.request == "REQUIRE_SETUP_LIST") {
-                        console.log(`WebSocket - [${sessionId}] - REQUIRE_SETUP_LIST`);
+                    if (req.request == "REQUIRE_CONFIG_LIST") {
+                        console.log(`WebSocket - [${sessionId}] - REQUIRE_CONFIG_LIST`);
                         socket.send(JSON.stringify({
                             response: "OK",
                             ref: req.ref,
-                            list: simulate.require_setup_list()
+                            list: simulate.require_config_list()
                         }));
                     } else if (req.request == "SET_CONFIG") {
                         console.log(`WebSocket - [${sessionId}] - SET_CONFIG`);
@@ -224,6 +235,16 @@ app.ws("/wsapi", (socket: WebSocket.WebSocket, req: http.IncomingMessage) => {
                         socket.send(JSON.stringify({
                             response: "OK",
                             ref: req.ref
+                        }));
+                    } else if (req.request == "SYSTEM_INFO") {
+                        console.log(`WebSocket - [${sessionId}] - SYSTEM_INFO`);
+                        socket.send(JSON.stringify({
+                            response: "OK",
+                            ref: req.ref,
+                            info: {
+                                version: "1.0.0 dev",
+                                build: `commit_${exec("git rev-parse HEAD", true, true)}`
+                            }
                         }));
                     } else {
                         console.log(`WebSocket - [${sessionId}] [BAD_REQUEST] ? ${req.request}`);

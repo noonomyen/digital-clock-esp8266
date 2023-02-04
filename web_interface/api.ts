@@ -63,13 +63,39 @@ namespace adcapi {
         response: string,
         ref: number,
         error?: string,
-        config?: { [key: string]: any },
+        config?: {
+            "wifi.enable"?: boolean,
+            "wifi.ssid"?: string | null,
+            "wifi.password"?: string | null,
+            "network.dhcp"?: boolean,
+            "network.ip"?: string | null,
+            "network.subnet"?: string | null,
+            "network.gateway"?: string | null,
+            "network.dns_1"?: string | null,
+            "network.dns_2"?: string | null,
+            "web.custom"?: boolean,
+            "web.background"?: string | null,
+            "web.background_url"?: string | null,
+            "web.font_color"?: string | null,
+            "web.dark_mode"?: boolean,
+            "web.language"?: string,
+            "time.custom"?: boolean,
+            "time.ntp_server_1"?: string | null,
+            "time.ntp_server_2"?: string | null,
+            "time.utc_offset"?: number,
+            "sensor.temperature_type"?: number,
+            [key: string]: any
+        },
         param?: string,
         fahrenheit?: number,
         celsius?: number,
         temperature_type?: number,
         humidity?: number,
         list?: [],
+        info?: {
+            version: string,
+            build: string
+        }
         [key: string]: any,
     };
 };

@@ -8,9 +8,9 @@ _adcapi = adcapi;
 _api = api;
 
 api.onopen(() => {
-    api.request("REQUIRE_SETUP_LIST", (err: boolean, res: adcapi.Response) => {
+    api.request("REQUIRE_CONFIG_LIST", (err: boolean, res: adcapi.Response) => {
         if (err) {
-            document.getElementById("container").innerText = "Server Error : request: REQUIRE_SETUP_LIST";
+            document.getElementById("container").innerText = "Server Error : request: REQUIRE_CONFIG_LIST";
             document.getElementById("container").style.display = "block";
         } else if (res.list.length != 0) {
             location.replace("setting");
@@ -21,5 +21,23 @@ api.onopen(() => {
     });
 });
 
+function lang(lang: string, code: string): string {
+    if (lang in language) {
+        if (code in language[lang]) {
+            return language[lang][code];
+        };
+    };
+    return `${lang}.${code}`;
+};
+
 function main(api: adcapi): void {
+};
+
+var language = {
+    "EN": {},
+    "TH": {}
+} as {
+    [key: string]: {
+        [key: string]: string
+    }
 };

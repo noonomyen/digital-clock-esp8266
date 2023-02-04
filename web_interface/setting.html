@@ -18,16 +18,77 @@
             <div class="vertical-line"></div>
             <div id="navbar_setting" class="item">
                 <i class="fa-solid fa-gear"></i>
-                <span>Setting</span>
+                <span class="lang-1"></span>
             </div>
             <div id="navbar_info" class="item">
                 <i class="fa-solid fa-circle-info"></i>
-                <span>Info</span>
+                <span class="lang-2"></span>
             </div>
         </div>
         <div id="content">
-            <div id="content.setting">setting</div>
-            <div id="content.info">info</div>
+            <div id="content_setting">
+                <div class="block"></div>
+            </div>
+            <div id="content_info">
+                <div class="block">
+                    <table>
+                        <tr>
+                            <td>Version</td>
+                            <td class="ph_10px">:</td>
+                            <td id="info_version"></td>
+                        </tr>
+                        <tr>
+                            <td>Build</td>
+                            <td class="ph_10px">:</td>
+                            <td id="info_build"></td>
+                        </tr>
+                    </table>
+                </div>
+                <hr class="break_block">
+                <div class="block">
+                    <h1>Arduino Core & Library</h1>
+                    <table>
+                        <tr>
+                            <td>Arduino core for ESP8266 WiFi chip</td>
+                            <td class="ph_10px">:</td>
+                            <td class="link" onclick="window.open('https://github.com/esp8266/Arduino')">https://github.com/esp8266/Arduino</td>
+                        </tr>
+                        <tr>
+                            <td>Adafruit Unified Sensor Driver</td>
+                            <td class="ph_10px">:</td>
+                            <td class="link" onclick="window.open('https://github.com/adafruit/Adafruit_Sensor')")>https://github.com/adafruit/Adafruit_Sensor</td>
+                        <tr>
+                            <td>DHT sensor library</td>
+                            <td class="ph_10px">:</td>
+                            <td class="link" onclick="window.open('https://github.com/adafruit/DHT-sensor-library')")>https://github.com/adafruit/DHT-sensor-library</td>
+                        </tr>
+                        <tr>
+                            <td>LiquidCrystal I2C LCD displays</td>
+                            <td class="ph_10px">:</td>
+                            <td class="link" onclick="window.open('https://github.com/johnrickman/LiquidCrystal_I2C')")>https://github.com/johnrickman/LiquidCrystal_I2C</td>
+                        </tr>
+                        <tr>
+                            <td>DS1302 RTC library for Arduino</td>
+                            <td class="ph_10px">:</td>
+                            <td class="link" onclick="window.open('https://github.com/msparks/arduino-ds1302')")>https://github.com/msparks/arduino-ds1302</td>
+                        </tr>
+                    </table>
+                </div>
+                <hr class="break_block">
+                <div class="block">
+                    <h1>Fonts</h1>
+                    <table>
+                        <tr>
+                            <td>Font Awesome</td>
+                            <td class="ph_10px">:</td>
+                            <td class="link" onclick="window.open('https://github.com/FortAwesome/Font-Awesome')")>https://github.com/FortAwesome/Font-Awesome</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div id="STATUS">
+            <span id="status"></span>
         </div>
     </div>
     <script>
