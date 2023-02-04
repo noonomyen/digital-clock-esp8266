@@ -248,3 +248,30 @@
     }
 }
 ```
+
+### สถานะ Wi-Fi
+#### send
+```json
+{
+    "request": "WIFI_STATUS",
+    "ref": <number>
+}
+```
+
+#### recv
+```json
+{
+    "response": "OK",
+    "ref": <number>,
+    "status": <string>
+}
+```
+
+| status | คำอธิบาย |
+|---|---|
+| IDLE_STATUS ||
+| NO_SSID_AVAIL ||
+| CONNECTED ||
+| CONNECT_FAILED ||
+| CONNECT_WRONG_PASSWORD ||
+| DISCONNECTED ||

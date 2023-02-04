@@ -98,6 +98,7 @@ body {
 
 #content_setting .block h1 {
     margin: 0px 0px 10px 0px;
+    font-weight: bold;
 }
 
 .link {
@@ -110,6 +111,18 @@ body {
 
 .ph_10px {
     padding: 0px 10px;
+}
+
+.ph_5px {
+    padding: 0px 5px;
+}
+
+.pv_10px {
+    padding: 10px 0px;
+}
+
+.pv_5px {
+    padding: 5px 0px;
 }
 
 #STATUS {
@@ -125,4 +138,47 @@ body {
     color: var(--REQUESTING_F_COLOR);
     border-radius: 10px;
     padding: 0px 20px 0px 20px;
+}
+
+#wifi_enable {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+}
+
+#wifi_disable {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+}
+
+#wifi_ssid {
+    width: 300px;
+    height: 30px;
+    padding: 3px;
+}
+
+#wifi_password {
+    width: 300px;
+    height: 30px;
+    padding: 3px;
+}
+
+#save_setting {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 150px;
+    height: 40px;
+    background-color: var(--NAVBAR_BG_COLOR);
+    border-radius: 10px;
+    padding: 5px;
+    font-size: 25px;
+    font-weight: bold;
+    color: var(--NAVBAR_F_COLOR);
+}
+
+#save_setting:hover {
+    background-color: var(--NAVBAR_SELECT_COLOR);
 }
