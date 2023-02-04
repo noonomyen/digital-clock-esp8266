@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": [
+        "dom",
+        "es2015",
+        "es5"
+    ],
+    "module": "es2015",
+    "rootDir": "./",
+    "allowJs": true,
+    "checkJs": true,
+    "outDir": "../build/web_interface",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": false,
+    "alwaysStrict": false,
+    "skipLibCheck": true
+  }
+}
