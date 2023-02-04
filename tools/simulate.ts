@@ -1,16 +1,16 @@
 import express from "express";
-import ws from "ws";
+import WebSocket from "ws";
 import fs from "fs";
 import path from "path";
 import http from "http";
 import cheerio from "cheerio";
+import expressWs from "express-ws";
 
 import { exec, rmdir } from "./other/lib"
 
 const config = {
     addr: "127.0.0.1",
-    http_port: 8000,
-    ws_port: 8001,
+    port: 8000,
     web_interface_src: path.join(__dirname, "../web_interface"),
     loop_check_delay: 250
 };
@@ -37,11 +37,7 @@ function src_build(): void {
     console.log("[build] complete");
 };
 
-var app = express();
-var wss =  new ws.Server({
-    port: config.ws_port,
-    host: config.addr
-});
+var { app } = expressWs(express());
 
 var live_reload_inject_js = fs.readFileSync(path.join(__dirname, "other/live-reload.inject.js"), { encoding: "utf-8" }).toString();
 
@@ -57,48 +53,7 @@ app.use((req: express.Request, res: express.Response, next: express.NextFunction
     };
 });
 
-app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
-    res.set("Cache-Control", "no-store");
-    next();
-});
-
-app.get("*", (req: express.Request, res: express.Response) => {
-    let req_path = req.path;
-    if (req_path == "/") {
-        req_path = "/index.html";
-    };
-    let file = path.join(__dirname, "../build/web_interface", req_path);
-    if (!fs.existsSync(file) && (file.toString().indexOf(".") == -1)) {
-        file = `${file}.html`;
-    };
-    if (fs.existsSync(file)) {
-        let filetype = file.split(".").slice(-1).toString();
-        if (filetype == "html" || filetype == "htm") {
-            let $ = cheerio.load(fs.readFileSync(file, { encoding: "utf-8" }));
-            // live reload script
-            $("body").append("<script>" + live_reload_inject_js + "</script>");
-            $("body").append(`<script>live_reloader(\"ws://${config.addr}:${config.ws_port}\")</script>`);
-            res.setHeader("Content-Type", "text/html");
-            res.status(200).send($.html());
-        } else if (filetype == "css") {
-            res.setHeader("Content-Type", "text/css");
-            res.status(200).send(fs.readFileSync(file, { encoding: "utf-8" }));
-        } else if (filetype == "js" || filetype == "mjs") {
-            res.setHeader("Content-Type", "text/javascript");
-            res.status(200).send(fs.readFileSync(file, { encoding: "utf-8" }));
-        } else if (filetype == "ttf" || filetype == "otf" || filetype == "woff" || filetype == "woff2") {
-            res.setHeader("Content-Type", `font/${filetype}`);
-            res.status(200).send(fs.readFileSync(file, { encoding: null }));
-        } else {
-            res.status(500).send();
-        };
-    } else {
-        res.status(404);
-    };
-    res.end();
-});
-
-var ws_connection: { [key: string]: ws.WebSocket } = {};
+var ws_connection: { [key: string]: WebSocket.WebSocket } = {};
 
 class simulate_config {
     public data: {
@@ -197,14 +152,27 @@ var simulate = new simulate_config();
 var simulate_time_hw = new Date().getTime();
 var simulate_time_set = 0;
 
-wss.on("connection", (socket: ws.WebSocket, req: http.IncomingMessage) => {
+app.ws("/live_reload", (socket: WebSocket.WebSocket, req: http.IncomingMessage) => {
     // filter
     if (req.socket.remoteAddress != undefined && (req.socket.remoteAddress == config.addr)) {
         console.log(`WebSocket ALLOW - ${req.socket.remoteAddress}:${req.socket.remotePort}`);
         let sessionId = req.headers['sec-websocket-key']?.toString();
         if (sessionId) {
+            console.log(`WebSocket - [${sessionId}] live reload`);
             ws_connection[sessionId] = socket;
-            socket.on("message", (message: ws.RawData) => {
+        } else {
+            socket.close();
+        };
+    };
+});
+
+app.ws("/wsapi", (socket: WebSocket.WebSocket, req: http.IncomingMessage) => {
+    // filter
+    if (req.socket.remoteAddress != undefined && (req.socket.remoteAddress == config.addr)) {
+        console.log(`WebSocket ALLOW - ${req.socket.remoteAddress}:${req.socket.remotePort}`);
+        let sessionId = req.headers['sec-websocket-key']?.toString();
+        if (sessionId) {
+            socket.on("message", (message: WebSocket.RawData) => {
                 try {
                     let req = JSON.parse(message.toString());
                     if (req.request == "REQUIRE_SETUP_LIST") {
@@ -302,17 +270,63 @@ loop = setInterval(() => {
         modify_checksum_old = modify_time;
         console.log(`Live-Reload - have modified`);
         for (let key in ws_connection) {
-            if (ws_connection[key].readyState == ws.OPEN) {
+            if (ws_connection[key].readyState == WebSocket.OPEN) {
                 src_build();
                 ws_connection[key].send("RELOAD");
-            } else if (ws_connection[key].readyState == ws.CLOSED) {
+            } else if (ws_connection[key].readyState == WebSocket.CLOSED) {
                 delete ws_connection[key];
             };
         };
     };
 }, config.loop_check_delay);
 
-app.listen(config.http_port, config.addr, () => {
+app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
+    res.set("Cache-Control", "no-store");
+    next();
+});
+
+app.get("*", (req: express.Request, res: express.Response) => {
+    let req_path = req.path;
+    if (req_path == "/") {
+        req_path = "/index.html";
+    };
+    let file = path.join(__dirname, "../build/web_interface", req_path);
+    if (!fs.existsSync(file) && (file.toString().indexOf(".") == -1)) {
+        file = `${file}.html`;
+    };
+    if (fs.existsSync(file)) {
+        let filetype = file.split(".").slice(-1).toString();
+        if (filetype == "html" || filetype == "htm") {
+            let $ = cheerio.load(fs.readFileSync(file, { encoding: "utf-8" }));
+            // live reload script
+            $("body").append("<script>" + live_reload_inject_js + "</script>");
+            $("body").append(`<script>live_reloader(\"ws://${config.addr}:${config.port}/live_reload\")</script>`);
+            res.setHeader("Content-Type", "text/html");
+            res.status(200).send($.html());
+        } else if (filetype == "css") {
+            res.setHeader("Content-Type", "text/css");
+            res.status(200).send(fs.readFileSync(file, { encoding: "utf-8" }));
+        } else if (filetype == "js" || filetype == "mjs") {
+            res.setHeader("Content-Type", "text/javascript");
+            res.status(200).send(fs.readFileSync(file, { encoding: "utf-8" }));
+        } else if (filetype == "ttf" || filetype == "otf" || filetype == "woff" || filetype == "woff2") {
+            res.setHeader("Content-Type", `font/${filetype}`);
+            res.status(200).send(fs.readFileSync(file, { encoding: null }));
+        } else {
+            res.status(500).send();
+        };
+    } else {
+        res.status(404);
+    };
+    res.end();
+});
+
+app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
+    res.status(404);
+    res.end();
+});
+
+app.listen(config.port, config.addr, () => {
     src_build();
-    console.log(`Server is listening at [HTTP ${config.addr}:${config.http_port}] [WS ${config.addr}:${config.ws_port}]`);
+    console.log(`Server is listening at ${config.addr}:${config.port}`);
 });

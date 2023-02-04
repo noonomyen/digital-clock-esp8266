@@ -1,6 +1,6 @@
 import adcapi from "./api.js";
 
-var api = new adcapi(`ws://127.0.0.1:8001`);
+var api = new adcapi(`ws://${window.location.host}/wsapi`);
 
 // @ts-ignore
 _adcapi = adcapi;
