@@ -18,56 +18,109 @@
             <div class="vertical-line"></div>
             <div id="navbar_setting" class="item">
                 <i class="fa-solid fa-gear"></i>
-                <span class="lang-1"></span>
+                <span>Setting</span>
             </div>
             <div id="navbar_info" class="item">
                 <i class="fa-solid fa-circle-info"></i>
-                <span class="lang-2"></span>
+                <span>Info</span>
             </div>
         </div>
         <div id="content">
             <div id="content_setting">
                 <div class="block">
-                    <h1 class="lang-5"></h1>
+                    <h1>Wi-Fi</h1>
                     <table>
                         <tr>
-                            <td class="lang-10"></td>
+                            <td>Status</td>
+                            <td class="ph_10px">:</td>
+                            <td id="wifi-status_status"></td>
+                        </tr>
+                        <tr>
+                            <td>SSID</td>
+                            <td class="ph_10px">:</td>
+                            <td id="wifi-status_ssid"></td>
+                        </tr>
+                        <tr>
+                            <td>MAC address</td>
+                            <td class="ph_10px">:</td>
+                            <td id="wifi-status_mac"></td>
+                        </tr>
+                        <tr>
+                            <td>DHCP enable</td>
+                            <td class="ph_10px">:</td>
+                            <td id="wifi-status_dhcp"></td>
+                        </tr>
+                        <tr>
+                            <td>IP address</td>
+                            <td class="ph_10px">:</td>
+                            <td id="wifi-status_ip"></td>
+                        </tr>
+                        <tr>
+                            <td>Subnet</td>
+                            <td class="ph_10px">:</td>
+                            <td id="wifi-status_subnet"></td>
+                        </tr>
+                        <tr>
+                            <td>Gateway</td>
+                            <td class="ph_10px">:</td>
+                            <td id="wifi-status_gateway"></td>
+                        </tr>
+                        <tr>
+                            <td>DNS primary</td>
+                            <td class="ph_10px">:</td>
+                            <td id="wifi-status_dns-1"></td>
+                        </tr>
+                        <tr>
+                            <td>DNS secondary</td>
+                            <td class="ph_10px">:</td>
+                            <td id="wifi-status_dns-2"></td>
+                        </tr>
+                    </table>
+                    <br>
+                    <table>
+                        <tr>
+                            <td>Wi-Fi Enable</td>
                             <td class="ph_10px"></td>
                             <td>
                                 <input type="radio" name="wifi_enable" id="wifi_enable">
-                                <label class="lang-11" for="wifi_enable"></label>
+                                <label for="wifi_enable">Enable</label>
                                 <input type="radio" name="wifi_enable" id="wifi_disable">
-                                <label class="lang-12" for="wifi_disable"></label>
+                                <label  for="wifi_disable">Disable</label>
                             </td>
                         </tr>
-                        <tr><td><div class="pv_5px"></div></td></tr>
+                        <tr><td colspan="3"><div class="pv_5px"></div></td></tr>
                         <tr>
-                            <td class="lang-13"></td>
+                            <td>SSID</td>
                             <td class="ph_10px"></td>
                             <td><input type="text" id="wifi_ssid"></td>
                         </tr>
+                        <tr><td colspan="3"><div class="pv_5px"></div></td></tr>
                         <tr>
-                            <td class="lang-14"></td>
+                            <td>Password</td>
                             <td class="ph_10px"></td>
-                            <td><input type="text" id="wifi_password"></td>
+                            <td>
+                                <input type="password" id="wifi_password">
+                                <i id="wifi_password_unhide" class="fa-solid fa-eye-slash"></i>
+                                <i id="wifi_password_hide" class="fa-solid fa-eye"></i>
+                            </td>
                         </tr>
                     </table>
                 </div>
                 <hr class="break_block">
                 <div class="block">
-                    <h1 class="lang-6"></h1>
+                    <h1>Network</h1>
                 </div>
                 <hr class="break_block">
                 <div class="block">
-                    <h1 class="lang-7"></h1>
+                    <h1>Web Interface</h1>
                 </div>
                 <hr class="break_block">
                 <div class="block">
-                    <h1 class="lang-8"></h1>
+                    <h1>Datetime</h1>
                 </div>
                 <hr class="break_block">
                 <div class="block">
-                    <h1 class="lang-9"></h1>
+                    <h1>Sensor</h1>
                 </div>
                 <hr class="break_block">
                 <div class="block">

@@ -56,10 +56,24 @@ app.use((req: express.Request, res: express.Response, next: express.NextFunction
 var ws_connection: { [key: string]: WebSocket.WebSocket } = {};
 
 class simulate_config {
+    public wifi: {
+        ssid: string,
+        password: string
+    };
+    public network: {
+        dhcp: boolean,
+        sta_ip: string,
+        sta_subnet: string,
+        sta_gateway: string,
+        dns_1: string,
+        dns_2: string
+    };
+    public wifi_mac: string;
+    public wifi_status: string;
     public data: {
         "wifi.enable": boolean,
-        "wifi.ssid": string | null,
-        "wifi.password": string | null,
+        "wifi.ssid": string,
+        "wifi.password": string,
         "network.dhcp": boolean,
         "network.ip": string | null,
         "network.subnet": string | null,
@@ -83,8 +97,8 @@ class simulate_config {
     constructor() {
         this.data = {
             "wifi.enable": false,
-            "wifi.ssid": null,
-            "wifi.password": null,
+            "wifi.ssid": "",
+            "wifi.password": "",
             "network.dhcp": true,
             "network.ip": null,
             "network.subnet": null,
@@ -103,6 +117,22 @@ class simulate_config {
             "time.utc_offset": 0,
             "sensor.temperature_type": 1
         };
+
+        this.wifi = {
+            ssid: "test",
+            password: ""
+        }
+        this.network = {
+            dhcp: true,
+            sta_ip: "",
+            sta_subnet: "",
+            sta_gateway: "",
+            dns_1: "",
+            dns_2: ""
+        };
+        this.wifi_mac = "00:00:00:00:00:00";
+        this.wifi_status = "IDLE_STATUS";
+        this.connect_wifi();
     };
 
     require_config_list(): string[] {
@@ -110,10 +140,7 @@ class simulate_config {
 
         if (
             (this.data["wifi.enable"] == true) &&
-            (
-                (this.data["wifi.ssid"] == null) ||
-                (this.data["wifi.password"] == null)
-            )
+            (this.data["wifi.ssid"] == "")
         ) {
             list.push("WIFI")
         };
@@ -156,7 +183,57 @@ class simulate_config {
         };
 
         return list;
-    }
+    };
+
+    connect_wifi() {
+        this.network.dhcp = this.data["network.dhcp"];
+        if (
+            (this.data["wifi.enable"] == true) &&
+            (
+                (this.data["wifi.ssid"] == this.wifi.ssid) &&
+                (this.data["wifi.password"] == this.wifi.password)
+            )
+        ) {
+            this.wifi_status = "CONNECTED";
+        } else if (
+            (this.data["wifi.enable"] == true) &&
+            (this.data["wifi.ssid"] != this.wifi.ssid)
+        ) {
+            this.wifi_status = "NO_SSID_AVAIL";
+        } else if (
+            (this.data["wifi.enable"] == true) &&
+            (
+                (this.data["wifi.ssid"] == this.wifi.ssid) &&
+                (this.data["wifi.password"] != this.wifi.password)
+            )
+        ) {
+            this.wifi_status = "CONNECT_WRONG_PASSWORD";
+        } else if (this.data["wifi.enable"] == false) {
+            this.wifi_status = "DISABLE";
+        } else {
+            this.wifi_status = "CONNECT_FAILED";
+        };
+        console.log(`[simulate] WiFi status ${this.wifi_status}`);
+        if (this.data["network.dhcp"]) {
+            this.network = {
+                dhcp: true,
+                sta_ip: "10.10.10.2",
+                sta_subnet: "255.255.255.0",
+                sta_gateway: "10.10.10.1",
+                dns_1: "1.1.1.1",
+                dns_2: "8.8.8.8"
+            };
+        } else {
+            this.network = {
+                dhcp: this.data["network.dhcp"],
+                sta_ip: this.data["network.ip"]!.toString(),
+                sta_subnet: this.data["network.subnet"]!.toString(),
+                sta_gateway: this.data["network.gateway"]!.toString(),
+                dns_1: this.data["network.dns_1"]!.toString(),
+                dns_2: this.data["network.dns_2"]!.toString()
+            };
+        };
+    };
 };
 
 var simulate = new simulate_config();
@@ -200,10 +277,17 @@ app.ws("/wsapi", (socket: WebSocket.WebSocket, req: http.IncomingMessage) => {
                             simulate_time_hw = new Date().getTime();
                             simulate_time_set = timestamp;
                         };
+                        let request_connect_wifi = false;
                         for (let key in req.config) {
                             if (key in simulate.data) {
+                                if (key in ["wifi.enable", "wifi.ssid", "wifi.password"]) {
+                                    request_connect_wifi = true;
+                                };
                                 simulate.data[key.toString()] = req.config[key];
                             };
+                        };
+                        if (request_connect_wifi) {
+                            simulate.connect_wifi();
                         };
                     } else if (req.request == "GET_CONFIG") {
                         console.log(`WebSocket - [${sessionId}] - GET_CONFIG`);
@@ -245,6 +329,17 @@ app.ws("/wsapi", (socket: WebSocket.WebSocket, req: http.IncomingMessage) => {
                                 version: "1.0.0 dev",
                                 build: `commit_${exec("git rev-parse HEAD", true, true)}`
                             }
+                        }));
+                    } else if (req.request == "GET_WIFI_STATUS") {
+                        console.log(`WebSocket - [${sessionId}] - GET_WIFI_STATUS`);
+                        socket.send(JSON.stringify({
+                            response: "OK",
+                            ref: req.ref,
+                            ssid: simulate.data["wifi.ssid"],
+                            dhcp: simulate.data["network.dhcp"],
+                            mac: simulate.wifi_mac,
+                            status: simulate.wifi_status,
+                            network: simulate.network
                         }));
                     } else {
                         console.log(`WebSocket - [${sessionId}] [BAD_REQUEST] ? ${req.request}`);

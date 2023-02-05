@@ -1,12 +1,14 @@
 class adcapi {
     public response_timeout: number;
-    public ref: { [key: string]: [number, Function]; };
+    public requesting: { [key: string]: [number, Function]; };
+    public requesting_silent: { [key: string]: [number, Function]; };
     public websocket: WebSocket;
     public request_gc: NodeJS.Timer;
 
     constructor(addr: string) {
         this.response_timeout = 10000;
-        this.ref = {};
+        this.requesting = {};
+        this.requesting_silent = {};
         this.websocket = new WebSocket(addr);
         this.websocket.onmessage = this.recv.bind(this);
         this.request_gc = setInterval(this.clear_req_no_res.bind(this), 1000);
@@ -19,17 +21,27 @@ class adcapi {
 
     recv(event: MessageEvent) {
         let res = JSON.parse(event.data.toString());
-        if ((res.ref != null) && (res.ref in this.ref)) {
-            this.ref[res.ref.toString()][1](false, res);
-            delete this.ref[res.ref.toString()];
+        if ((res.ref != null) && (res.ref in this.requesting)) {
+            this.requesting[res.ref.toString()][1](false, res);
+            delete this.requesting[res.ref.toString()];
+        };
+        if ((res.ref != null) && (res.ref in this.requesting_silent)) {
+            this.requesting_silent[res.ref.toString()][1](false, res);
+            delete this.requesting_silent[res.ref.toString()];
         };
     };
 
     clear_req_no_res(): void {
-        for (let key in this.ref) {
-            if ((this.ref[key][0] + this.response_timeout) > new Date().getTime()) {
-                this.ref[key][1](true, null);
-                delete this.ref[key];
+        for (let key in this.requesting) {
+            if ((this.requesting[key][0] + this.response_timeout) > new Date().getTime()) {
+                this.requesting[key][1](true, null);
+                delete this.requesting[key];
+            };
+        };
+        for (let key in this.requesting_silent) {
+            if ((this.requesting_silent[key][0] + this.response_timeout) > new Date().getTime()) {
+                this.requesting_silent[key][1](true, null);
+                delete this.requesting_silent[key];
             };
         };
     };
@@ -41,9 +53,13 @@ class adcapi {
             };
         };
         let time = new Date().getTime();
-        let _ref = time.toString() + Math.floor(Math.random() * 1000).toString();
-        this.ref[_ref] = [time, callback];
-        req.ref = _ref;
+        let ref = time.toString() + Math.floor(Math.random() * 1000).toString();
+        if (("silent" in req) && req["silent"] == true) {
+            this.requesting_silent[ref] = [time, callback];
+        } else {
+            this.requesting[ref] = [time, callback];
+        };
+        req.ref = ref;
         this.websocket.send(JSON.stringify(req));
     };
 
@@ -95,7 +111,18 @@ namespace adcapi {
         info?: {
             version: string,
             build: string
-        }
+        },
+        ssid?: string,
+        status?: string,
+        mac?: string,
+        network?: {
+            dhcp: boolean,
+            sta_ip: string,
+            sta_subnet: string,
+            sta_gateway: string,
+            dns_1: string,
+            dns_2: string
+        },
         [key: string]: any,
     };
 };

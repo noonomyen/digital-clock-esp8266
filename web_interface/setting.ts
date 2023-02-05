@@ -1,3 +1,6 @@
+document.getElementById("status").innerText = "Connecting...";
+document.getElementById("STATUS").style.display = "flex";
+
 import adcapi from "./api.js";
 
 var api = new adcapi(`ws://${window.location.host}/wsapi`);
@@ -8,41 +11,9 @@ _adcapi = adcapi;
 _api = api;
 
 api.onopen(() => {
-    api.request("REQUIRE_CONFIG_LIST", (err: boolean, res: adcapi.Response) => {
-        if (err) {
-            document.getElementById("container").innerText = "Server Error : request: REQUIRE_CONFIG_LIST";
-            document.getElementById("container").style.display = "block";
-        } else if (res.list.length != 0) {
-            document.getElementById("container").style.display = "block";
-            main(api, res.list);
-        } else {
-            document.getElementById("container").style.display = "block";
-            main(api);
-        };
-    });
+    document.getElementById("container").style.display = "block";
+    main(api);
 });
-
-function lang(l: string, code: string): string {
-    if (l in language) {
-        if (code in language[l]) {
-            return language[l][code];
-        };
-    };
-    return `ERROR_${lang}.${code}`;
-};
-
-function lang_switch(l: string) {
-    if (l in language) {
-        for (let code in language[l]) {
-            let text = language[l][code];
-            document.querySelectorAll(`.lang-${code}`).forEach((element: HTMLElement) => {
-                element.innerText = text;
-            });
-        };
-    } else {
-        console.log(`[lang_switch] not found lang:${l}`);
-    };
-};
 
 function page_switch(page: "setting" | "info") {
     if (page == "setting") {
@@ -69,9 +40,21 @@ async function set_onclick(api: adcapi) {
     document.querySelector("#navbar div.logo").addEventListener("click", () => {
         window.location.replace("/");
     });
+
+    document.getElementById("wifi_password_hide").onclick = () => {
+        document.getElementById("wifi_password_hide").style.display = "none";
+        document.getElementById("wifi_password_unhide").style.display = "inline-block";
+        (document.getElementById("wifi_password") as HTMLInputElement).type = "password";
+    };
+
+    document.getElementById("wifi_password_unhide").onclick = () => {
+        document.getElementById("wifi_password_unhide").style.display = "none";
+        document.getElementById("wifi_password_hide").style.display = "inline-block";
+        (document.getElementById("wifi_password") as HTMLInputElement).type = "text";
+    };
 };
 
-function main(api: adcapi, require_setting?: []): void {
+function main(api: adcapi): void {
     set_onclick(api);
 
     let url_params = new URLSearchParams(window.location.search);
@@ -83,26 +66,50 @@ function main(api: adcapi, require_setting?: []): void {
         page_switch("setting");
     };
 
+    setInterval(() => {
+        api.request({
+            request: "GET_WIFI_STATUS",
+            silent: true
+        }, (err: boolean, res: adcapi.Response) => {
+            if (err) {
+                //
+            } else {
+                document.getElementById("wifi-status_status").innerText = res.status;
+                document.getElementById("wifi-status_ssid").innerText = res.ssid;
+                document.getElementById("wifi-status_mac").innerText = res.mac;
+                let dhcp = "disable";
+                if (res.dhcp == true) {
+                    dhcp = "enable";
+                };
+                document.getElementById("wifi-status_dhcp").innerText = dhcp;
+                document.getElementById("wifi-status_ip").innerText = res.network.sta_ip;
+                document.getElementById("wifi-status_subnet").innerText = res.network.sta_subnet;
+                document.getElementById("wifi-status_gateway").innerText = res.network.sta_gateway;
+                document.getElementById("wifi-status_dns-1").innerText = res.network.dns_1;
+                document.getElementById("wifi-status_dns-2").innerText = res.network.dns_2;
+            };
+        });
+    }, 1000);
+
     api.request("GET_CONFIG", (err: boolean, res: adcapi.Response) => {
         if (err) {
             document.getElementById("container").innerText = "Server Error : request: GET_CONFIG";
         } else {
-            lang_switch(res.config["web.language"]);
             let loop: NodeJS.Timer;
             loop = setInterval((() => {
                 if (api.websocket.readyState == WebSocket.CLOSED) {
-                    document.getElementById("status").innerText = lang(res.config["web.language"], "4");
+                    document.getElementById("status").innerText = "Disconnected, please refresh this page !";
                     document.getElementById("STATUS").style.display = "flex";
                     clearInterval(loop);
                 } else {
-                    if (Object.keys(api.ref).length != 0) {
-                        document.getElementById("status").innerText = lang(res.config["web.language"], "3");
+                    if (Object.keys(api.requesting).length != 0) {
+                        document.getElementById("status").innerText = "In progress...";
                         document.getElementById("STATUS").style.display = "flex";
                     } else {
                         document.getElementById("STATUS").style.display = "none";
                     };
                 };
-            }), 100);
+            }), 50);
         };
     });
 
@@ -114,45 +121,4 @@ function main(api: adcapi, require_setting?: []): void {
             document.getElementById("info_build").innerText = res.info.build;
         };
     });
-};
-
-var language = {
-    "EN": {
-        "1": "Setting",
-        "2": "Info",
-        "3": "in progress...",
-        "4": "Disconnected, please refresh this page !",
-        "5": "Wi-Fi",
-        "6": "Network",
-        "7": "Web Interface",
-        "8": "Datetime",
-        "9": "Sensor",
-        "10": "Wi-Fi enable",
-        "11": "Enable",
-        "12": "Disable",
-        "13": "SSID",
-        "14": "Password",
-        "15": "SAVE",
-    },
-    "TH": {
-        "1": "ตั้งค่า",
-        "2": "ข้อมูล",
-        "3": "กำลังดำเนินการ...",
-        "4": "ตัดการเชื่อมต่อแล้ว, โปรดรีเฟรชหน้านี้ !",
-        "5": "WiFi",
-        "6": "เครือข่าย",
-        "7": "เว็บอินเตอร์เฟส",
-        "8": "วันเวลา",
-        "9": "เซ็นเซอร์",
-        "10": "เปิดใช้งาน Wi-Fi",
-        "11": "เปิด",
-        "12": "ปิด",
-        "13": "SSID",
-        "14": "รหัสผ่าน",
-        "15": "บันทึก",
-    }
-} as {
-    [key: string]: {
-        [key: string]: string
-    }
 };

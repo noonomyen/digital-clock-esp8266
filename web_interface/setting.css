@@ -89,7 +89,9 @@ body {
 }
 
 #content_info .block h1 {
+    font-size: 25px;
     margin: 0px 0px 10px 0px;
+    font-weight: bold;
 }
 
 #content_setting .block {
@@ -97,6 +99,7 @@ body {
 }
 
 #content_setting .block h1 {
+    font-size: 25px;
     margin: 0px 0px 10px 0px;
     font-weight: bold;
 }
@@ -182,3 +185,19 @@ body {
 #save_setting:hover {
     background-color: var(--NAVBAR_SELECT_COLOR);
 }
+
+#wifi_password_hide {
+    display: none;
+    cursor: pointer;
+    user-select: none;
+    vertical-align: middle;
+    margin: 0px 0px 0px 10px;
+}
+
+#wifi_password_unhide {
+    cursor: pointer;
+    user-select: none;
+    vertical-align: middle;
+    margin: 0px 0px 0px 10px;
+}
+

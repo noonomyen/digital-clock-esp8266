@@ -24,7 +24,6 @@
 | `web.background` | string | สีพื้นหลัง (Hex color) | จะกำหนดได้ก็ต่อเมื่อ `web.custom` เป็น `true` |
 | `web.background_url` | string| พื้นหลังเป็นรูป โดยรูปจะใช้ตามที่อยู่ URL | จะกำหนดได้ก็ต่อเมื่อ `web.custom` เป็น `true` |
 | `web.font_color`| number | สีตัวอักษร (Hex color) | จะกำหนดได้ก็ต่อเมื่อ `web.custom` เป็น `true` |
-| `web.dark_mode` | boolean | โหมดมืด | จะกำหนดได้ก็ต่อเมื่อ `web.custom` เป็น `false` |
 | `web.language` | string | ภาษา รองรับแค่ `TH` / `EN` ||
 | `time.custom` | boolean | กำหนดเวลาด้วยตัวเอง (ไม่ใช้ NTP) ||
 | `time.timestamp` | number | เวลาที่กำหนดเอง หน่วย ms | จะกำหนดได้ก็ต่อเมื่อ `time.custom` เป็น `true` |
@@ -57,7 +56,7 @@
 |---|---|---|
 | "WIFI" | `wifi.enable` `wifi.ssid` `wifi.password` | ชื่อ ssid กับรหัสผ่าน wifi |
 | "NETWORK" | `network.dhcp` `network.ip` `network.subnet` `network.gateway` `network.dns_1` `network.dns_2` | การกำหนดค่าเครือข่าย |
-| "WEB" | `web.custom` `web.background` `web.background_url` `web.font_color` `web.dark_mode` `web.language` | การกำหนดค่าเว็บที่ใช้แสดงผล |
+| "WEB" | `web.custom` `web.background` `web.background_url` `web.font_color` `web.language` | การกำหนดค่าเว็บที่ใช้แสดงผล |
 | "TIME" | `time.custom` `time.timestamp` `time.ntp_server_1` `time.ntp_server_2` `time.utc_offset` | การกำหนดค่าเวลา |
 
 ---
@@ -84,7 +83,6 @@
         "web.background": <string>,
         "web.background_url": <string>,
         "web.font_color": <string>,
-        "web.dark_mode": <boolean>,
         "web.language": <string>,
         "time.custom": <boolean>,
         "time.timestamp": <number>,
@@ -156,7 +154,6 @@
         "web.background": <string>,
         "web.background_url": <string>,
         "web.font_color": <string>,
-        "web.dark_mode": <boolean>,
         "time.custom": <boolean>,
         "time.ntp_server_1": <string>,
         "time.ntp_server_2": <string>,
@@ -253,7 +250,7 @@
 #### send
 ```json
 {
-    "request": "WIFI_STATUS",
+    "request": "GET_WIFI_STATUS",
     "ref": <number>
 }
 ```
@@ -263,15 +260,26 @@
 {
     "response": "OK",
     "ref": <number>,
-    "status": <string>
+    "ssid": <string>,
+    "mac": <string>,
+    "status": <string>,
+    "network": {
+        "dhcp": <boolean>,
+        "sta_ip": <string>,
+        "sta_subnet": <string>,
+        "sta_gateway": <string>,
+        "dns_1": <string>,
+        "dns_2": <string>
+    }
 }
 ```
 
 | status | คำอธิบาย |
 |---|---|
-| IDLE_STATUS ||
-| NO_SSID_AVAIL ||
-| CONNECTED ||
-| CONNECT_FAILED ||
-| CONNECT_WRONG_PASSWORD ||
-| DISCONNECTED ||
+| DISABLE | ปิดใช้งาน |
+| IDLE_STATUS | ว่าง |
+| NO_SSID_AVAIL | ไม่พบ SSID ที่กำหนด |
+| CONNECTED | เชื่อมต่อสำเร็จ |
+| CONNECT_FAILED | เชื่อมต่อไม่สำเร็จ |
+| CONNECT_WRONG_PASSWORD | รหัสผ่านไม่ถูกต้อง |
+| DISCONNECTED | ตัดการเชื่อมต่อแล้ว |
