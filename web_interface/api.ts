@@ -46,21 +46,22 @@ class adcapi {
         };
     };
 
-    async request(req: { [key: string]: any } | string , callback: Function) {
-        if (typeof req == "string") {
-            req = {
-                request: req
+    async request(req: adcapi.Request | string
+        , callback: Function) {
+            if (typeof req == "string") {
+                req = {
+                    request: req
+                };
             };
-        };
-        let time = new Date().getTime();
-        let ref = time.toString() + Math.floor(Math.random() * 1000).toString();
-        if (("silent" in req) && req["silent"] == true) {
-            this.requesting_silent[ref] = [time, callback];
-        } else {
-            this.requesting[ref] = [time, callback];
-        };
-        req.ref = ref;
-        this.websocket.send(JSON.stringify(req));
+            let time = new Date().getTime();
+            let ref = time.toString() + Math.floor(Math.random() * 1000).toString();
+            if (("silent" in req) && req["silent"] == true) {
+                this.requesting_silent[ref] = [time, callback];
+            } else {
+                this.requesting[ref] = [time, callback];
+            };
+            req.ref = ref;
+            this.websocket.send(JSON.stringify(req));
     };
 
     async onopen(func: Function) {
@@ -75,33 +76,40 @@ class adcapi {
 };
 
 namespace adcapi {
+    export interface Config {
+        "wifi.enable"?: boolean,
+        "wifi.ssid"?: string,
+        "wifi.password"?: string,
+        "network.dhcp"?: boolean,
+        "network.ip"?: string | null,
+        "network.subnet"?: string | null,
+        "network.gateway"?: string | null,
+        "network.dns_1"?: string | null,
+        "network.dns_2"?: string | null,
+        "web.custom"?: boolean,
+        "web.background"?: string | null,
+        "web.background_url"?: string | null,
+        "web.font_color"?: string | null,
+        "web.dark_mode"?: boolean,
+        "time.custom"?: boolean,
+        "time.ntp_server_1"?: string | null,
+        "time.ntp_server_2"?: string | null,
+        "time.utc_offset"?: number,
+        "sensor.temperature_type"?: number,
+        [key: string]: any
+    };
+
+    export interface Request {
+        request?: string,
+        config?: Config | { "time.timestamp"?: number },
+        [key: string]: any
+    };
+
     export interface Response {
         response: string,
         ref: number,
         error?: string,
-        config?: {
-            "wifi.enable"?: boolean,
-            "wifi.ssid"?: string | null,
-            "wifi.password"?: string | null,
-            "network.dhcp"?: boolean,
-            "network.ip"?: string | null,
-            "network.subnet"?: string | null,
-            "network.gateway"?: string | null,
-            "network.dns_1"?: string | null,
-            "network.dns_2"?: string | null,
-            "web.custom"?: boolean,
-            "web.background"?: string | null,
-            "web.background_url"?: string | null,
-            "web.font_color"?: string | null,
-            "web.dark_mode"?: boolean,
-            "web.language"?: string,
-            "time.custom"?: boolean,
-            "time.ntp_server_1"?: string | null,
-            "time.ntp_server_2"?: string | null,
-            "time.utc_offset"?: number,
-            "sensor.temperature_type"?: number,
-            [key: string]: any
-        },
+        config?: Config,
         param?: string,
         fahrenheit?: number,
         celsius?: number,

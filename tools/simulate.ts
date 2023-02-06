@@ -85,7 +85,6 @@ class simulate_config {
         "web.background_url": string | null,
         "web.font_color": string | null,
         "web.dark_mode": boolean,
-        "web.language": string,
         "time.custom": boolean,
         "time.ntp_server_1": string | null,
         "time.ntp_server_2": string | null,
@@ -110,7 +109,6 @@ class simulate_config {
             "web.background_url": null,
             "web.font_color": null,
             "web.dark_mode": false,
-            "web.language": "EN",
             "time.custom": false,
             "time.ntp_server_1": "time.google.com",
             "time.ntp_server_2": "time.cloudflare.com",
@@ -215,13 +213,24 @@ class simulate_config {
         };
         console.log(`[simulate] WiFi status ${this.wifi_status}`);
         if (this.data["network.dhcp"]) {
-            this.network = {
-                dhcp: true,
-                sta_ip: "10.10.10.2",
-                sta_subnet: "255.255.255.0",
-                sta_gateway: "10.10.10.1",
-                dns_1: "1.1.1.1",
-                dns_2: "8.8.8.8"
+            if (this.data["wifi.enable"]) {
+                this.network = {
+                    dhcp: true,
+                    sta_ip: "10.10.10.2",
+                    sta_subnet: "255.255.255.0",
+                    sta_gateway: "10.10.10.1",
+                    dns_1: "1.1.1.1",
+                    dns_2: "8.8.8.8"
+                };
+            } else {
+                this.network = {
+                    dhcp: true,
+                    sta_ip: "",
+                    sta_subnet: "",
+                    sta_gateway: "",
+                    dns_1: "",
+                    dns_2: ""
+                };
             };
         } else {
             this.network = {
@@ -264,14 +273,14 @@ app.ws("/wsapi", (socket: WebSocket.WebSocket, req: http.IncomingMessage) => {
                 try {
                     let req = JSON.parse(message.toString());
                     if (req.request == "REQUIRE_CONFIG_LIST") {
-                        console.log(`WebSocket - [${sessionId}] - REQUIRE_CONFIG_LIST`);
+                        console.log(`WebSocket - [${sessionId}] [${req.ref}] - REQUIRE_CONFIG_LIST`);
                         socket.send(JSON.stringify({
                             response: "OK",
                             ref: req.ref,
                             list: simulate.require_config_list()
                         }));
                     } else if (req.request == "SET_CONFIG") {
-                        console.log(`WebSocket - [${sessionId}] - SET_CONFIG`);
+                        console.log(`WebSocket - [${sessionId}] [${req.ref}] - SET_CONFIG`);
                         if (req.config["time.timestamp"]) {
                             let timestamp = Number(req.config["time.timestamp"]);
                             simulate_time_hw = new Date().getTime();
@@ -280,7 +289,7 @@ app.ws("/wsapi", (socket: WebSocket.WebSocket, req: http.IncomingMessage) => {
                         let request_connect_wifi = false;
                         for (let key in req.config) {
                             if (key in simulate.data) {
-                                if (key in ["wifi.enable", "wifi.ssid", "wifi.password"]) {
+                                if (["wifi.enable", "wifi.ssid", "wifi.password"].indexOf(key) != -1) {
                                     request_connect_wifi = true;
                                 };
                                 simulate.data[key.toString()] = req.config[key];
@@ -289,15 +298,19 @@ app.ws("/wsapi", (socket: WebSocket.WebSocket, req: http.IncomingMessage) => {
                         if (request_connect_wifi) {
                             simulate.connect_wifi();
                         };
+                        socket.send(JSON.stringify({
+                            response: "OK",
+                            ref: req.ref
+                        }));
                     } else if (req.request == "GET_CONFIG") {
-                        console.log(`WebSocket - [${sessionId}] - GET_CONFIG`);
+                        console.log(`WebSocket - [${sessionId}] [${req.ref}] - GET_CONFIG`);
                         socket.send(JSON.stringify({
                             response: "OK",
                             ref: req.ref,
                             config: simulate.data
                         }));
                     } else if (req.request == "GET_SENSOR") {
-                        console.log(`WebSocket - [${sessionId}] - GET_SENSOR`);
+                        console.log(`WebSocket - [${sessionId}] [${req.ref}] - GET_SENSOR`);
                         socket.send(JSON.stringify({
                             response: "OK",
                             ref: req.ref,
@@ -306,7 +319,7 @@ app.ws("/wsapi", (socket: WebSocket.WebSocket, req: http.IncomingMessage) => {
                             temperature_type: simulate.data["sensor.temperature_type"],
                         }));
                     } else if (req.request == "GET_DATETIME") {
-                        console.log(`WebSocket - [${sessionId}] - GET_DATETIME`);
+                        console.log(`WebSocket - [${sessionId}] [${req.ref}] - GET_DATETIME`);
                         socket.send(JSON.stringify({
                             response: "OK",
                             ref: req.ref,
@@ -314,14 +327,14 @@ app.ws("/wsapi", (socket: WebSocket.WebSocket, req: http.IncomingMessage) => {
                             utc_offset: simulate.data["time.utc_offset"]
                         }));
                     } else if (req.request == "RESET_CONFIG") {
-                        console.log(`WebSocket - [${sessionId}] - RESET_CONFIG`);
+                        console.log(`WebSocket - [${sessionId}] [${req.ref}] - RESET_CONFIG`);
                         simulate = new simulate_config();
                         socket.send(JSON.stringify({
                             response: "OK",
                             ref: req.ref
                         }));
                     } else if (req.request == "SYSTEM_INFO") {
-                        console.log(`WebSocket - [${sessionId}] - SYSTEM_INFO`);
+                        console.log(`WebSocket - [${sessionId}] [${req.ref}] - SYSTEM_INFO`);
                         socket.send(JSON.stringify({
                             response: "OK",
                             ref: req.ref,
@@ -331,7 +344,7 @@ app.ws("/wsapi", (socket: WebSocket.WebSocket, req: http.IncomingMessage) => {
                             }
                         }));
                     } else if (req.request == "GET_WIFI_STATUS") {
-                        console.log(`WebSocket - [${sessionId}] - GET_WIFI_STATUS`);
+                        console.log(`WebSocket - [${sessionId}] [${req.ref}] - GET_WIFI_STATUS`);
                         socket.send(JSON.stringify({
                             response: "OK",
                             ref: req.ref,

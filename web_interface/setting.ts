@@ -10,10 +10,25 @@ _adcapi = adcapi;
 // @ts-ignore
 _api = api;
 
+const WiFiStatus = {
+    "DISABLE": "disable",
+    "IDLE_STATUS": "idle",
+    "NO_SSID_AVAIL": "No SSID available",
+    "CONNECTED": "connected",
+    "CONNECT_FAILED": "failed",
+    "CONNECT_WRONG_PASSWORD": "incorrect password",
+    "DISCONNECTED": "disconnected"
+} as {
+    [key: string]: string
+};
+
 api.onopen(() => {
     document.getElementById("container").style.display = "block";
     main(api);
 });
+
+var cache_config: adcapi.Config;
+var SET_CONFIG_STATUS: [string, number] = ["", 0];
 
 function page_switch(page: "setting" | "info") {
     if (page == "setting") {
@@ -52,6 +67,38 @@ async function set_onclick(api: adcapi) {
         document.getElementById("wifi_password_hide").style.display = "inline-block";
         (document.getElementById("wifi_password") as HTMLInputElement).type = "text";
     };
+
+    document.getElementById("save_setting").onclick = () => {
+        SET_CONFIG_STATUS = ["", 0];
+        let tmp: adcapi.Config = {};
+        let new_config: adcapi.Config = {};
+        tmp["wifi.enable"] = (document.getElementById("wifi_enable") as HTMLInputElement).checked;
+        tmp["wifi.ssid"] = (document.getElementById("wifi_ssid") as HTMLInputElement).value;
+        tmp["wifi.password"] = (document.getElementById("wifi_password") as HTMLInputElement).value;
+
+        for (let key in tmp) {
+            if (key in cache_config && (new_config[key] != tmp[key])) {
+                new_config[key] = tmp[key];
+            } else if (key == "time.timestamp" && (new_config["time.timestamp"] != tmp["time.timestamp"])) {
+                new_config["time.timestamp"] = tmp["time.timestamp"];
+            };
+        };
+
+        api.request({
+            request: "SET_CONFIG",
+            config: new_config
+        }, (err: boolean, res: adcapi.Response) => {
+            if (err) {
+                SET_CONFIG_STATUS = ["ERROR [request: SET_CONFIG]", 0];
+            } else {
+                if (res.response == "ERROR") {
+                    SET_CONFIG_STATUS = [`ERROR [response: ${res.error}]`, new Date().getTime() + (5 * 1000)];
+                } else if (res.response == "OK") {
+                    SET_CONFIG_STATUS = [`Successfully`, new Date().getTime() + (2 * 1000)];
+                };
+            };
+        })
+    };
 };
 
 function main(api: adcapi): void {
@@ -74,7 +121,13 @@ function main(api: adcapi): void {
             if (err) {
                 //
             } else {
-                document.getElementById("wifi-status_status").innerText = res.status;
+                let status: string;
+                if (res.status in WiFiStatus) {
+                    status = WiFiStatus[res.status];
+                } else {
+                    status = res.status;
+                };
+                document.getElementById("wifi-status_status").innerText = status;
                 document.getElementById("wifi-status_ssid").innerText = res.ssid;
                 document.getElementById("wifi-status_mac").innerText = res.mac;
                 let dhcp = "disable";
@@ -93,29 +146,43 @@ function main(api: adcapi): void {
 
     api.request("GET_CONFIG", (err: boolean, res: adcapi.Response) => {
         if (err) {
-            document.getElementById("container").innerText = "Server Error : request: GET_CONFIG";
+            document.getElementById("container").innerText = "ERROR [request: GET_CONFIG]";
         } else {
-            let loop: NodeJS.Timer;
-            loop = setInterval((() => {
-                if (api.websocket.readyState == WebSocket.CLOSED) {
-                    document.getElementById("status").innerText = "Disconnected, please refresh this page !";
-                    document.getElementById("STATUS").style.display = "flex";
-                    clearInterval(loop);
-                } else {
-                    if (Object.keys(api.requesting).length != 0) {
-                        document.getElementById("status").innerText = "In progress...";
-                        document.getElementById("STATUS").style.display = "flex";
-                    } else {
-                        document.getElementById("STATUS").style.display = "none";
-                    };
-                };
-            }), 50);
+            cache_config = res.config;
+            (document.getElementById("wifi_enable") as HTMLInputElement).checked = res.config["wifi.enable"];
+            (document.getElementById("wifi_disable") as HTMLInputElement).checked = !res.config["wifi.enable"];
+            (document.getElementById("wifi_ssid") as HTMLInputElement).value = res.config["wifi.ssid"];
+            (document.getElementById("wifi_password") as HTMLInputElement).value = res.config["wifi.password"];
         };
     });
 
+    let loop: NodeJS.Timer;
+    loop = setInterval((() => {
+        if (api.websocket.readyState == WebSocket.CLOSED) {
+            document.getElementById("status").innerText = "Disconnected, please refresh this page !";
+            document.getElementById("STATUS").style.display = "flex";
+            clearInterval(loop);
+        } else {
+            if (SET_CONFIG_STATUS[0] != "") {
+                if (SET_CONFIG_STATUS[1] < new Date().getTime()) {
+                    SET_CONFIG_STATUS = ["", 0];
+                } else {
+                    document.getElementById("status").innerText = SET_CONFIG_STATUS[0];
+                    document.getElementById("STATUS").style.display = "flex";
+                };
+            } else if (Object.keys(api.requesting).length != 0) {
+                document.getElementById("status").innerText = "In progress...";
+                document.getElementById("STATUS").style.display = "flex";
+            } else {
+                document.getElementById("STATUS").style.display = "none";
+                document.getElementById("status").innerText = "";
+            };
+        };
+    }), 50);
+
     api.request("SYSTEM_INFO", (err: boolean, res: adcapi.Response) => {
         if (err) {
-            document.getElementById("container").innerText = "Server Error : request: SYSTEM_INFO";
+            document.getElementById("container").innerText = "ERROR [request: SYSTEM_INFO]";
         } else {
             document.getElementById("info_version").innerText = res.info.version;
             document.getElementById("info_build").innerText = res.info.build;

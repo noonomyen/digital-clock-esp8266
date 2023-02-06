@@ -24,7 +24,6 @@
 | `web.background` | string | สีพื้นหลัง (Hex color) | จะกำหนดได้ก็ต่อเมื่อ `web.custom` เป็น `true` |
 | `web.background_url` | string| พื้นหลังเป็นรูป โดยรูปจะใช้ตามที่อยู่ URL | จะกำหนดได้ก็ต่อเมื่อ `web.custom` เป็น `true` |
 | `web.font_color`| number | สีตัวอักษร (Hex color) | จะกำหนดได้ก็ต่อเมื่อ `web.custom` เป็น `true` |
-| `web.language` | string | ภาษา รองรับแค่ `TH` / `EN` ||
 | `time.custom` | boolean | กำหนดเวลาด้วยตัวเอง (ไม่ใช้ NTP) ||
 | `time.timestamp` | number | เวลาที่กำหนดเอง หน่วย ms | จะกำหนดได้ก็ต่อเมื่อ `time.custom` เป็น `true` |
 | `time.ntp_server_1` | string | ที่อยู่ DNS server หลัก | จะกำหนดได้ก็ต่อเมื่อ `time.custom` เป็น `false` |
@@ -56,7 +55,7 @@
 |---|---|---|
 | "WIFI" | `wifi.enable` `wifi.ssid` `wifi.password` | ชื่อ ssid กับรหัสผ่าน wifi |
 | "NETWORK" | `network.dhcp` `network.ip` `network.subnet` `network.gateway` `network.dns_1` `network.dns_2` | การกำหนดค่าเครือข่าย |
-| "WEB" | `web.custom` `web.background` `web.background_url` `web.font_color` `web.language` | การกำหนดค่าเว็บที่ใช้แสดงผล |
+| "WEB" | `web.custom` `web.background` `web.background_url` `web.font_color` | การกำหนดค่าเว็บที่ใช้แสดงผล |
 | "TIME" | `time.custom` `time.timestamp` `time.ntp_server_1` `time.ntp_server_2` `time.utc_offset` | การกำหนดค่าเวลา |
 
 ---
@@ -83,7 +82,6 @@
         "web.background": <string>,
         "web.background_url": <string>,
         "web.font_color": <string>,
-        "web.language": <string>,
         "time.custom": <boolean>,
         "time.timestamp": <number>,
         "time.ntp_server_1": <string>,
