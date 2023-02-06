@@ -1,17 +1,50 @@
 class adcapi {
+    public address: string;
     public response_timeout: number;
     public requesting: { [key: string]: [number, Function]; };
     public requesting_silent: { [key: string]: [number, Function]; };
     public websocket: WebSocket;
     public request_gc: NodeJS.Timer;
+    public try_reconnect_timeout: number;
+    public connection: "CONNECTING" | "CONNECTED" | "RECONNECTING" | "DISCONNECTED";
+    public reconnect: NodeJS.Timer;
+    public reconnect_timeout: number;
 
-    constructor(addr: string) {
-        this.response_timeout = 10000;
-        this.requesting = {};
-        this.requesting_silent = {};
-        this.websocket = new WebSocket(addr);
-        this.websocket.onmessage = this.recv.bind(this);
-        this.request_gc = setInterval(this.clear_req_no_res.bind(this), 1000);
+    constructor(addr: string, option: {
+            response_timeout?: number,
+            response_gc_delay?: number,
+            try_reconnect_timeout?: number
+        } = {}) {
+            this.address = addr;
+            this.response_timeout = option.response_timeout | 10000; // 10 sec
+            this.requesting = {};
+            this.requesting_silent = {};
+            this.websocket = new WebSocket(addr);
+            this.websocket.onmessage = this.recv.bind(this);
+            this.request_gc = setInterval(this.clear_req_no_res.bind(this), option.response_gc_delay | 1000);
+            this.connection = "CONNECTING";
+            this.try_reconnect_timeout = option.try_reconnect_timeout | 20000; // 20 sec
+            this.reconnect_timeout = 0;
+            this.reconnect;
+    };
+
+    _reconnect() {
+        if (this.reconnect_timeout > new Date().getTime()) {
+            if ((this.websocket.readyState == WebSocket.CLOSING) || (this.websocket.readyState == WebSocket.CLOSED)) {
+                this.websocket.close();
+                this.websocket = new WebSocket(this.address);
+                this.connection = "RECONNECTING";
+            } else if (this.websocket.readyState == WebSocket.CONNECTING) {
+                this.connection = "RECONNECTING";
+            } else if (this.websocket.readyState == WebSocket.OPEN) {
+                this.connection = "CONNECTED";
+                clearInterval(this.reconnect);
+            };
+        } else {
+            this.websocket.close();
+            this.connection = "DISCONNECTED";
+            clearInterval(this.reconnect);
+        };
     };
 
     close() {
@@ -46,8 +79,8 @@ class adcapi {
         };
     };
 
-    async request(req: adcapi.Request | string
-        , callback: Function) {
+    async request(req: adcapi.Request | string, callback: Function) {
+        if (this.websocket.readyState == WebSocket.OPEN) {
             if (typeof req == "string") {
                 req = {
                     request: req
@@ -62,6 +95,14 @@ class adcapi {
             };
             req.ref = ref;
             this.websocket.send(JSON.stringify(req));
+        } else {
+            if (this.connection == "CONNECTED") {
+                this.connection = "RECONNECTING";
+                this.reconnect_timeout = new Date().getTime() + this.try_reconnect_timeout;
+                this.reconnect = setInterval(this._reconnect.bind(this), 500);
+            };
+            callback(true, null);
+        };
     };
 
     async onopen(func: Function) {
@@ -69,6 +110,7 @@ class adcapi {
         loop = setInterval((() => {
             if (this.websocket.readyState == WebSocket.OPEN) {
                 clearInterval(loop);
+                this.connection = "CONNECTED";
                 func();
             };
         }).bind(this), 100);

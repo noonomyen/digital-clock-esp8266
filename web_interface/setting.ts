@@ -5,11 +5,6 @@ import adcapi from "./api.js";
 
 var api = new adcapi(`ws://${window.location.host}/wsapi`);
 
-// @ts-ignore
-_adcapi = adcapi;
-// @ts-ignore
-_api = api;
-
 const WiFiStatus = {
     "DISABLE": "disable",
     "IDLE_STATUS": "idle",
@@ -42,6 +37,20 @@ function page_switch(page: "setting" | "info") {
         document.getElementById("content_setting").style.display = "none";
         document.getElementById("content_info").style.display = "block";
     };
+};
+
+function load_and_fill_config(api: adcapi) {
+    api.request("GET_CONFIG", (err: boolean, res: adcapi.Response) => {
+        if (err) {
+            document.getElementById("container").innerText = "ERROR [request: GET_CONFIG]";
+        } else {
+            cache_config = res.config;
+            (document.getElementById("wifi_enable") as HTMLInputElement).checked = res.config["wifi.enable"];
+            (document.getElementById("wifi_disable") as HTMLInputElement).checked = !res.config["wifi.enable"];
+            (document.getElementById("wifi_ssid") as HTMLInputElement).value = res.config["wifi.ssid"];
+            (document.getElementById("wifi_password") as HTMLInputElement).value = res.config["wifi.password"];
+        };
+    });
 };
 
 async function set_onclick(api: adcapi) {
@@ -118,9 +127,7 @@ function main(api: adcapi): void {
             request: "GET_WIFI_STATUS",
             silent: true
         }, (err: boolean, res: adcapi.Response) => {
-            if (err) {
-                //
-            } else {
+            if (!err && res.response == "OK") {
                 let status: string;
                 if (res.status in WiFiStatus) {
                     status = WiFiStatus[res.status];
@@ -144,38 +151,46 @@ function main(api: adcapi): void {
         });
     }, 1000);
 
-    api.request("GET_CONFIG", (err: boolean, res: adcapi.Response) => {
-        if (err) {
-            document.getElementById("container").innerText = "ERROR [request: GET_CONFIG]";
-        } else {
-            cache_config = res.config;
-            (document.getElementById("wifi_enable") as HTMLInputElement).checked = res.config["wifi.enable"];
-            (document.getElementById("wifi_disable") as HTMLInputElement).checked = !res.config["wifi.enable"];
-            (document.getElementById("wifi_ssid") as HTMLInputElement).value = res.config["wifi.ssid"];
-            (document.getElementById("wifi_password") as HTMLInputElement).value = res.config["wifi.password"];
-        };
-    });
+    load_and_fill_config(api);
 
     let loop: NodeJS.Timer;
+    let status_output = 0;
     loop = setInterval((() => {
-        if (api.websocket.readyState == WebSocket.CLOSED) {
-            document.getElementById("status").innerText = "Disconnected, please refresh this page !";
-            document.getElementById("STATUS").style.display = "flex";
-            clearInterval(loop);
+        if (api.connection == "DISCONNECTED") {
+            if (status_output != 5) {
+                status_output = 5;
+                document.getElementById("status").innerText = "Disconnected, please refresh this page !";
+                document.getElementById("STATUS").style.display = "flex";
+            };
+        } else if (api.connection == "RECONNECTING") {
+            if (status_output != 4) {
+                status_output = 4;
+                document.getElementById("status").innerText = "Reconnecting...";
+                document.getElementById("STATUS").style.display = "flex";
+            };
         } else {
             if (SET_CONFIG_STATUS[0] != "") {
                 if (SET_CONFIG_STATUS[1] < new Date().getTime()) {
                     SET_CONFIG_STATUS = ["", 0];
                 } else {
-                    document.getElementById("status").innerText = SET_CONFIG_STATUS[0];
-                    document.getElementById("STATUS").style.display = "flex";
+                    if (status_output != 3) {
+                        status_output = 3;
+                        document.getElementById("status").innerText = SET_CONFIG_STATUS[0];
+                        document.getElementById("STATUS").style.display = "flex";
+                    };
                 };
             } else if (Object.keys(api.requesting).length != 0) {
-                document.getElementById("status").innerText = "In progress...";
-                document.getElementById("STATUS").style.display = "flex";
+                if (status_output != 2) {
+                    status_output = 2;
+                    document.getElementById("status").innerText = "In progress...";
+                    document.getElementById("STATUS").style.display = "flex";
+                };
             } else {
-                document.getElementById("STATUS").style.display = "none";
-                document.getElementById("status").innerText = "";
+                if (status_output != 1) {
+                    status_output = 1;
+                    document.getElementById("STATUS").style.display = "none";
+                    document.getElementById("status").innerText = "";
+                };
             };
         };
     }), 50);

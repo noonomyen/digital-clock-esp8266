@@ -281,3 +281,12 @@
 | CONNECT_FAILED | เชื่อมต่อไม่สำเร็จ |
 | CONNECT_WRONG_PASSWORD | รหัสผ่านไม่ถูกต้อง |
 | DISCONNECTED | ตัดการเชื่อมต่อแล้ว |
+
+### Time Sync
+#### send
+```json
+{
+    "request": "TIME_SYNC",
+    "ref": <number>
+}
+```

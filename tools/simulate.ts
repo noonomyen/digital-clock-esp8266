@@ -12,7 +12,8 @@ const config = {
     addr: "127.0.0.1",
     port: 8000,
     web_interface_src: path.join(__dirname, "../web_interface"),
-    loop_check_delay: 250
+    loop_check_delay: 250,
+    live_reload_enable: true
 };
 
 function src_build(): void {
@@ -117,8 +118,8 @@ class simulate_config {
         };
 
         this.wifi = {
-            ssid: "test",
-            password: ""
+            ssid: "simulate",
+            password: "12345678"
         }
         this.network = {
             dhcp: true,
@@ -426,12 +427,16 @@ app.get("*", (req: express.Request, res: express.Response) => {
     if (fs.existsSync(file)) {
         let filetype = file.split(".").slice(-1).toString();
         if (filetype == "html" || filetype == "htm") {
-            let $ = cheerio.load(fs.readFileSync(file, { encoding: "utf-8" }));
-            // live reload script
-            $("body").append("<script>" + live_reload_inject_js + "</script>");
-            $("body").append(`<script>live_reloader(\"ws://${config.addr}:${config.port}/live_reload\")</script>`);
-            res.setHeader("Content-Type", "text/html");
-            res.status(200).send($.html());
+            if (config.live_reload_enable) {
+                let $ = cheerio.load(fs.readFileSync(file, { encoding: "utf-8" }));
+                // live reload script
+                $("body").append("<script>" + live_reload_inject_js + "</script>");
+                $("body").append(`<script>live_reloader(\"ws://${config.addr}:${config.port}/live_reload\")</script>`);
+                res.setHeader("Content-Type", "text/html");
+                res.status(200).send($.html());
+            } else {
+                res.status(200).send(fs.readFileSync(file, { encoding: "utf-8" }));
+            };
         } else if (filetype == "css") {
             res.setHeader("Content-Type", "text/css");
             res.status(200).send(fs.readFileSync(file, { encoding: "utf-8" }));

@@ -92,14 +92,14 @@
                         <tr>
                             <td>SSID</td>
                             <td class="ph_10px"></td>
-                            <td><input type="text" id="wifi_ssid"></td>
+                            <td><input readonly onfocus="this.removeAttribute('readonly');" autocomplete="off" type="text" id="wifi_ssid"></td>
                         </tr>
                         <tr><td colspan="3"><div class="pv_5px"></div></td></tr>
                         <tr>
                             <td>Password</td>
                             <td class="ph_10px"></td>
                             <td>
-                                <input type="password" id="wifi_password">
+                                <input readonly onfocus="this.removeAttribute('readonly');" autocomplete="off" type="password" id="wifi_password">
                                 <i id="wifi_password_unhide" class="fa-solid fa-eye-slash"></i>
                                 <i id="wifi_password_hide" class="fa-solid fa-eye"></i>
                             </td>
@@ -190,10 +190,6 @@
             <span id="status"></span>
         </div>
     </div>
-    <script>
-        var _adcapi;
-        var _api;
-    </script>
     <script type="module" src="setting.js"></script>
 </body>
 </html>
