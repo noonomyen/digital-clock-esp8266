@@ -25,16 +25,6 @@ function src_build(): void {
         };
         fs.copyFileSync(path.join(__dirname, "../web_interface", file), path.join(__dirname, "../build/web_interface", file));
     };
-    if (!fs.existsSync(path.join(__dirname, "../build/web_interface/webfonts"))) {
-        fs.mkdirSync(path.join(__dirname, "../build/web_interface/webfonts"));
-    };
-    if (!fs.existsSync(path.join(__dirname, "../build/web_interface/assets"))) {
-        fs.mkdirSync(path.join(__dirname, "../build/web_interface/assets"));
-    };
-    fs.copyFileSync(path.join(__dirname, "../assets/Font-Awesome/css/all.css"), path.join(__dirname, "../build/web_interface/assets/font-awesome.all.css"));
-    for (let file of fs.readdirSync(path.join(__dirname, "../assets/Font-Awesome/webfonts"))) {
-        fs.copyFileSync(path.join(__dirname, "../assets/Font-Awesome/webfonts", file), path.join(__dirname, "../build/web_interface/webfonts", file));
-    };
     console.log("[build] complete");
 };
 
@@ -82,7 +72,8 @@ class simulate_config {
         "network.dns_1": string | null,
         "network.dns_2": string | null,
         "web.custom": boolean,
-        "web.background": string | null,
+        "web.background": boolean,
+        "web.background_color": string | null,
         "web.background_url": string | null,
         "web.font_color": string | null,
         "web.dark_mode": boolean,
@@ -106,7 +97,8 @@ class simulate_config {
             "network.dns_1": null,
             "network.dns_2": null,
             "web.custom": false,
-            "web.background": null,
+            "web.background": false,
+            "web.background_color": null,
             "web.background_url": null,
             "web.font_color": null,
             "web.dark_mode": false,

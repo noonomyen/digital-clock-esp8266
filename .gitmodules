@@ -10,9 +10,6 @@
 [submodule "Adafruit_Sensor"]
 	path = arduino-library/Adafruit_Sensor
 	url = https://github.com/adafruit/Adafruit_Sensor
-[submodule "assets/Font-Awesome"]
-	path = assets/Font-Awesome
-	url = https://github.com/FortAwesome/Font-Awesome
 [submodule "arduino-library/Adafruit_Sensor"]
 	path = arduino-library/Adafruit_Sensor
 	url = https://github.com/adafruit/Adafruit_Sensor

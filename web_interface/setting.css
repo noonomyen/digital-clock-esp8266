@@ -5,8 +5,8 @@
     --NAVBAR_VL_COLOR: #fcfcfc;
     --NAVBAR_SELECT_COLOR: #004ec2;
     --BODY_BG_COLOR: #fdfdfd;
-    --REQUESTING_BG_COLOR: #000000ad;
-    --REQUESTING_F_COLOR: #ffffff;
+    --STATUS_BG_COLOR: #000000ad;
+    --STATUS_F_COLOR: #ffffff;
 }
 
 * {
@@ -141,8 +141,8 @@ body {
     bottom: 10px;
     width: auto;
     height: 60px;
-    background-color: var(--REQUESTING_BG_COLOR);
-    color: var(--REQUESTING_F_COLOR);
+    background-color: var(--STATUS_BG_COLOR);
+    color: var(--STATUS_F_COLOR);
     border-radius: 10px;
     padding: 0px 20px 0px 20px;
 }
@@ -154,6 +154,12 @@ body {
 }
 
 .text_box {
+    width: 300px;
+    height: 30px;
+    padding: 3px;
+}
+
+.select_box {
     width: 300px;
     height: 30px;
     padding: 3px;

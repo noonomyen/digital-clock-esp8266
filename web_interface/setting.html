@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="assets/font-awesome.all.css">
     <link rel="stylesheet" href="setting.css">
     <title>Setup</title>
 </head>
@@ -195,10 +194,172 @@
                 <hr class="break_block">
                 <div class="block">
                     <h1>Web Interface</h1>
+                    <table>
+                        <tr>
+                            <td>Custom</td>
+                            <td class="ph_10px"></td>
+                            <td>
+                                <input class="radio_enable_disable" type="radio" name="web_custom_enable" id="web_custom-enable">
+                                <label for="web_custom_enable">Enable</label>
+                                <input class="radio_enable_disable" type="radio" name="web_custom_enable" id="web_custom-disable">
+                                <label for="web_custom_enable">Disable</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <div class="pv_2px"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Use Background Image</td>
+                            <td class="ph_10px"></td>
+                            <td>
+                                <input class="radio_enable_disable" type="radio" name="web_bg" id="web_use-bg-url">
+                                <label for="web_bg">Enable</label>
+                                <input class="radio_enable_disable" type="radio" name="web_bg" id="web_no-use-bg-url">
+                                <label for="web_bg">Disable</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <div class="pv_2px"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Background Color (Hex Color)</td>
+                            <td class="ph_10px"></td>
+                            <td>
+                                <input class="text_box web_text-box" autocomplete="off" type="text" id="web_bg-color"></td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <div class="pv_2px"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Background Image (URL)</td>
+                            <td class="ph_10px"></td>
+                            <td>
+                                <input class="text_box web_text-box" autocomplete="off" type="text" id="web_bg-url"></td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <div class="pv_2px"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Font Color (Hex Color)</td>
+                            <td class="ph_10px"></td>
+                            <td>
+                                <input class="text_box web_text-box" autocomplete="off" type="text" id="web_font-color"></td>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
                 <hr class="break_block">
                 <div class="block">
                     <h1>Datetime</h1>
+                    <table>
+                        <tr>
+                            <td>Custom</td>
+                            <td class="ph_10px"></td>
+                            <td>
+                                <input class="radio_enable_disable" type="radio" name="time_custom_enable" id="time_custom-enable">
+                                <label for="time_custom_enable">Enable</label>
+                                <input class="radio_enable_disable" type="radio" name="time_custom_enable" id="time_custom-disable">
+                                <label for="time_custom_enable">Disable</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <div class="pv_2px"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td class="ph_10px"></td>
+                            <td>
+                                <input class="text_box" type="datetime-local" name="time_set" id="time_set">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <div class="pv_2px"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>NTP Primary</td>
+                            <td class="ph_10px"></td>
+                            <td>
+                                <input class="text_box" autocomplete="off" type="text" id="time_ntp-1"></td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <div class="pv_2px"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>NTP Secondary</td>
+                            <td class="ph_10px"></td>
+                            <td>
+                                <input class="text_box" autocomplete="off" type="text" id="time_ntp-2"></td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <div class="pv_2px"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>UTC Offset</td>
+                            <td class="ph_10px"></td>
+                            <td>
+                                <select class="select_box" name="time_utc-offset" id="time_utc-offset">
+                                    <option value="-720000">UTC -12:00</option>
+                                    <option value="-660000">UTC -11:00</option>
+                                    <option value="-600000">UTC -10:00</option>
+                                    <option value="-510000">UTC -09:30</option>
+                                    <option value="-540000">UTC -09:00</option>
+                                    <option value="-480000">UTC -08:00</option>
+                                    <option value="-420000">UTC -07:00</option>
+                                    <option value="-360000">UTC -06:00</option>
+                                    <option value="-300000">UTC -05:00</option>
+                                    <option value="-240000">UTC -04:00</option>
+                                    <option value="-150000">UTC -03:30</option>
+                                    <option value="-180000">UTC -03:00</option>
+                                    <option value="-120000">UTC -02:00</option>
+                                    <option value="-60000">UTC -01:00</option>
+                                    <option value="0">UTC 00:00</option>
+                                    <option value="60000">UTC +01:00</option>
+                                    <option value="120000">UTC +02:00</option>
+                                    <option value="180000">UTC +03:00</option>
+                                    <option value="210000">UTC +03:30</option>
+                                    <option value="240000">UTC +04:00</option>
+                                    <option value="270000">UTC +04:30</option>
+                                    <option value="300000">UTC +05:00</option>
+                                    <option value="330000">UTC +05:30</option>
+                                    <option value="345000">UTC +05:45</option>
+                                    <option value="360000">UTC +06:00</option>
+                                    <option value="390000">UTC +06:30</option>
+                                    <option value="420000">UTC +07:00</option>
+                                    <option value="480000">UTC +08:00</option>
+                                    <option value="525000">UTC +08:45</option>
+                                    <option value="540000">UTC +09:00</option>
+                                    <option value="570000">UTC +09:30</option>
+                                    <option value="600000">UTC +10:00</option>
+                                    <option value="630000">UTC +10:30</option>
+                                    <option value="660000">UTC +11:00</option>
+                                    <option value="720000">UTC +12:00</option>
+                                    <option value="765000">UTC +12:45</option>
+                                    <option value="780000">UTC +13:00</option>
+                                    <option value="840000">UTC +14:00</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
                 <hr class="break_block">
                 <div class="block">
@@ -251,17 +412,6 @@
                             <td>DS1302 RTC library for Arduino</td>
                             <td class="ph_10px">:</td>
                             <td class="link" onclick="window.open('https://github.com/msparks/arduino-ds1302')")>https://github.com/msparks/arduino-ds1302</td>
-                        </tr>
-                    </table>
-                </div>
-                <hr class="break_block">
-                <div class="block">
-                    <h1>Fonts</h1>
-                    <table>
-                        <tr>
-                            <td>Font Awesome</td>
-                            <td class="ph_10px">:</td>
-                            <td class="link" onclick="window.open('https://github.com/FortAwesome/Font-Awesome')")>https://github.com/FortAwesome/Font-Awesome</td>
                         </tr>
                     </table>
                 </div>

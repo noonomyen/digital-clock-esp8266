@@ -21,7 +21,8 @@
 | `network.dns_1` | string | ที่อยู่ DNS server หลัก | จะกำหนดได้ก็ต่อเมื่อ `network.dhcp` เป็น `false` |
 | `network.dns_2` | string | ที่อยู่ DNS server สำรอง | จะกำหนดได้ก็ต่อเมื่อ `network.dhcp` เป็น `false` |
 | `web.custom` | boolean | กำหนดค่าเอง ||
-| `web.background` | string | สีพื้นหลัง (Hex color) | จะกำหนดได้ก็ต่อเมื่อ `web.custom` เป็น `true` |
+| `web.background` | boolean | สีพื้นหลัง `0 - color` `1 - image` | จะกำหนดได้ก็ต่อเมื่อ `web.custom` เป็น `true` |
+| `web.background_color` | string | สีพื้นหลัง (Hex color) | จะกำหนดได้ก็ต่อเมื่อ `web.custom` เป็น `true` |
 | `web.background_url` | string| พื้นหลังเป็นรูป โดยรูปจะใช้ตามที่อยู่ URL | จะกำหนดได้ก็ต่อเมื่อ `web.custom` เป็น `true` |
 | `web.font_color`| number | สีตัวอักษร (Hex color) | จะกำหนดได้ก็ต่อเมื่อ `web.custom` เป็น `true` |
 | `time.custom` | boolean | กำหนดเวลาด้วยตัวเอง (ไม่ใช้ NTP) ||
@@ -79,7 +80,8 @@
         "network.dns_1": <string>,
         "network.dns_2": <string>,
         "web.custom": <boolean>,
-        "web.background": <string>,
+        "web.background": <boolean>,
+        "web.background_color": <string>,
         "web.background_url": <string>,
         "web.font_color": <string>,
         "time.custom": <boolean>,
@@ -149,7 +151,8 @@
         "network.dns_1": <string>,
         "network.dns_2": <string>,
         "web.custom": <boolean>,
-        "web.background": <string>,
+        "web.background": <boolean>,
+        "web.background_color": <string>,
         "web.background_url": <string>,
         "web.font_color": <string>,
         "time.custom": <boolean>,
@@ -274,6 +277,7 @@
 
 | status | คำอธิบาย |
 |---|---|
+| CONFIG_ERROR | การกำหนดค่าไม่ถูก |
 | DISABLE | ปิดใช้งาน |
 | IDLE_STATUS | ว่าง |
 | NO_SSID_AVAIL | ไม่พบ SSID ที่กำหนด |
