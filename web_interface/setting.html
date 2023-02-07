@@ -82,24 +82,34 @@
                             <td>Wi-Fi Enable</td>
                             <td class="ph_10px"></td>
                             <td>
-                                <input type="radio" name="wifi_enable" id="wifi_enable">
+                                <input class="radio_enable_disable" type="radio" name="wifi_enable" id="wifi_enable">
                                 <label for="wifi_enable">Enable</label>
-                                <input type="radio" name="wifi_enable" id="wifi_disable">
-                                <label  for="wifi_disable">Disable</label>
+                                <input class="radio_enable_disable" type="radio" name="wifi_enable" id="wifi_disable">
+                                <label for="wifi_enable">Disable</label>
                             </td>
                         </tr>
-                        <tr><td colspan="3"><div class="pv_5px"></div></td></tr>
+                        <tr>
+                            <td colspan="3">
+                                <div class="pv_2px"></div>
+                            </td>
+                        </tr>
                         <tr>
                             <td>SSID</td>
                             <td class="ph_10px"></td>
-                            <td><input readonly onfocus="this.removeAttribute('readonly');" autocomplete="off" type="text" id="wifi_ssid"></td>
+                            <td>
+                                <input class="text_box" autocomplete="off" type="text" id="wifi_ssid">
+                            </td>
                         </tr>
-                        <tr><td colspan="3"><div class="pv_5px"></div></td></tr>
+                        <tr>
+                            <td colspan="3">
+                                <div class="pv_2px"></div>
+                            </td>
+                        </tr>
                         <tr>
                             <td>Password</td>
                             <td class="ph_10px"></td>
                             <td>
-                                <input readonly onfocus="this.removeAttribute('readonly');" autocomplete="off" type="password" id="wifi_password">
+                                <input class="text_box" autocomplete="off" type="password" id="wifi_password">
                                 <i id="wifi_password_unhide" class="fa-solid fa-eye-slash"></i>
                                 <i id="wifi_password_hide" class="fa-solid fa-eye"></i>
                             </td>
@@ -109,6 +119,78 @@
                 <hr class="break_block">
                 <div class="block">
                     <h1>Network</h1>
+                    <table>
+                        <tr>
+                            <td>DHCP Enable</td>
+                            <td class="ph_10px"></td>
+                            <td>
+                                <input class="radio_enable_disable" type="radio" name="dhcp_enable" id="network_dhcp-enable">
+                                <label for="dhcp_enable">Enable</label>
+                                <input class="radio_enable_disable" type="radio" name="dhcp_enable" id="network_dhcp-disable">
+                                <label for="dhcp_enable">Disable</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <div class="pv_2px"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>IP Address</td>
+                            <td class="ph_10px"></td>
+                            <td>
+                                <input class="text_box network_text-box" autocomplete="off" type="text" id="network_ip"></td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <div class="pv_2px"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>IP Subnet</td>
+                            <td class="ph_10px"></td>
+                            <td>
+                                <input class="text_box network_text-box" autocomplete="off" type="text" id="network_subnet"></td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <div class="pv_2px"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>IP Gateway</td>
+                            <td class="ph_10px"></td>
+                            <td>
+                                <input class="text_box network_text-box" autocomplete="off" type="text" id="network_gateway"></td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <div class="pv_2px"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>DNS Primary</td>
+                            <td class="ph_10px"></td>
+                            <td>
+                                <input class="text_box network_text-box" autocomplete="off" type="text" id="network_dns-1"></td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <div class="pv_2px"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>DNS Secondary</td>
+                            <td class="ph_10px"></td>
+                            <td>
+                                <input class="text_box network_text-box" autocomplete="off" type="text" id="network_dns-2"></td>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
                 <hr class="break_block">
                 <div class="block">

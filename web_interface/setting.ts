@@ -49,11 +49,32 @@ function load_and_fill_config(api: adcapi) {
             (document.getElementById("wifi_disable") as HTMLInputElement).checked = !res.config["wifi.enable"];
             (document.getElementById("wifi_ssid") as HTMLInputElement).value = res.config["wifi.ssid"];
             (document.getElementById("wifi_password") as HTMLInputElement).value = res.config["wifi.password"];
+            (document.getElementById("network_dhcp-enable") as HTMLInputElement).checked = res.config["network.dhcp"];
+            (document.getElementById("network_dhcp-disable") as HTMLInputElement).checked = !res.config["network.dhcp"];
+            (document.getElementById("network_ip") as HTMLInputElement).value = res.config["network.ip"];
+            (document.getElementById("network_subnet") as HTMLInputElement).value = res.config["network.subnet"];
+            (document.getElementById("network_gateway") as HTMLInputElement).value = res.config["network.gateway"];
+            (document.getElementById("network_dns-1") as HTMLInputElement).value = res.config["network.dns_1"];
+            (document.getElementById("network_dns-2") as HTMLInputElement).value = res.config["network.dns_2"];
         };
+        event_change_network_dhcp();
     });
 };
 
-async function set_onclick(api: adcapi) {
+function event_change_network_dhcp() {
+    let ntb = document.getElementsByClassName("network_text-box");
+    if ((document.getElementById("network_dhcp-enable") as HTMLInputElement).checked) {
+        for (let i = 0; i < ntb.length; i++) {
+            (ntb[i] as HTMLInputElement).setAttribute("disabled", "");
+        };
+    } else {
+        for (let i = 0; i < ntb.length; i++) {
+            (ntb[i] as HTMLInputElement).removeAttribute("disabled");
+        };
+    };
+};
+
+async function set_event(api: adcapi) {
     document.getElementById("navbar_setting").onclick = () => {
         page_switch("setting");
     };
@@ -77,6 +98,9 @@ async function set_onclick(api: adcapi) {
         (document.getElementById("wifi_password") as HTMLInputElement).type = "text";
     };
 
+    document.getElementById("network_dhcp-enable").addEventListener("change",event_change_network_dhcp);
+    document.getElementById("network_dhcp-disable").addEventListener("change", event_change_network_dhcp);
+
     document.getElementById("save_setting").onclick = () => {
         SET_CONFIG_STATUS = ["", 0];
         let tmp: adcapi.Config = {};
@@ -84,6 +108,12 @@ async function set_onclick(api: adcapi) {
         tmp["wifi.enable"] = (document.getElementById("wifi_enable") as HTMLInputElement).checked;
         tmp["wifi.ssid"] = (document.getElementById("wifi_ssid") as HTMLInputElement).value;
         tmp["wifi.password"] = (document.getElementById("wifi_password") as HTMLInputElement).value;
+        tmp["network.dhcp"] = (document.getElementById("network_dhcp-enable") as HTMLInputElement).checked;
+        tmp["network.ip"] = (document.getElementById("network_ip") as HTMLInputElement).value;
+        tmp["network.subnet"] = (document.getElementById("network_subnet") as HTMLInputElement).value;
+        tmp["network.gateway"] = (document.getElementById("network_gateway") as HTMLInputElement).value;
+        tmp["network.dns_1"] = (document.getElementById("network_dns-1") as HTMLInputElement).value;
+        tmp["network.dns_2"] = (document.getElementById("network_dns-2") as HTMLInputElement).value;
 
         for (let key in tmp) {
             if (key in cache_config && (new_config[key] != tmp[key])) {
@@ -111,7 +141,7 @@ async function set_onclick(api: adcapi) {
 };
 
 function main(api: adcapi): void {
-    set_onclick(api);
+    set_event(api);
 
     let url_params = new URLSearchParams(window.location.search);
     if ((url_params.get("page") == null) || url_params.get("page") == "setting") {

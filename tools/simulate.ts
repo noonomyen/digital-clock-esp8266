@@ -247,7 +247,7 @@ class simulate_config {
 };
 
 var simulate = new simulate_config();
-var simulate_time_hw = new Date().getTime();
+var simulate_time_ref = new Date().getTime();
 var simulate_time_set = 0;
 
 app.ws("/live_reload", (socket: WebSocket.WebSocket, req: http.IncomingMessage) => {
@@ -284,7 +284,7 @@ app.ws("/wsapi", (socket: WebSocket.WebSocket, req: http.IncomingMessage) => {
                         console.log(`WebSocket - [${sessionId}] [${req.ref}] - SET_CONFIG`);
                         if (req.config["time.timestamp"]) {
                             let timestamp = Number(req.config["time.timestamp"]);
-                            simulate_time_hw = new Date().getTime();
+                            simulate_time_ref = new Date().getTime();
                             simulate_time_set = timestamp;
                         };
                         let request_connect_wifi = false;
@@ -324,7 +324,7 @@ app.ws("/wsapi", (socket: WebSocket.WebSocket, req: http.IncomingMessage) => {
                         socket.send(JSON.stringify({
                             response: "OK",
                             ref: req.ref,
-                            timestamp: (new Date().getTime() - simulate_time_hw) + simulate_time_set,
+                            timestamp: (new Date().getTime() - simulate_time_ref) + simulate_time_set,
                             utc_offset: simulate.data["time.utc_offset"]
                         }));
                     } else if (req.request == "RESET_CONFIG") {
@@ -354,6 +354,14 @@ app.ws("/wsapi", (socket: WebSocket.WebSocket, req: http.IncomingMessage) => {
                             mac: simulate.wifi_mac,
                             status: simulate.wifi_status,
                             network: simulate.network
+                        }));
+                    } else if (req.request == "TIME_SYNC") {
+                        console.log(`WebSocket - [${sessionId}] [${req.ref}] - TIME_SYNC`);
+                        simulate_time_ref = new Date().getTime();
+                        simulate_time_set = simulate_time_ref;
+                        socket.send(JSON.stringify({
+                            response: "OK",
+                            ref: req.ref
                         }));
                     } else {
                         console.log(`WebSocket - [${sessionId}] [BAD_REQUEST] ? ${req.request}`);
