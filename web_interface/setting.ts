@@ -22,7 +22,6 @@ api.onopen(() => {
     main(api);
 });
 
-var cache_config: adcapi.Config;
 var SET_CONFIG_STATUS: [string, number] = ["", 0];
 
 function page_switch(page: "setting" | "info") {
@@ -44,7 +43,6 @@ function load_and_fill_config(api: adcapi) {
         if (err) {
             document.getElementById("container").innerText = "ERROR [request: GET_CONFIG]";
         } else {
-            cache_config = res.config;
             (document.getElementById("wifi_enable") as HTMLInputElement).checked = res.config["wifi.enable"];
             (document.getElementById("wifi_disable") as HTMLInputElement).checked = !res.config["wifi.enable"];
             (document.getElementById("wifi_ssid") as HTMLInputElement).value = res.config["wifi.ssid"];
@@ -74,6 +72,7 @@ function load_and_fill_config(api: adcapi) {
         };
         event_change_network_dhcp();
         event_change_web_custom();
+        event_change_time_custom();
     });
 };
 
@@ -118,6 +117,20 @@ function event_change_web_bg() {
     };
 };
 
+function event_change_time_custom() {
+    if ((document.getElementById("time_custom-enable") as HTMLInputElement).checked) {
+        document.getElementById("time_set").removeAttribute("disabled");
+        document.getElementById("time_ntp-1").setAttribute("disabled", "");
+        document.getElementById("time_ntp-2").setAttribute("disabled", "");
+        document.getElementById("time_utc-offset").setAttribute("disabled", "");
+    } else {
+        document.getElementById("time_set").setAttribute("disabled", "");
+        document.getElementById("time_ntp-1").removeAttribute("disabled");
+        document.getElementById("time_ntp-2").removeAttribute("disabled");
+        document.getElementById("time_utc-offset").removeAttribute("disabled");
+    };
+};
+
 async function set_event(api: adcapi) {
     document.getElementById("navbar_setting").onclick = () => {
         page_switch("setting");
@@ -151,6 +164,9 @@ async function set_event(api: adcapi) {
     document.getElementById("web_use-bg-url").addEventListener("change", event_change_web_bg);
     document.getElementById("web_no-use-bg-url").addEventListener("change", event_change_web_bg);
 
+    document.getElementById("time_custom-enable").addEventListener("change", event_change_time_custom);
+    document.getElementById("time_custom-disable").addEventListener("change", event_change_time_custom);
+
     document.getElementById("save_setting").onclick = () => {
         SET_CONFIG_STATUS = ["", 0];
         let tmp: adcapi.Config = {};
@@ -173,17 +189,23 @@ async function set_event(api: adcapi) {
         tmp["web.background_url"] = (document.getElementById("web_bg-url") as HTMLInputElement).value;
         tmp["web.font_color"] = (document.getElementById("web_font-color") as HTMLInputElement).value;
 
-        for (let key in tmp) {
-            if (key in cache_config && (new_config[key] != tmp[key])) {
-                new_config[key] = tmp[key];
-            } else if (key == "time.timestamp" && (new_config["time.timestamp"] != tmp["time.timestamp"])) {
-                new_config["time.timestamp"] = tmp["time.timestamp"];
+        if ((document.getElementById("time_custom-enable") as HTMLInputElement).checked) {
+            tmp["time.custom"] = true;
+            let ts = (document.getElementById("time_set") as HTMLInputElement).value;
+            if (ts) {
+                let d = new Date(ts);
+                tmp["time.timestamp"] = d.getTime() - (d.getTimezoneOffset() * 60 * 1000);
             };
+        } else {
+            tmp["time.custom"] = false;
         };
+        tmp["time.ntp_server_1"] = (document.getElementById("time_ntp-1") as HTMLInputElement).value;
+        tmp["time.ntp_server_2"] = (document.getElementById("time_ntp-2") as HTMLInputElement).value;
+        tmp["time.utc_offset"] = Number((document.getElementById("time_utc-offset") as HTMLInputElement).value);
 
         api.request({
             request: "SET_CONFIG",
-            config: new_config
+            config: tmp
         }, (err: boolean, res: adcapi.Response) => {
             if (err) {
                 SET_CONFIG_STATUS = ["ERROR [request: SET_CONFIG]", 0];
@@ -192,6 +214,7 @@ async function set_event(api: adcapi) {
                     SET_CONFIG_STATUS = [`ERROR [response: ${res.error}]`, new Date().getTime() + (5 * 1000)];
                 } else if (res.response == "OK") {
                     SET_CONFIG_STATUS = [`Successfully`, new Date().getTime() + (2 * 1000)];
+                    (document.getElementById("time_set") as HTMLInputElement).value = "";
                 };
             };
         })
@@ -235,6 +258,17 @@ function main(api: adcapi): void {
                 document.getElementById("wifi-status_gateway").innerText = res.network.sta_gateway;
                 document.getElementById("wifi-status_dns-1").innerText = res.network.dns_1;
                 document.getElementById("wifi-status_dns-2").innerText = res.network.dns_2;
+            };
+        });
+    }, 1000);
+
+    setInterval(() => {
+        api.request({
+            request: "GET_DATETIME",
+            silent: true
+        }, (err: boolean, res: adcapi.Response) => {
+            if (!err && res.response == "OK") {
+                document.getElementById("current_time").innerText = `${new Date(Number(res.timestamp)).toISOString()}`;
             };
         });
     }, 1000);

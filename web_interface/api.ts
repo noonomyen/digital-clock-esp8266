@@ -143,7 +143,7 @@ namespace adcapi {
 
     export interface Request {
         request?: string,
-        config?: Config | { "time.timestamp"?: number },
+        config?: { "time.timestamp"?: number } | Config,
         [key: string]: any
     };
 
@@ -173,6 +173,8 @@ namespace adcapi {
             dns_1: string,
             dns_2: string
         },
+        timestamp?: number,
+        utc_offset?: number,
         [key: string]: any,
     };
 };

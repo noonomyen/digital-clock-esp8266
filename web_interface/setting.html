@@ -262,6 +262,16 @@
                 <div class="block">
                     <h1>Datetime</h1>
                     <table>
+                        <td></td>
+                        <td class="ph_10px"></td>
+                        <td>
+                            <span id="current_time">Wait...</span>
+                        </td>
+                        <tr>
+                            <td colspan="3">
+                                <div class="pv_10px"></div>
+                            </td>
+                        </tr>
                         <tr>
                             <td>Custom</td>
                             <td class="ph_10px"></td>
@@ -281,7 +291,7 @@
                             <td></td>
                             <td class="ph_10px"></td>
                             <td>
-                                <input class="text_box" type="datetime-local" name="time_set" id="time_set">
+                                <input class="text_box" type="datetime-local" name="time_set" id="time_set" min="2000-01-01T00:00">
                             </td>
                         </tr>
                         <tr>
@@ -318,44 +328,44 @@
                             <td class="ph_10px"></td>
                             <td>
                                 <select class="select_box" name="time_utc-offset" id="time_utc-offset">
-                                    <option value="-720000">UTC -12:00</option>
-                                    <option value="-660000">UTC -11:00</option>
-                                    <option value="-600000">UTC -10:00</option>
-                                    <option value="-510000">UTC -09:30</option>
-                                    <option value="-540000">UTC -09:00</option>
-                                    <option value="-480000">UTC -08:00</option>
-                                    <option value="-420000">UTC -07:00</option>
-                                    <option value="-360000">UTC -06:00</option>
-                                    <option value="-300000">UTC -05:00</option>
-                                    <option value="-240000">UTC -04:00</option>
-                                    <option value="-150000">UTC -03:30</option>
-                                    <option value="-180000">UTC -03:00</option>
-                                    <option value="-120000">UTC -02:00</option>
-                                    <option value="-60000">UTC -01:00</option>
-                                    <option value="0">UTC 00:00</option>
-                                    <option value="60000">UTC +01:00</option>
-                                    <option value="120000">UTC +02:00</option>
-                                    <option value="180000">UTC +03:00</option>
-                                    <option value="210000">UTC +03:30</option>
-                                    <option value="240000">UTC +04:00</option>
-                                    <option value="270000">UTC +04:30</option>
-                                    <option value="300000">UTC +05:00</option>
-                                    <option value="330000">UTC +05:30</option>
-                                    <option value="345000">UTC +05:45</option>
-                                    <option value="360000">UTC +06:00</option>
-                                    <option value="390000">UTC +06:30</option>
-                                    <option value="420000">UTC +07:00</option>
-                                    <option value="480000">UTC +08:00</option>
-                                    <option value="525000">UTC +08:45</option>
-                                    <option value="540000">UTC +09:00</option>
-                                    <option value="570000">UTC +09:30</option>
-                                    <option value="600000">UTC +10:00</option>
-                                    <option value="630000">UTC +10:30</option>
-                                    <option value="660000">UTC +11:00</option>
-                                    <option value="720000">UTC +12:00</option>
-                                    <option value="765000">UTC +12:45</option>
-                                    <option value="780000">UTC +13:00</option>
-                                    <option value="840000">UTC +14:00</option>
+                                    <option value=-43200000>UTC -12:00</option>
+                                    <option value=-39600000>UTC -11:00</option>
+                                    <option value=-36000000>UTC -10:00</option>
+                                    <option value=-30600000>UTC -09:30</option>
+                                    <option value=-32400000>UTC -09:00</option>
+                                    <option value=-28800000>UTC -08:00</option>
+                                    <option value=-25200000>UTC -07:00</option>
+                                    <option value=-21600000>UTC -06:00</option>
+                                    <option value=-18000000>UTC -05:00</option>
+                                    <option value=-14400000>UTC -04:00</option>
+                                    <option value=-9000000>UTC -03:30</option>
+                                    <option value=-10800000>UTC -03:00</option>
+                                    <option value=-7200000>UTC -02:00</option>
+                                    <option value=-3600000>UTC -01:00</option>
+                                    <option value=0>UTC 00:00</option>
+                                    <option value=3600000>UTC +01:00</option>
+                                    <option value=7200000>UTC +02:00</option>
+                                    <option value=10800000>UTC +03:00</option>
+                                    <option value=12600000>UTC +03:30</option>
+                                    <option value=14400000>UTC +04:00</option>
+                                    <option value=16200000>UTC +04:30</option>
+                                    <option value=18000000>UTC +05:00</option>
+                                    <option value=19800000>UTC +05:30</option>
+                                    <option value=20700000>UTC +05:45</option>
+                                    <option value=21600000>UTC +06:00</option>
+                                    <option value=23400000>UTC +06:30</option>
+                                    <option value=25200000>UTC +07:00</option>
+                                    <option value=28800000>UTC +08:00</option>
+                                    <option value=31500000>UTC +08:45</option>
+                                    <option value=32400000>UTC +09:00</option>
+                                    <option value=34200000>UTC +09:30</option>
+                                    <option value=36000000>UTC +10:00</option>
+                                    <option value=37800000>UTC +10:30</option>
+                                    <option value=39600000>UTC +11:00</option>
+                                    <option value=43200000>UTC +12:00</option>
+                                    <option value=45900000>UTC +12:45</option>
+                                    <option value=46800000>UTC +13:00</option>
+                                    <option value=50400000>UTC +14:00</option>
                                 </select>
                             </td>
                         </tr>

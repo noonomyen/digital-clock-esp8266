@@ -273,6 +273,7 @@ app.ws("/wsapi", (socket: WebSocket.WebSocket, req: http.IncomingMessage) => {
                             list: simulate.require_config_list()
                         }));
                     } else if (req.request == "SET_CONFIG") {
+                        console.log(req.config)
                         console.log(`WebSocket - [${sessionId}] [${req.ref}] - SET_CONFIG`);
                         if (req.config["time.timestamp"]) {
                             let timestamp = Number(req.config["time.timestamp"]);
@@ -313,10 +314,16 @@ app.ws("/wsapi", (socket: WebSocket.WebSocket, req: http.IncomingMessage) => {
                         }));
                     } else if (req.request == "GET_DATETIME") {
                         console.log(`WebSocket - [${sessionId}] [${req.ref}] - GET_DATETIME`);
+                        let ts: number;
+                        if (simulate.data["time.custom"]) {
+                            ts = (new Date().getTime() - simulate_time_ref) + simulate_time_set;
+                        } else {
+                            ts = new Date().getTime() + (simulate.data["time.utc_offset"]);
+                        };
                         socket.send(JSON.stringify({
                             response: "OK",
                             ref: req.ref,
-                            timestamp: (new Date().getTime() - simulate_time_ref) + simulate_time_set,
+                            timestamp: ts,
                             utc_offset: simulate.data["time.utc_offset"]
                         }));
                     } else if (req.request == "RESET_CONFIG") {
