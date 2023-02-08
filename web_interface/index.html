@@ -4,18 +4,36 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="assets/font-awesome.all.css">
     <link rel="stylesheet" href="index.css">
     <title>ADC</title>
 </head>
 <body>
     <div id="container">
-        <h1>???</h1>
+        <div id="block_clock">
+            <span class="clock" id="clock_H1">1</span>
+            <span class="clock" id="clock_H1">2</span>
+            <span class="clock" id="clock_space">:</span>
+            <span class="clock" id="clock_M1">0</span>
+            <span class="clock" id="clock_M1">0</span>
+            <span class="clock" id="clock_space">:</span>
+            <span class="clock" id="clock_S1">0</span>
+            <span class="clock" id="clock_S2">0</span>
+        </div>
+        <div id="block_date">
+            <span id="date">Wednesday, February 8, 2023</span>
+        </div>
+        <div id="block_sensor">
+            <span id="temp">
+                <span class="sensor_text">Temp</span>
+                <span id="temperature">100°C</span>
+            </span>
+            <span class="gap_h_40px"></span>
+            <span id="humi">
+                <span class="sensor_text">Humi</span>
+                <span id="humidity">50%</span>
+            </span>
+        </div>
     </div>
-    <script>
-        var _adcapi;
-        var _api;
-    </script>
     <script type="module" src="index.js"></script>
 </body>
 </html>

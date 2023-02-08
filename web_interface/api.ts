@@ -137,7 +137,7 @@ namespace adcapi {
         "time.ntp_server_1"?: string | null,
         "time.ntp_server_2"?: string | null,
         "time.utc_offset"?: number,
-        "sensor.temperature_type"?: number,
+        "sensor.temperature_type"?: boolean,
         [key: string]: any
     };
 

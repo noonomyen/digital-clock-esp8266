@@ -81,7 +81,7 @@ class simulate_config {
         "time.ntp_server_1": string | null,
         "time.ntp_server_2": string | null,
         "time.utc_offset": number,
-        "sensor.temperature_type": number,
+        "sensor.temperature_type": boolean,
         [key: string]: any
     };
 
@@ -106,7 +106,7 @@ class simulate_config {
             "time.ntp_server_1": "time.google.com",
             "time.ntp_server_2": "time.cloudflare.com",
             "time.utc_offset": 0,
-            "sensor.temperature_type": 1
+            "sensor.temperature_type": true
         };
 
         this.wifi = {
@@ -329,6 +329,8 @@ app.ws("/wsapi", (socket: WebSocket.WebSocket, req: http.IncomingMessage) => {
                     } else if (req.request == "RESET_CONFIG") {
                         console.log(`WebSocket - [${sessionId}] [${req.ref}] - RESET_CONFIG`);
                         simulate = new simulate_config();
+                        simulate_time_ref = new Date().getTime();
+                        simulate_time_set = 0;
                         socket.send(JSON.stringify({
                             response: "OK",
                             ref: req.ref

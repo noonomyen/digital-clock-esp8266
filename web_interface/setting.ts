@@ -69,7 +69,12 @@ function load_and_fill_config(api: adcapi) {
             (document.getElementById("time_ntp-1") as HTMLInputElement).value = res.config["time.ntp_server_1"];
             (document.getElementById("time_ntp-2") as HTMLInputElement).value = res.config["time.ntp_server_2"];
             (document.getElementById("time_utc-offset") as HTMLInputElement).value = res.config["time.utc_offset"].toString();
+
+            (document.getElementById("sensor_temp-c") as HTMLInputElement).checked = res.config["sensor.temperature_type"];
+            (document.getElementById("sensor_temp-f") as HTMLInputElement).checked = !res.config["sensor.temperature_type"];
+
         };
+        event_change_wifi_enable();
         event_change_network_dhcp();
         event_change_web_custom();
         event_change_time_custom();
@@ -131,6 +136,16 @@ function event_change_time_custom() {
     };
 };
 
+function event_change_wifi_enable() {
+    if ((document.getElementById("wifi_enable") as HTMLInputElement).checked) {
+        document.getElementById("wifi_ssid").removeAttribute("disabled");
+        document.getElementById("wifi_password").removeAttribute("disabled");
+    } else {
+        document.getElementById("wifi_ssid").setAttribute("disabled", "");
+        document.getElementById("wifi_password").setAttribute("disabled", "");
+    };
+};
+
 async function set_event(api: adcapi) {
     document.getElementById("navbar_setting").onclick = () => {
         page_switch("setting");
@@ -155,7 +170,10 @@ async function set_event(api: adcapi) {
         (document.getElementById("wifi_password") as HTMLInputElement).type = "text";
     };
 
-    document.getElementById("network_dhcp-enable").addEventListener("change",event_change_network_dhcp);
+    document.getElementById("wifi_enable").addEventListener("change", event_change_wifi_enable);
+    document.getElementById("wifi_disable").addEventListener("change", event_change_wifi_enable);
+
+    document.getElementById("network_dhcp-enable").addEventListener("change", event_change_network_dhcp);
     document.getElementById("network_dhcp-disable").addEventListener("change", event_change_network_dhcp);
 
     document.getElementById("web_custom-enable").addEventListener("change", event_change_web_custom);
@@ -167,10 +185,34 @@ async function set_event(api: adcapi) {
     document.getElementById("time_custom-enable").addEventListener("change", event_change_time_custom);
     document.getElementById("time_custom-disable").addEventListener("change", event_change_time_custom);
 
+    document.getElementById("time_sync_now").onclick = () => {
+        api.request("TIME_SYNC", (err: boolean, res: adcapi.Response) => {
+            if (!err && res.response == "OK") {
+                SET_CONFIG_STATUS = ["Success time sync", new Date().getTime() + (1000 * 3)];
+            };
+        });
+    };
+
+    document.getElementById("reset_setting").onclick = () => {
+        if (window.confirm("Are you sure you want to reset the settings?")) {
+            api.request("RESET_CONFIG", (err: boolean, res: adcapi.Response) => {
+                if (!err && res.response == "OK") {
+                    SET_CONFIG_STATUS = ["Success setting reset", new Date().getTime() + (1000 * 3)];
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 2000);
+                };
+            });
+        };
+    };
+
+    document.getElementById("cancel_setting").onclick = () => {
+        window.location.reload();
+    };
+
     document.getElementById("save_setting").onclick = () => {
         SET_CONFIG_STATUS = ["", 0];
         let tmp: adcapi.Config = {};
-        let new_config: adcapi.Config = {};
 
         tmp["wifi.enable"] = (document.getElementById("wifi_enable") as HTMLInputElement).checked;
         tmp["wifi.ssid"] = (document.getElementById("wifi_ssid") as HTMLInputElement).value;
@@ -202,6 +244,8 @@ async function set_event(api: adcapi) {
         tmp["time.ntp_server_1"] = (document.getElementById("time_ntp-1") as HTMLInputElement).value;
         tmp["time.ntp_server_2"] = (document.getElementById("time_ntp-2") as HTMLInputElement).value;
         tmp["time.utc_offset"] = Number((document.getElementById("time_utc-offset") as HTMLInputElement).value);
+
+        tmp["sensor.temperature_type"] = (document.getElementById("sensor_temp-c") as HTMLInputElement).checked;
 
         api.request({
             request: "SET_CONFIG",

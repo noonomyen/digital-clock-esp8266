@@ -16,7 +16,7 @@
     font-size: 20px;
 }
 
-body {
+html, body {
     background-color: var(--BODY_BG_COLOR);
 }
 
@@ -31,8 +31,8 @@ body {
     display: flex;
     justify-content: left;
     align-items: center;
-    width: 100%;
     height: 60px;
+    width: 100%;
     background-color: var(--NAVBAR_BG_COLOR);
     color: var(--NAVBAR_F_COLOR);
 }
@@ -165,12 +165,12 @@ body {
     padding: 3px;
 }
 
-#save_setting {
+.btn_setting {
     cursor: pointer;
-    display: flex;
+    display: inline-flex;
     justify-content: center;
     align-items: center;
-    width: 150px;
+    width: 225px;
     height: 40px;
     background-color: var(--NAVBAR_BG_COLOR);
     border-radius: 10px;
@@ -180,8 +180,13 @@ body {
     color: var(--NAVBAR_F_COLOR);
 }
 
-#save_setting:hover {
+.btn_setting:hover {
     background-color: var(--NAVBAR_SELECT_COLOR);
+}
+
+.btn_setting_gap {
+    padding: 0px 3px 0px 3px;
+    display: inline-flex;
 }
 
 #wifi_password_hide {
@@ -199,3 +204,37 @@ body {
     margin: 0px 0px 0px 10px;
 }
 
+#time_sync_now {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 298px;
+    height: 33px;
+    background-color: var(--NAVBAR_BG_COLOR);
+    border-radius: 10px;
+    padding: 5px;
+    font-size: 23px;
+    color: var(--NAVBAR_F_COLOR);
+}
+
+#time_sync_now:hover {
+    background-color: var(--NAVBAR_SELECT_COLOR);
+}
+
+#time_utc-offset {
+    width: 308px;
+    height: 38px;
+}
+
+@media only screen and (max-width: 700px) {
+    html {
+        width: 700px;
+        min-width: 700px;
+    };
+
+    #navbar {
+        width: 700px;
+        min-width: 700px;
+    }
+};

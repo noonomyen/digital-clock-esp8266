@@ -1,8 +1,46 @@
+:root {
+    --BODY_BG_COLOR: #ffffff;
+    --FONT_COLOR: #000000;
+}
+
 * {
     padding: 0px;
     margin: 0px;
+    font-family: sans-serif;
+}
+
+html, body {
+    background-color: var(--BODY_BG_COLOR);
+    color: var(--FONT_COLOR);
 }
 
 #container {
     display: none;
-};
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    /* background-color: #eeeeee; */
+    text-align: center;
+}
+
+#block_clock {
+    font-size: 200px;
+}
+
+#block_date {
+    font-size: 80px;
+    margin: 0px 0px 40px 0px;
+}
+
+#block_sensor {
+    font-size: 90px;
+}
+
+.sensor_text {
+    font-size: 50px;
+}
+
+.gap_h_40px {
+    padding: 0px 20px 0px 20px;
+}

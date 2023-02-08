@@ -327,7 +327,7 @@
                             <td>UTC Offset</td>
                             <td class="ph_10px"></td>
                             <td>
-                                <select class="select_box" name="time_utc-offset" id="time_utc-offset">
+                                <select name="time_utc-offset" id="time_utc-offset">
                                     <option value=-43200000>UTC -12:00</option>
                                     <option value=-39600000>UTC -11:00</option>
                                     <option value=-36000000>UTC -10:00</option>
@@ -369,15 +369,44 @@
                                 </select>
                             </td>
                         </tr>
+                        <tr>
+                            <td colspan="3">
+                                <div class="pv_5px"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td class="ph_10px"></td>
+                            <td>
+                                <div id="time_sync_now">Time Sync</div>
+                            </td>
+                        </tr>
                     </table>
                 </div>
                 <hr class="break_block">
                 <div class="block">
                     <h1>Sensor</h1>
+                    <table>
+                        <tr>
+                            <td>Temperature</td>
+                            <td class="ph_10px"></td>
+                            <td>
+                                <input class="radio_enable_disable" type="radio" name="sensor_temp" id="sensor_temp-c">
+                                <label for="sensor_temp">Celsius</label>
+                                <input class="radio_enable_disable" type="radio" name="sensor_temp" id="sensor_temp-f">
+                                <label for="sensor_temp">Fahrenheit</label>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
                 <hr class="break_block">
                 <div class="block">
-                    <div id="save_setting">SAVE</div>
+                    <div class="btn_setting" id="cancel_setting">Cancel</div>
+                    <div class="btn_setting_gap"></div>
+                    <div class="btn_setting" id="save_setting">Save</div>
+                </div>
+                <div class="block">
+                    <div class="btn_setting" id="reset_setting">Reset</div>
                 </div>
             </div>
             <div id="content_info">

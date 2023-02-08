@@ -89,7 +89,7 @@
         "time.ntp_server_1": <string>,
         "time.ntp_server_2": <string>,
         "time.utc_offset": <number>,
-        "sensor.temperature_type": <number>
+        "sensor.temperature_type": <boolean>
     }
 }
 ```
@@ -159,7 +159,7 @@
         "time.ntp_server_1": <string>,
         "time.ntp_server_2": <string>,
         "time.utc_offset": <number>,
-        "sensor.temperature_type": <number>
+        "sensor.temperature_type": <boolean>
     }
 }
 ```
@@ -183,7 +183,7 @@
     "ref": <number>,
     "fahrenheit": <number>,
     "celsius": <number>,
-    "temperature_type": <number>,
+    "temperature_type": <boolean>,
     "humidity": <number>
 }
 ```
