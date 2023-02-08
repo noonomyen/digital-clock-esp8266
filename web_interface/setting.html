@@ -1,466 +1,466 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="setting.css">
-    <title>Setup</title>
-</head>
-<body>
-    <div id="container">
-        <div id="navbar">
-            <div class="logo">
-                <i class="fa-solid fa-clock"></i>
-                <span>Digital Clock</span>
-            </div>
-            <div class="vertical-line"></div>
-            <div id="navbar_setting" class="item">
-                <i class="fa-solid fa-gear"></i>
-                <span>Setting</span>
-            </div>
-            <div id="navbar_info" class="item">
-                <i class="fa-solid fa-circle-info"></i>
-                <span>Info</span>
-            </div>
-        </div>
-        <div id="content">
-            <div id="content_setting">
-                <div class="block">
-                    <h1>Wi-Fi</h1>
-                    <table>
-                        <tr>
-                            <td>Status</td>
-                            <td class="ph_10px">:</td>
-                            <td id="wifi-status_status"></td>
-                        </tr>
-                        <tr>
-                            <td>SSID</td>
-                            <td class="ph_10px">:</td>
-                            <td id="wifi-status_ssid"></td>
-                        </tr>
-                        <tr>
-                            <td>MAC address</td>
-                            <td class="ph_10px">:</td>
-                            <td id="wifi-status_mac"></td>
-                        </tr>
-                        <tr>
-                            <td>DHCP enable</td>
-                            <td class="ph_10px">:</td>
-                            <td id="wifi-status_dhcp"></td>
-                        </tr>
-                        <tr>
-                            <td>IP address</td>
-                            <td class="ph_10px">:</td>
-                            <td id="wifi-status_ip"></td>
-                        </tr>
-                        <tr>
-                            <td>Subnet</td>
-                            <td class="ph_10px">:</td>
-                            <td id="wifi-status_subnet"></td>
-                        </tr>
-                        <tr>
-                            <td>Gateway</td>
-                            <td class="ph_10px">:</td>
-                            <td id="wifi-status_gateway"></td>
-                        </tr>
-                        <tr>
-                            <td>DNS primary</td>
-                            <td class="ph_10px">:</td>
-                            <td id="wifi-status_dns-1"></td>
-                        </tr>
-                        <tr>
-                            <td>DNS secondary</td>
-                            <td class="ph_10px">:</td>
-                            <td id="wifi-status_dns-2"></td>
-                        </tr>
-                    </table>
-                    <br>
-                    <table>
-                        <tr>
-                            <td>Wi-Fi Enable</td>
-                            <td class="ph_10px"></td>
-                            <td>
-                                <input class="radio_enable_disable" type="radio" name="wifi_enable" id="wifi_enable">
-                                <label for="wifi_enable">Enable</label>
-                                <input class="radio_enable_disable" type="radio" name="wifi_enable" id="wifi_disable">
-                                <label for="wifi_enable">Disable</label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="3">
-                                <div class="pv_2px"></div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>SSID</td>
-                            <td class="ph_10px"></td>
-                            <td>
-                                <input class="text_box" autocomplete="off" type="text" id="wifi_ssid">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="3">
-                                <div class="pv_2px"></div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Password</td>
-                            <td class="ph_10px"></td>
-                            <td>
-                                <input class="text_box" autocomplete="off" type="password" id="wifi_password">
-                                <i id="wifi_password_unhide" class="fa-solid fa-eye-slash"></i>
-                                <i id="wifi_password_hide" class="fa-solid fa-eye"></i>
-                            </td>
-                        </tr>
-                    </table>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="setting.css">
+        <title>Setup</title>
+    </head>
+    <body>
+        <div id="container">
+            <div id="navbar">
+                <div class="logo">
+                    <i class="fa-solid fa-clock"></i>
+                    <span>Digital Clock</span>
                 </div>
-                <hr class="break_block">
-                <div class="block">
-                    <h1>Network</h1>
-                    <table>
-                        <tr>
-                            <td>DHCP Enable</td>
-                            <td class="ph_10px"></td>
-                            <td>
-                                <input class="radio_enable_disable" type="radio" name="dhcp_enable" id="network_dhcp-enable">
-                                <label for="dhcp_enable">Enable</label>
-                                <input class="radio_enable_disable" type="radio" name="dhcp_enable" id="network_dhcp-disable">
-                                <label for="dhcp_enable">Disable</label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="3">
-                                <div class="pv_2px"></div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>IP Address</td>
-                            <td class="ph_10px"></td>
-                            <td>
-                                <input class="text_box network_text-box" autocomplete="off" type="text" id="network_ip"></td>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="3">
-                                <div class="pv_2px"></div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>IP Subnet</td>
-                            <td class="ph_10px"></td>
-                            <td>
-                                <input class="text_box network_text-box" autocomplete="off" type="text" id="network_subnet"></td>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="3">
-                                <div class="pv_2px"></div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>IP Gateway</td>
-                            <td class="ph_10px"></td>
-                            <td>
-                                <input class="text_box network_text-box" autocomplete="off" type="text" id="network_gateway"></td>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="3">
-                                <div class="pv_2px"></div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>DNS Primary</td>
-                            <td class="ph_10px"></td>
-                            <td>
-                                <input class="text_box network_text-box" autocomplete="off" type="text" id="network_dns-1"></td>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="3">
-                                <div class="pv_2px"></div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>DNS Secondary</td>
-                            <td class="ph_10px"></td>
-                            <td>
-                                <input class="text_box network_text-box" autocomplete="off" type="text" id="network_dns-2"></td>
-                            </td>
-                        </tr>
-                    </table>
+                <div class="vertical-line"></div>
+                <div id="navbar_setting" class="item">
+                    <i class="fa-solid fa-gear"></i>
+                    <span>Setting</span>
                 </div>
-                <hr class="break_block">
-                <div class="block">
-                    <h1>Web Interface</h1>
-                    <table>
-                        <tr>
-                            <td>Custom</td>
-                            <td class="ph_10px"></td>
-                            <td>
-                                <input class="radio_enable_disable" type="radio" name="web_custom_enable" id="web_custom-enable">
-                                <label for="web_custom_enable">Enable</label>
-                                <input class="radio_enable_disable" type="radio" name="web_custom_enable" id="web_custom-disable">
-                                <label for="web_custom_enable">Disable</label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="3">
-                                <div class="pv_2px"></div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Use Background Image</td>
-                            <td class="ph_10px"></td>
-                            <td>
-                                <input class="radio_enable_disable" type="radio" name="web_bg" id="web_use-bg-url">
-                                <label for="web_bg">Enable</label>
-                                <input class="radio_enable_disable" type="radio" name="web_bg" id="web_no-use-bg-url">
-                                <label for="web_bg">Disable</label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="3">
-                                <div class="pv_2px"></div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Background Color (Hex Color)</td>
-                            <td class="ph_10px"></td>
-                            <td>
-                                <input class="text_box web_text-box" autocomplete="off" type="text" id="web_bg-color"></td>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="3">
-                                <div class="pv_2px"></div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Background Image (URL)</td>
-                            <td class="ph_10px"></td>
-                            <td>
-                                <input class="text_box web_text-box" autocomplete="off" type="text" id="web_bg-url"></td>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="3">
-                                <div class="pv_2px"></div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Font Color (Hex Color)</td>
-                            <td class="ph_10px"></td>
-                            <td>
-                                <input class="text_box web_text-box" autocomplete="off" type="text" id="web_font-color"></td>
-                            </td>
-                        </tr>
-                    </table>
+                <div id="navbar_info" class="item">
+                    <i class="fa-solid fa-circle-info"></i>
+                    <span>Info</span>
                 </div>
-                <hr class="break_block">
-                <div class="block">
-                    <h1>Datetime</h1>
-                    <table>
-                        <td></td>
-                        <td class="ph_10px"></td>
-                        <td>
-                            <span id="current_time">Wait...</span>
-                        </td>
-                        <tr>
-                            <td colspan="3">
-                                <div class="pv_10px"></div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Custom</td>
-                            <td class="ph_10px"></td>
-                            <td>
-                                <input class="radio_enable_disable" type="radio" name="time_custom_enable" id="time_custom-enable">
-                                <label for="time_custom_enable">Enable</label>
-                                <input class="radio_enable_disable" type="radio" name="time_custom_enable" id="time_custom-disable">
-                                <label for="time_custom_enable">Disable</label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="3">
-                                <div class="pv_2px"></div>
-                            </td>
-                        </tr>
-                        <tr>
+            </div>
+            <div id="content">
+                <div id="content_setting">
+                    <div class="block">
+                        <h1>Wi-Fi</h1>
+                        <table>
+                            <tr>
+                                <td>Status</td>
+                                <td class="ph_10px">:</td>
+                                <td id="wifi-status_status"></td>
+                            </tr>
+                            <tr>
+                                <td>SSID</td>
+                                <td class="ph_10px">:</td>
+                                <td id="wifi-status_ssid"></td>
+                            </tr>
+                            <tr>
+                                <td>MAC address</td>
+                                <td class="ph_10px">:</td>
+                                <td id="wifi-status_mac"></td>
+                            </tr>
+                            <tr>
+                                <td>DHCP enable</td>
+                                <td class="ph_10px">:</td>
+                                <td id="wifi-status_dhcp"></td>
+                            </tr>
+                            <tr>
+                                <td>IP address</td>
+                                <td class="ph_10px">:</td>
+                                <td id="wifi-status_ip"></td>
+                            </tr>
+                            <tr>
+                                <td>Subnet</td>
+                                <td class="ph_10px">:</td>
+                                <td id="wifi-status_subnet"></td>
+                            </tr>
+                            <tr>
+                                <td>Gateway</td>
+                                <td class="ph_10px">:</td>
+                                <td id="wifi-status_gateway"></td>
+                            </tr>
+                            <tr>
+                                <td>DNS primary</td>
+                                <td class="ph_10px">:</td>
+                                <td id="wifi-status_dns-1"></td>
+                            </tr>
+                            <tr>
+                                <td>DNS secondary</td>
+                                <td class="ph_10px">:</td>
+                                <td id="wifi-status_dns-2"></td>
+                            </tr>
+                        </table>
+                        <br>
+                        <table>
+                            <tr>
+                                <td>Wi-Fi Enable</td>
+                                <td class="ph_10px"></td>
+                                <td>
+                                    <input class="radio_enable_disable" type="radio" name="wifi_enable" id="wifi_enable">
+                                    <label for="wifi_enable">Enable</label>
+                                    <input class="radio_enable_disable" type="radio" name="wifi_enable" id="wifi_disable">
+                                    <label for="wifi_enable">Disable</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <div class="pv_2px"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>SSID</td>
+                                <td class="ph_10px"></td>
+                                <td>
+                                    <input class="text_box" autocomplete="off" type="text" id="wifi_ssid">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <div class="pv_2px"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Password</td>
+                                <td class="ph_10px"></td>
+                                <td>
+                                    <input class="text_box" autocomplete="off" type="password" id="wifi_password">
+                                    <i id="wifi_password_unhide" class="fa-solid fa-eye-slash"></i>
+                                    <i id="wifi_password_hide" class="fa-solid fa-eye"></i>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <hr class="break_block">
+                    <div class="block">
+                        <h1>Network</h1>
+                        <table>
+                            <tr>
+                                <td>DHCP Enable</td>
+                                <td class="ph_10px"></td>
+                                <td>
+                                    <input class="radio_enable_disable" type="radio" name="dhcp_enable" id="network_dhcp-enable">
+                                    <label for="dhcp_enable">Enable</label>
+                                    <input class="radio_enable_disable" type="radio" name="dhcp_enable" id="network_dhcp-disable">
+                                    <label for="dhcp_enable">Disable</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <div class="pv_2px"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>IP Address</td>
+                                <td class="ph_10px"></td>
+                                <td>
+                                    <input class="text_box network_text-box" autocomplete="off" type="text" id="network_ip"></td>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <div class="pv_2px"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>IP Subnet</td>
+                                <td class="ph_10px"></td>
+                                <td>
+                                    <input class="text_box network_text-box" autocomplete="off" type="text" id="network_subnet"></td>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <div class="pv_2px"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>IP Gateway</td>
+                                <td class="ph_10px"></td>
+                                <td>
+                                    <input class="text_box network_text-box" autocomplete="off" type="text" id="network_gateway"></td>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <div class="pv_2px"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>DNS Primary</td>
+                                <td class="ph_10px"></td>
+                                <td>
+                                    <input class="text_box network_text-box" autocomplete="off" type="text" id="network_dns-1"></td>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <div class="pv_2px"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>DNS Secondary</td>
+                                <td class="ph_10px"></td>
+                                <td>
+                                    <input class="text_box network_text-box" autocomplete="off" type="text" id="network_dns-2"></td>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <hr class="break_block">
+                    <div class="block">
+                        <h1>Web Interface</h1>
+                        <table>
+                            <tr>
+                                <td>Custom</td>
+                                <td class="ph_10px"></td>
+                                <td>
+                                    <input class="radio_enable_disable" type="radio" name="web_custom_enable" id="web_custom-enable">
+                                    <label for="web_custom_enable">Enable</label>
+                                    <input class="radio_enable_disable" type="radio" name="web_custom_enable" id="web_custom-disable">
+                                    <label for="web_custom_enable">Disable</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <div class="pv_2px"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Use Background Image</td>
+                                <td class="ph_10px"></td>
+                                <td>
+                                    <input class="radio_enable_disable" type="radio" name="web_bg" id="web_use-bg-url">
+                                    <label for="web_bg">Enable</label>
+                                    <input class="radio_enable_disable" type="radio" name="web_bg" id="web_no-use-bg-url">
+                                    <label for="web_bg">Disable</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <div class="pv_2px"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Background Color (Hex Color)</td>
+                                <td class="ph_10px"></td>
+                                <td>
+                                    <input class="text_box web_text-box" autocomplete="off" type="text" id="web_bg-color"></td>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <div class="pv_2px"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Background Image (URL)</td>
+                                <td class="ph_10px"></td>
+                                <td>
+                                    <input class="text_box web_text-box" autocomplete="off" type="text" id="web_bg-url"></td>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <div class="pv_2px"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Font Color (Hex Color)</td>
+                                <td class="ph_10px"></td>
+                                <td>
+                                    <input class="text_box web_text-box" autocomplete="off" type="text" id="web_font-color"></td>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <hr class="break_block">
+                    <div class="block">
+                        <h1>Datetime</h1>
+                        <table>
                             <td></td>
                             <td class="ph_10px"></td>
                             <td>
-                                <input class="text_box" type="datetime-local" name="time_set" id="time_set" min="2000-01-01T00:00">
+                                <span id="current_time">Wait...</span>
                             </td>
-                        </tr>
-                        <tr>
-                            <td colspan="3">
-                                <div class="pv_2px"></div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>NTP Primary</td>
-                            <td class="ph_10px"></td>
-                            <td>
-                                <input class="text_box" autocomplete="off" type="text" id="time_ntp-1"></td>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="3">
-                                <div class="pv_2px"></div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>NTP Secondary</td>
-                            <td class="ph_10px"></td>
-                            <td>
-                                <input class="text_box" autocomplete="off" type="text" id="time_ntp-2"></td>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="3">
-                                <div class="pv_2px"></div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>UTC Offset</td>
-                            <td class="ph_10px"></td>
-                            <td>
-                                <select name="time_utc-offset" id="time_utc-offset">
-                                    <option value=-43200000>UTC -12:00</option>
-                                    <option value=-39600000>UTC -11:00</option>
-                                    <option value=-36000000>UTC -10:00</option>
-                                    <option value=-30600000>UTC -09:30</option>
-                                    <option value=-32400000>UTC -09:00</option>
-                                    <option value=-28800000>UTC -08:00</option>
-                                    <option value=-25200000>UTC -07:00</option>
-                                    <option value=-21600000>UTC -06:00</option>
-                                    <option value=-18000000>UTC -05:00</option>
-                                    <option value=-14400000>UTC -04:00</option>
-                                    <option value=-9000000>UTC -03:30</option>
-                                    <option value=-10800000>UTC -03:00</option>
-                                    <option value=-7200000>UTC -02:00</option>
-                                    <option value=-3600000>UTC -01:00</option>
-                                    <option value=0>UTC 00:00</option>
-                                    <option value=3600000>UTC +01:00</option>
-                                    <option value=7200000>UTC +02:00</option>
-                                    <option value=10800000>UTC +03:00</option>
-                                    <option value=12600000>UTC +03:30</option>
-                                    <option value=14400000>UTC +04:00</option>
-                                    <option value=16200000>UTC +04:30</option>
-                                    <option value=18000000>UTC +05:00</option>
-                                    <option value=19800000>UTC +05:30</option>
-                                    <option value=20700000>UTC +05:45</option>
-                                    <option value=21600000>UTC +06:00</option>
-                                    <option value=23400000>UTC +06:30</option>
-                                    <option value=25200000>UTC +07:00</option>
-                                    <option value=28800000>UTC +08:00</option>
-                                    <option value=31500000>UTC +08:45</option>
-                                    <option value=32400000>UTC +09:00</option>
-                                    <option value=34200000>UTC +09:30</option>
-                                    <option value=36000000>UTC +10:00</option>
-                                    <option value=37800000>UTC +10:30</option>
-                                    <option value=39600000>UTC +11:00</option>
-                                    <option value=43200000>UTC +12:00</option>
-                                    <option value=45900000>UTC +12:45</option>
-                                    <option value=46800000>UTC +13:00</option>
-                                    <option value=50400000>UTC +14:00</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="3">
-                                <div class="pv_5px"></div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td class="ph_10px"></td>
-                            <td>
-                                <div id="time_sync_now">Time Sync</div>
-                            </td>
-                        </tr>
-                    </table>
+                            <tr>
+                                <td colspan="3">
+                                    <div class="pv_10px"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Custom</td>
+                                <td class="ph_10px"></td>
+                                <td>
+                                    <input class="radio_enable_disable" type="radio" name="time_custom_enable" id="time_custom-enable">
+                                    <label for="time_custom_enable">Enable</label>
+                                    <input class="radio_enable_disable" type="radio" name="time_custom_enable" id="time_custom-disable">
+                                    <label for="time_custom_enable">Disable</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <div class="pv_2px"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td class="ph_10px"></td>
+                                <td>
+                                    <input class="text_box" type="datetime-local" name="time_set" id="time_set" min="2000-01-01T00:00">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <div class="pv_2px"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>NTP Primary</td>
+                                <td class="ph_10px"></td>
+                                <td>
+                                    <input class="text_box" autocomplete="off" type="text" id="time_ntp-1"></td>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <div class="pv_2px"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>NTP Secondary</td>
+                                <td class="ph_10px"></td>
+                                <td>
+                                    <input class="text_box" autocomplete="off" type="text" id="time_ntp-2"></td>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <div class="pv_2px"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>UTC Offset</td>
+                                <td class="ph_10px"></td>
+                                <td>
+                                    <select name="time_utc-offset" id="time_utc-offset">
+                                        <option value=-43200000>UTC -12:00</option>
+                                        <option value=-39600000>UTC -11:00</option>
+                                        <option value=-36000000>UTC -10:00</option>
+                                        <option value=-30600000>UTC -09:30</option>
+                                        <option value=-32400000>UTC -09:00</option>
+                                        <option value=-28800000>UTC -08:00</option>
+                                        <option value=-25200000>UTC -07:00</option>
+                                        <option value=-21600000>UTC -06:00</option>
+                                        <option value=-18000000>UTC -05:00</option>
+                                        <option value=-14400000>UTC -04:00</option>
+                                        <option value=-9000000>UTC -03:30</option>
+                                        <option value=-10800000>UTC -03:00</option>
+                                        <option value=-7200000>UTC -02:00</option>
+                                        <option value=-3600000>UTC -01:00</option>
+                                        <option value=0>UTC 00:00</option>
+                                        <option value=3600000>UTC +01:00</option>
+                                        <option value=7200000>UTC +02:00</option>
+                                        <option value=10800000>UTC +03:00</option>
+                                        <option value=12600000>UTC +03:30</option>
+                                        <option value=14400000>UTC +04:00</option>
+                                        <option value=16200000>UTC +04:30</option>
+                                        <option value=18000000>UTC +05:00</option>
+                                        <option value=19800000>UTC +05:30</option>
+                                        <option value=20700000>UTC +05:45</option>
+                                        <option value=21600000>UTC +06:00</option>
+                                        <option value=23400000>UTC +06:30</option>
+                                        <option value=25200000>UTC +07:00</option>
+                                        <option value=28800000>UTC +08:00</option>
+                                        <option value=31500000>UTC +08:45</option>
+                                        <option value=32400000>UTC +09:00</option>
+                                        <option value=34200000>UTC +09:30</option>
+                                        <option value=36000000>UTC +10:00</option>
+                                        <option value=37800000>UTC +10:30</option>
+                                        <option value=39600000>UTC +11:00</option>
+                                        <option value=43200000>UTC +12:00</option>
+                                        <option value=45900000>UTC +12:45</option>
+                                        <option value=46800000>UTC +13:00</option>
+                                        <option value=50400000>UTC +14:00</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <div class="pv_5px"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td class="ph_10px"></td>
+                                <td>
+                                    <div id="time_sync_now">Time Sync</div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <hr class="break_block">
+                    <div class="block">
+                        <h1>Sensor</h1>
+                        <table>
+                            <tr>
+                                <td>Temperature</td>
+                                <td class="ph_10px"></td>
+                                <td>
+                                    <input class="radio_enable_disable" type="radio" name="sensor_temp" id="sensor_temp-c">
+                                    <label for="sensor_temp">Celsius</label>
+                                    <input class="radio_enable_disable" type="radio" name="sensor_temp" id="sensor_temp-f">
+                                    <label for="sensor_temp">Fahrenheit</label>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <hr class="break_block">
+                    <div class="block">
+                        <div class="btn_setting" id="cancel_setting">Cancel</div>
+                        <div class="btn_setting_gap"></div>
+                        <div class="btn_setting" id="save_setting">Save</div>
+                    </div>
+                    <div class="block">
+                        <div class="btn_setting" id="reset_setting">Reset</div>
+                    </div>
                 </div>
-                <hr class="break_block">
-                <div class="block">
-                    <h1>Sensor</h1>
-                    <table>
-                        <tr>
-                            <td>Temperature</td>
-                            <td class="ph_10px"></td>
-                            <td>
-                                <input class="radio_enable_disable" type="radio" name="sensor_temp" id="sensor_temp-c">
-                                <label for="sensor_temp">Celsius</label>
-                                <input class="radio_enable_disable" type="radio" name="sensor_temp" id="sensor_temp-f">
-                                <label for="sensor_temp">Fahrenheit</label>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-                <hr class="break_block">
-                <div class="block">
-                    <div class="btn_setting" id="cancel_setting">Cancel</div>
-                    <div class="btn_setting_gap"></div>
-                    <div class="btn_setting" id="save_setting">Save</div>
-                </div>
-                <div class="block">
-                    <div class="btn_setting" id="reset_setting">Reset</div>
+                <div id="content_info">
+                    <div class="block">
+                        <table>
+                            <tr>
+                                <td>Version</td>
+                                <td class="ph_10px">:</td>
+                                <td id="info_version"></td>
+                            </tr>
+                            <tr>
+                                <td>Build</td>
+                                <td class="ph_10px">:</td>
+                                <td id="info_build"></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <hr class="break_block">
+                    <div class="block">
+                        <h1>Arduino Core & Library</h1>
+                        <table>
+                            <tr>
+                                <td>Arduino core for ESP8266 WiFi chip</td>
+                                <td class="ph_10px">:</td>
+                                <td class="link" onclick="window.open('https://github.com/esp8266/Arduino')">https://github.com/esp8266/Arduino</td>
+                            </tr>
+                            <tr>
+                                <td>Adafruit Unified Sensor Driver</td>
+                                <td class="ph_10px">:</td>
+                                <td class="link" onclick="window.open('https://github.com/adafruit/Adafruit_Sensor')")>https://github.com/adafruit/Adafruit_Sensor</td>
+                            <tr>
+                                <td>DHT sensor library</td>
+                                <td class="ph_10px">:</td>
+                                <td class="link" onclick="window.open('https://github.com/adafruit/DHT-sensor-library')")>https://github.com/adafruit/DHT-sensor-library</td>
+                            </tr>
+                            <tr>
+                                <td>LiquidCrystal I2C LCD displays</td>
+                                <td class="ph_10px">:</td>
+                                <td class="link" onclick="window.open('https://github.com/johnrickman/LiquidCrystal_I2C')")>https://github.com/johnrickman/LiquidCrystal_I2C</td>
+                            </tr>
+                            <tr>
+                                <td>DS1302 RTC library for Arduino</td>
+                                <td class="ph_10px">:</td>
+                                <td class="link" onclick="window.open('https://github.com/msparks/arduino-ds1302')")>https://github.com/msparks/arduino-ds1302</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <hr class="break_block">
                 </div>
             </div>
-            <div id="content_info">
-                <div class="block">
-                    <table>
-                        <tr>
-                            <td>Version</td>
-                            <td class="ph_10px">:</td>
-                            <td id="info_version"></td>
-                        </tr>
-                        <tr>
-                            <td>Build</td>
-                            <td class="ph_10px">:</td>
-                            <td id="info_build"></td>
-                        </tr>
-                    </table>
-                </div>
-                <hr class="break_block">
-                <div class="block">
-                    <h1>Arduino Core & Library</h1>
-                    <table>
-                        <tr>
-                            <td>Arduino core for ESP8266 WiFi chip</td>
-                            <td class="ph_10px">:</td>
-                            <td class="link" onclick="window.open('https://github.com/esp8266/Arduino')">https://github.com/esp8266/Arduino</td>
-                        </tr>
-                        <tr>
-                            <td>Adafruit Unified Sensor Driver</td>
-                            <td class="ph_10px">:</td>
-                            <td class="link" onclick="window.open('https://github.com/adafruit/Adafruit_Sensor')")>https://github.com/adafruit/Adafruit_Sensor</td>
-                        <tr>
-                            <td>DHT sensor library</td>
-                            <td class="ph_10px">:</td>
-                            <td class="link" onclick="window.open('https://github.com/adafruit/DHT-sensor-library')")>https://github.com/adafruit/DHT-sensor-library</td>
-                        </tr>
-                        <tr>
-                            <td>LiquidCrystal I2C LCD displays</td>
-                            <td class="ph_10px">:</td>
-                            <td class="link" onclick="window.open('https://github.com/johnrickman/LiquidCrystal_I2C')")>https://github.com/johnrickman/LiquidCrystal_I2C</td>
-                        </tr>
-                        <tr>
-                            <td>DS1302 RTC library for Arduino</td>
-                            <td class="ph_10px">:</td>
-                            <td class="link" onclick="window.open('https://github.com/msparks/arduino-ds1302')")>https://github.com/msparks/arduino-ds1302</td>
-                        </tr>
-                    </table>
-                </div>
-                <hr class="break_block">
+            <div id="STATUS">
+                <span id="status"></span>
             </div>
         </div>
-        <div id="STATUS">
-            <span id="status"></span>
-        </div>
-    </div>
-    <script type="module" src="setting.js"></script>
-</body>
+        <script type="module" src="setting.js"></script>
+    </body>
 </html>

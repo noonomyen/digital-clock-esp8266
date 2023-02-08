@@ -128,11 +128,13 @@ function event_change_time_custom() {
         document.getElementById("time_ntp-1").setAttribute("disabled", "");
         document.getElementById("time_ntp-2").setAttribute("disabled", "");
         document.getElementById("time_utc-offset").setAttribute("disabled", "");
+        document.getElementById("time_sync_now").style.visibility = "hidden";
     } else {
         document.getElementById("time_set").setAttribute("disabled", "");
         document.getElementById("time_ntp-1").removeAttribute("disabled");
         document.getElementById("time_ntp-2").removeAttribute("disabled");
         document.getElementById("time_utc-offset").removeAttribute("disabled");
+        document.getElementById("time_sync_now").style.visibility = "visible";
     };
 };
 
