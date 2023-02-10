@@ -10,15 +10,3 @@
 [submodule "Adafruit_Sensor"]
 	path = arduino-library/Adafruit_Sensor
 	url = https://github.com/adafruit/Adafruit_Sensor
-[submodule "arduino-library/Adafruit_Sensor"]
-	path = arduino-library/Adafruit_Sensor
-	url = https://github.com/adafruit/Adafruit_Sensor
-[submodule "arduino-library/DHT-sensor-library"]
-	path = arduino-library/DHT-sensor-library
-	url = https://github.com/adafruit/DHT-sensor-library
-[submodule "arduino-library/LiquidCrystal_I2C"]
-	path = arduino-library/LiquidCrystal_I2C
-	url = https://github.com/johnrickman/LiquidCrystal_I2C
-[submodule "arduino-library/arduino-ds1302"]
-	path = arduino-library/arduino-ds1302
-	url = https://github.com/msparks/arduino-ds1302
