@@ -308,9 +308,10 @@ app.ws("/wsapi", (socket: WebSocket.WebSocket, req: http.IncomingMessage) => {
                         socket.send(JSON.stringify({
                             response: "OK",
                             ref: req.ref,
-                            fahrenheit: 77.0,
-                            celsius: 25.0,
+                            fahrenheit: 210.2,
+                            celsius: 99,
                             temperature_type: simulate.data["sensor.temperature_type"],
+                            humidity: 0
                         }));
                     } else if (req.request == "GET_DATETIME") {
                         console.log(`WebSocket - [${sessionId}] [${req.ref}] - GET_DATETIME`);
