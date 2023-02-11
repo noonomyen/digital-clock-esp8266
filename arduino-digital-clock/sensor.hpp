@@ -1,9 +1,9 @@
-#ifndef __HSM_HPP__
-#define __HSM_HPP__
+#ifndef __SENSOR_HPP__
+#define __SENSOR_HPP__
 
 #include <Arduino.h>
 
-namespace HSM {
+namespace SENSOR {
     void init();
 
     float celsius_temperature();
@@ -11,4 +11,4 @@ namespace HSM {
     float humidity();
 };
 
-#endif /* __HSM_HPP__ */
+#endif /* __SENSOR_HPP__ */

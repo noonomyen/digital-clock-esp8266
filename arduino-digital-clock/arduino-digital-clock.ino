@@ -2,18 +2,15 @@
 
 #include <Arduino.h>
 
-#include "ntp.hpp"
-#include "control.hpp"
-#include "rtc.hpp"
+#include "time.hpp"
 #include "display.hpp"
 #include "wifi.hpp"
-#include "hsm.hpp"
-#include "http.hpp"
-#include "ws.hpp"
+#include "server.hpp"
+#include "sensor.hpp"
 
 void setup() {
     Serial.begin(115200);
-    HSM::init();
+    SENSOR::init();
 };
 
 void loop() {

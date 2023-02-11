@@ -1,4 +1,4 @@
-#include "hsm.hpp"
+#include "sensor.hpp"
 
 #include <Adafruit_Sensor.h>
 #include <DHT.h>
@@ -6,18 +6,18 @@
 
 DHT dht(D3, DHT11);
 
-void HSM::init() {
+void SENSOR::init() {
     dht.begin();
 };
 
-float HSM::celsius_temperature() {
+float SENSOR::celsius_temperature() {
     return dht.readTemperature(false);
 };
 
-float HSM::fahrenheit_temperature() {
+float SENSOR::fahrenheit_temperature() {
     return dht.readTemperature(true);
 };
 
-float HSM::humidity() {
+float SENSOR::humidity() {
     return dht.readHumidity();
 };

@@ -1,4 +1,4 @@
-#include "rtc.hpp"
+#include "time.hpp"
 
 void RTC::init() {
 

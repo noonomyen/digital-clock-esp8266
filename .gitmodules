@@ -10,3 +10,9 @@
 [submodule "Adafruit_Sensor"]
 	path = arduino-library/Adafruit_Sensor
 	url = https://github.com/adafruit/Adafruit_Sensor
+[submodule "arduino-library/ESPAsyncWebServer"]
+	path = arduino-library/ESPAsyncWebServer
+	url = https://github.com/me-no-dev/ESPAsyncWebServer
+[submodule "arduino-library/ESPAsyncTCP"]
+	path = arduino-library/ESPAsyncTCP
+	url = https://github.com/me-no-dev/ESPAsyncTCP

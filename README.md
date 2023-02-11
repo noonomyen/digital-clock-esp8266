@@ -27,3 +27,5 @@ npx ts-node ./tools/setup.ts --reset
 - https://github.com/adafruit/DHT-sensor-library
 - https://github.com/johnrickman/LiquidCrystal_I2C
 - https://github.com/msparks/arduino-ds1302
+- https://github.com/me-no-dev/ESPAsyncTCP
+- https://github.com/me-no-dev/ESPAsyncWebServer
