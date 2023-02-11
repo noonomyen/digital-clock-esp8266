@@ -3,4 +3,8 @@
 
 #include <Arduino.h>
 
+namespace display {
+    void init();
+};
+
 #endif /* __DISPLAY_HPP__ */

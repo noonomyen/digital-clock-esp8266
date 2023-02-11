@@ -11,4 +11,7 @@ namespace RTC {
     void setTime_from_NTP();
 };
 
+namespace NTP {
+};
+
 #endif /* __TIME_HPP__ */

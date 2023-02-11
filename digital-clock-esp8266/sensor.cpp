@@ -6,18 +6,18 @@
 
 DHT dht(D3, DHT11);
 
-void SENSOR::init() {
+void sensor::init() {
     dht.begin();
 };
 
-float SENSOR::celsius_temperature() {
+float sensor::celsius_temperature() {
     return dht.readTemperature(false);
 };
 
-float SENSOR::fahrenheit_temperature() {
+float sensor::fahrenheit_temperature() {
     return dht.readTemperature(true);
 };
 
-float SENSOR::humidity() {
+float sensor::humidity() {
     return dht.readHumidity();
 };

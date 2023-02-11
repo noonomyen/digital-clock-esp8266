@@ -3,7 +3,7 @@
 
 #include <Arduino.h>
 
-namespace SENSOR {
+namespace sensor {
     void init();
 
     float celsius_temperature();

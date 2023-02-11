@@ -10,7 +10,11 @@
 
 void setup() {
     Serial.begin(115200);
-    SENSOR::init();
+
+    pinMode(A0, INPUT);
+
+    display::init();
+    sensor::init();
 };
 
 void loop() {

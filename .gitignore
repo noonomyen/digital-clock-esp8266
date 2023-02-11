@@ -4,4 +4,4 @@
 /arduino
 
 /.vscode/c_cpp_properties.json
-/arduino-digital-clock/web_page.hpp
+/digital-clock-esp8266/web_page.hpp
