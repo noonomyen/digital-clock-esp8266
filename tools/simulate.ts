@@ -6,7 +6,7 @@ import http from "http";
 import cheerio from "cheerio";
 import expressWs from "express-ws";
 
-import { exec, rmdir } from "./other/lib"
+import { exec, rmdir, src_build } from "./other/lib"
 
 const config = {
     addr: "127.0.0.1",
@@ -14,18 +14,6 @@ const config = {
     web_interface_src: path.join(__dirname, "../web_interface"),
     loop_check_delay: 250,
     live_reload_enable: true
-};
-
-function src_build(): void {
-    rmdir(path.join(__dirname, "../build/web_interface"));
-    exec(`npx tsc --project ${path.join(__dirname, "../web_interface/tsconfig.json")}`);
-    for (let file of fs.readdirSync(path.join(__dirname, "../web_interface"))) {
-        if (file == "tsconfig.json" || file.split(".").slice(-1).toString() == "ts") {
-            continue;
-        };
-        fs.copyFileSync(path.join(__dirname, "../web_interface", file), path.join(__dirname, "../build/web_interface", file));
-    };
-    console.log("[build] complete");
 };
 
 var { app } = expressWs(express());
@@ -412,6 +400,7 @@ loop = setInterval(() => {
         for (let key in ws_connection) {
             if (ws_connection[key].readyState == WebSocket.OPEN) {
                 src_build();
+                console.log("[build] complete");
                 ws_connection[key].send("RELOAD");
             } else if (ws_connection[key].readyState == WebSocket.CLOSED) {
                 delete ws_connection[key];
@@ -472,5 +461,6 @@ app.use((req: express.Request, res: express.Response, next: express.NextFunction
 
 app.listen(config.port, config.addr, () => {
     src_build();
+    console.log("[build] complete");
     console.log(`Server is listening at ${config.addr}:${config.port}`);
 });

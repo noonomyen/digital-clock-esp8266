@@ -120,9 +120,21 @@ namespace archive {
     };
 };
 
+function src_build(): void {
+    rmdir(path.join(__dirname, "../../build/web_interface"));
+    exec(`npx tsc --project ${path.join(__dirname, "../../web_interface/tsconfig.json")}`);
+    for (let file of fs.readdirSync(path.join(__dirname, "../../web_interface"))) {
+        if (file == "tsconfig.json" || file.split(".").slice(-1).toString() == "ts") {
+            continue;
+        };
+        fs.copyFileSync(path.join(__dirname, "../../web_interface", file), path.join(__dirname, "../../build/web_interface", file));
+    };
+};
+
 export {
     archive,
     rmdir,
     exec,
-    downloadFile
+    downloadFile,
+    src_build
 };

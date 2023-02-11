@@ -12,6 +12,7 @@ var set_temp_humi_old = [null, null];
 var loop_datetime: NodeJS.Timer;
 var start_time: number;
 var set_time: number;
+var utc_offset: number;
 
 api.onopen(() => {
     document.getElementById("container").style.display = "block";
@@ -77,6 +78,7 @@ function main(api: adcapi): void {
     api.request("GET_DATETIME", (err: boolean, res: adcapi.Response) => {
         start_time = new Date().getTime();
         set_time = res.timestamp;
+        utc_offset = res.utc_offset;
         loop_datetime = setInterval(() => {
             let ts = new Date();
             let d = new Date((ts.getTime() - start_time) + set_time + (ts.getTimezoneOffset() * 60 * 1000));
@@ -84,19 +86,6 @@ function main(api: adcapi): void {
             set_date(d.getFullYear(), d.getMonth(), d.getDate(), d.getDay());
         }, 50);
     });
-
-    setInterval(() => {
-        api.request("GET_DATETIME", (err: boolean, res: adcapi.Response) => {
-            if (!err && res.response == "OK") {
-                let ts = new Date().getTime();
-                let t = (ts - start_time) + set_time;
-                if (res.timestamp > (t + 10000) || res.timestamp < (t + 10000)) {
-                    start_time = ts;
-                    set_time = t;
-                };
-            }
-        });
-    }, 5000);
 
     setInterval(() => {
         api.request("GET_SENSOR", (err: boolean, res: adcapi.Response) => {

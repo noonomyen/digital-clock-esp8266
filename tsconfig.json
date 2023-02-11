@@ -107,10 +107,11 @@
     "./node_modules",
     "./build",
     "./web_interface",
-    "./Adafruit_Sensor",
     "./arduino-digital-clock",
-    "./arduino-ds1302",
-    "./DHT-sensor-library",
-    "./LiquidCrystal_I2C"
+    "./arduino-library",
+    "./docs",
+    ".vscode",
+    "./arduino",
+    "./tmp"
   ]
 }
