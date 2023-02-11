@@ -1,9 +1,5 @@
 #include "sensor.hpp"
 
-#include <Adafruit_Sensor.h>
-#include <DHT.h>
-#include <DHT_U.h>
-
 DHT dht(D3, DHT11);
 
 void sensor::init() {

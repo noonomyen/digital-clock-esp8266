@@ -6,6 +6,8 @@
 
 namespace wifi {
     void init();
+
+    void reconnect(uint8_t *status);
 };
 
 #endif /* __WIFI_HPP__ */

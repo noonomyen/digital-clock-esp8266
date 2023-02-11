@@ -2,6 +2,11 @@
 /tmp
 /build
 /arduino
+/logs
 
-/.vscode/c_cpp_properties.json
 /digital-clock-esp8266/web_page.hpp
+/digital-clock-esp8266/build
+
+/.vscode/*
+!/.vscode/arduino.workspace.json
+!/.vscode/settings.workspace.json
