@@ -5,6 +5,7 @@
 #include <ESP8266WiFi.h>
 
 namespace wifi {
+    void update();
     void init();
 
     void reconnect(uint8_t *status);

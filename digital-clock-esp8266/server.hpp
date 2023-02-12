@@ -6,7 +6,11 @@
 #include <ESPAsyncTCP.h>
 #include <ESPAsyncWebServer.h>
 
-#include "web_page.hpp"
+#include "server.web_page.hpp"
 
+namespace server {
+    void update();
+    void init();
+};
 
 #endif /* __HTTP_HPP__ */

@@ -4,7 +4,7 @@
 /arduino
 /logs
 
-/digital-clock-esp8266/web_page.hpp
+/digital-clock-esp8266/server.web_page.hpp
 /digital-clock-esp8266/build
 
 /.vscode/*

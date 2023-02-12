@@ -12,6 +12,7 @@ namespace RTC {
 };
 
 namespace NTP {
+    void sync();
 };
 
 #endif /* __TIME_HPP__ */
