@@ -77,7 +77,7 @@ function main(api: adcapi): void {
 
     api.request("GET_DATETIME", (err: boolean, res: adcapi.Response) => {
         start_time = new Date().getTime();
-        set_time = res.timestamp;
+        set_time = res.timestamp * 1000;
         utc_offset = res.utc_offset;
         loop_datetime = setInterval(() => {
             let ts = new Date();

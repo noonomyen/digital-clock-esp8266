@@ -38,6 +38,6 @@ const char setting_js[] PROGMEM = R"=====(${src.setting_js})=====";
 
 #endif /* __WEB_PAGE_HPP__ */`;
 
-fs.writeFileSync(path.join(__dirname, "../digital-clock-esp8266/web_page.hpp"), out);
+fs.writeFileSync(path.join(__dirname, "../digital-clock-esp8266/server.web_page.hpp"), out);
 
 console.log(`build web_page.hpp - ${out.length} bytes`);

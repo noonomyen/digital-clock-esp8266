@@ -2,7 +2,7 @@
 #define __DISPLAY_CUSTOM_CHAR_HPP__
 
 const char custom_char[][8] = {
-    // degree
+    // 248 - degree symbol
     {
         B01110,
         B01010,
@@ -12,6 +12,17 @@ const char custom_char[][8] = {
         B00000,
         B00000,
         B00000
+    },
+    // 219 - block
+    {
+        B11111,
+        B11111,
+        B11111,
+        B11111,
+        B11111,
+        B11111,
+        B11111,
+        B11111
     }
 };
 

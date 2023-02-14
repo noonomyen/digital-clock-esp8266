@@ -238,7 +238,7 @@ async function set_event(api: adcapi) {
             let ts = (document.getElementById("time_set") as HTMLInputElement).value;
             if (ts) {
                 let d = new Date(ts);
-                tmp["time.timestamp"] = d.getTime() - (d.getTimezoneOffset() * 60 * 1000);
+                tmp["time.timestamp"] = (d.getTime() - (d.getTimezoneOffset() * 60 * 1000)) / 1000;
             };
         } else {
             tmp["time.custom"] = false;
@@ -314,7 +314,7 @@ function main(api: adcapi): void {
             silent: true
         }, (err: boolean, res: adcapi.Response) => {
             if (!err && res.response == "OK") {
-                document.getElementById("current_time").innerText = `${new Date(Number(res.timestamp)).toISOString()}`;
+                document.getElementById("current_time").innerText = `${new Date(Number(res.timestamp * 1000)).toISOString()}`;
             };
         });
     }, 1000);

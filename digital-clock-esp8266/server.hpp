@@ -5,7 +5,6 @@
 #include <ESP8266WiFi.h>
 #include <ESPAsyncTCP.h>
 #include <ESPAsyncWebServer.h>
-
 #include "server.web_page.hpp"
 
 namespace server {

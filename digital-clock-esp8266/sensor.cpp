@@ -1,19 +1,18 @@
 #include "sensor.hpp"
-
-DHT dht(D3, DHT11);
+#include "config.hpp"
 
 void sensor::init() {
-    dht.begin();
+    _dht.begin();
 };
 
 float sensor::celsius_temperature() {
-    return dht.readTemperature(false);
+    return _dht.readTemperature(false);
 };
 
 float sensor::fahrenheit_temperature() {
-    return dht.readTemperature(true);
+    return _dht.readTemperature(true);
 };
 
 float sensor::humidity() {
-    return dht.readHumidity();
+    return _dht.readHumidity();
 };

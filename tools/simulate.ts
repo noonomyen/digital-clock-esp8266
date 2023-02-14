@@ -264,7 +264,7 @@ app.ws("/wsapi", (socket: WebSocket.WebSocket, req: http.IncomingMessage) => {
                         console.log(req.config)
                         console.log(`WebSocket - [${sessionId}] [${req.ref}] - SET_CONFIG`);
                         if (req.config["time.timestamp"]) {
-                            let timestamp = Number(req.config["time.timestamp"]);
+                            let timestamp = Number(req.config["time.timestamp"]) * 1000;
                             simulate_time_ref = new Date().getTime();
                             simulate_time_set = timestamp;
                         };
@@ -312,7 +312,7 @@ app.ws("/wsapi", (socket: WebSocket.WebSocket, req: http.IncomingMessage) => {
                         socket.send(JSON.stringify({
                             response: "OK",
                             ref: req.ref,
-                            timestamp: ts,
+                            timestamp: ts / 1000,
                             utc_offset: simulate.data["time.utc_offset"]
                         }));
                     } else if (req.request == "RESET_CONFIG") {

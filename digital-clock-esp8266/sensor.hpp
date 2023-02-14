@@ -2,10 +2,11 @@
 #define __SENSOR_HPP__
 
 #include <Arduino.h>
-
 #include <Adafruit_Sensor.h>
 #include <DHT.h>
 #include <DHT_U.h>
+
+extern DHT _dht;
 
 namespace sensor {
     void init();
