@@ -35,8 +35,8 @@ void ntp::init() {
 };
 
 String dayAsString(Time::Day day) {
-    if (day < 7) {
-        return DAY[day];
+    if ((day - 1) < 7) {
+        return DAY[day - 1];
     } else {
         return "ERR";
     };

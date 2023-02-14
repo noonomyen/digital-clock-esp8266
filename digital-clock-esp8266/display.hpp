@@ -3,7 +3,6 @@
 
 #include <Arduino.h>
 #include <LiquidCrystal_I2C.h>
-#include "display.custom_char.hpp"
 
 extern LiquidCrystal_I2C _lcd2004;
 

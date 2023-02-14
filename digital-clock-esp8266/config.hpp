@@ -10,11 +10,11 @@ class Config {
         String wifi_ssid;
         String wifi_password;
         bool network_dhcp;
-        String network_ip;
-        String network_subnet;
-        String network_gateway;
-        String network_dns_1;
-        String network_dns_2;
+        uint8_t network_ip[4];
+        uint8_t network_subnet[4];
+        uint8_t network_gateway[4];
+        uint8_t network_dns_1[4];
+        uint8_t network_dns_2[4];
         bool web_custom;
         bool web_background;
         String web_background_color;
@@ -26,13 +26,17 @@ class Config {
         uint32_t time_utc_offset;
         bool sensor_temperature_type;
 
-    Config();
-    bool parse();
-    String stringify();
+        Config();
+        void init();
+        void reset();
+        bool parse();
+        String stringify();
+        void set_ip(uint8_t *point, uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4);
+        String get_ip_str(uint8_t *point);
+        void save();
+        void load();
 };
 
-namespace config {
-    void init();
-};
+extern Config config;
 
 #endif /* __CONFIG_HPP__ */
