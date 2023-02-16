@@ -5,6 +5,8 @@
 #include <time.h>
 #include <DS1302.h>
 
+extern bool request_sync_ntp;
+
 extern const String DAY[];
 extern const String MONTH[];
 
@@ -19,14 +21,9 @@ String monthAsString(uint8_t mon);
 
 namespace rtc {
     void init();
-    void setTime(uint64_t timestamp);
-    void setTime_from_NTP();
-};
+    void update();
 
-namespace ntp {
-    void init();
-    void sync();
-    void setTime_from_RTC();
+    void sync_ntp();
 };
 
 #endif /* __TIME_HPP__ */

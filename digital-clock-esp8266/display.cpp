@@ -7,6 +7,11 @@ time_t display_t;
 time_t auto_refresh_t;
 
 const char degree_symbol = char(176);
+const char str_AP[] = "AP";
+const char str_STA[] = "STA";
+
+bool WIFI_STA_CONNECTED = false;
+bool AP_MODE_ENABLE = false;
 
 void remove_null_terminated(char *buffer, uint8_t len) {
     for (uint8_t i = 0; i < (len - 1); i++) {
@@ -90,6 +95,17 @@ void display::update() {
             } else {
                 sprintf(L3, "Temp %.1f%c%c Humi %.0f%%", roundf(temp * 10) / 10, char(176), temp_type, roundf(humi));
             };
+        };
+
+        if (WIFI_STA_CONNECTED) {
+            L0[19] = str_STA[2];
+            L0[18] = str_STA[1];
+            L0[17] = str_STA[0];
+        };
+
+        if (AP_MODE_ENABLE) {
+            L0[15] = str_AP[1];
+            L0[14] = str_AP[0];
         };
 
         remove_null_terminated(L0, 21);

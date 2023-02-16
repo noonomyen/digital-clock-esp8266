@@ -1,6 +1,7 @@
 // arduino digital clock
 
 #include <Arduino.h>
+#include <EEPROM.h>
 
 #include "time.hpp"
 #include "display.hpp"
@@ -16,22 +17,24 @@ DHT _dht(D3, DHT11);
 time_t btn_a0_t;
 bool btn_a0 = false;
 time_t btn_a0_t_reset;
+bool ap_mode;
 
 void setup() {
     Serial.begin(115200);
     pinMode(A0, INPUT);
     pinMode(D4, OUTPUT);
 
-    config.init();
-    display::init();
     sensor::init();
     rtc::init();
+    display::init();
+    config.init();
+    wifi::init();
 
     digitalWrite(D4, HIGH);
     btn_a0_t = millis();
     btn_a0_t_reset = millis();
 };
- 
+
 void loop() {
     if ((millis() - btn_a0_t) > 250) {
         btn_a0_t = millis();
@@ -39,21 +42,37 @@ void loop() {
             digitalWrite(D4, LOW);
             if (!btn_a0) {
                 btn_a0_t_reset = millis();
-            }
+            } else if ((millis() - btn_a0_t_reset) > 10000) {
+                config.reset();
+                config.save();
+                _lcd2004.clear();
+                _lcd2004.print("Reset...");
+                delay(1000);
+                ESP.restart();
+            };
             btn_a0 = true;
         } else if (btn_a0) {
             digitalWrite(D4, HIGH);
             btn_a0 = false;
-            if ((millis() - btn_a0_t_reset) > 10000) {
-                config.reset();
-                config.save();
+            if (ap_mode) {
                 _lcd2004.clear();
-                _lcd2004.print("RESET CONFIG ...");
-                delay(1000);
-                ESP.restart();
+                _lcd2004.setCursor(0, 0);
+                _lcd2004.print("AP mode disable");
+                AP_MODE_ENABLE = false;
+                ap_mode = false;
+                wifi::ap_disable();
+            } else {
+                _lcd2004.clear();
+                _lcd2004.setCursor(0, 0);
+                _lcd2004.print("AP mode enable");
+                AP_MODE_ENABLE = true;
+                ap_mode = true;
+                wifi::ap_enable();
             };
+            delay(1000);
         };
     };
 
     display::update();
+    rtc::update();
 };

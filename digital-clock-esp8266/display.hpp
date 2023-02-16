@@ -5,6 +5,8 @@
 #include <LiquidCrystal_I2C.h>
 
 extern LiquidCrystal_I2C _lcd2004;
+extern bool WIFI_STA_CONNECTED;
+extern bool AP_MODE_ENABLE;
 
 namespace display {
     void init();

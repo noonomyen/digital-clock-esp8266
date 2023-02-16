@@ -1,10 +1,28 @@
 #include "config.hpp"
 #include "time.hpp"
+#include "display.hpp"
+
+const String EEPROM_DATETIME = __DATE__ __TIME__;
+const int OFFSET_EEPROM = EEPROM_DATETIME.length();
 
 Config::Config() {
 };
 
 void Config::init() {
+    EEPROM.begin(512);
+    if (is_ipl()) {
+        delay(500);
+        _lcd2004.clear();
+        _lcd2004.print("Please wait...");
+        this->reset();
+        this->save();
+        EEPROM.commit();
+        EEPROM.end();
+        delay(2000);
+        ESP.restart();
+    } else {
+        this->load();
+    };
 };
 
 bool Config::parse() {
@@ -25,17 +43,6 @@ void Config::reset() {
     this->wifi_enable = false;
     this->wifi_ssid = "";
     this->wifi_password = "";
-    this->network_dhcp = true;
-    this->set_ip(this->network_ip, 0, 0, 0, 0);
-    this->set_ip(this->network_subnet, 0, 0, 0, 0);
-    this->set_ip(this->network_gateway, 0, 0, 0, 0);
-    this->set_ip(this->network_dns_1, 0, 0, 0, 0);
-    this->set_ip(this->network_dns_2, 0, 0, 0, 0);
-    this->web_custom = false;
-    this->web_background = true;
-    this->web_background_color = "ffffff";
-    this->web_background_url = "";
-    this->web_font_color = "000000";
     this->time_custom = false;
     this->time_ntp_server_1 = "time.google.com";
     this->time_ntp_server_2 = "time.cloudflare.com";
@@ -45,8 +52,102 @@ void Config::reset() {
     _rtc.time(t);
 };
 
-void Config::save() {};
+void Config::save() {
+    int current_addr = OFFSET_EEPROM + 1;
+    EEPROM.write(current_addr, this->wifi_enable);
 
-void Config::load() {}
+    current_addr += 1;
+    char wifi_ssid_buffer[32];
+    this->wifi_ssid.toCharArray(wifi_ssid_buffer, 32);
+    for (int i = 0; i < 32; i++) {
+        EEPROM.write(current_addr + i, wifi_ssid_buffer[i]);
+    };
+
+    current_addr += 32;
+    char wifi_password_buffer[64];
+    this->wifi_password.toCharArray(wifi_password_buffer, 64);
+    for (int i = 0; i < 64; i++) {
+        EEPROM.write(current_addr + i, wifi_password_buffer[i]);
+    };
+
+    current_addr += 64;
+    EEPROM.write(current_addr, this->time_custom);
+
+    current_addr += 1;
+    char time_ntp_server_1_buffer[64];
+    this->time_ntp_server_1.toCharArray(time_ntp_server_1_buffer, 64);
+    for (int i = 0; i < 64; i++) {
+        EEPROM.write(current_addr + i, time_ntp_server_1_buffer[i]);
+    };
+
+    current_addr += 64;
+    char time_ntp_server_2_buffer[64];
+    this->time_ntp_server_2.toCharArray(time_ntp_server_2_buffer, 64);
+    for (int i = 0; i < 64; i++) {
+        EEPROM.write(current_addr + i, time_ntp_server_2_buffer[i]);
+    };
+
+    current_addr += 64;
+    EEPROM.write(current_addr + 0, (uint8_t)((this->time_utc_offset >> 8) & 0xFF));
+    EEPROM.write(current_addr + 1, (uint8_t)(this->time_utc_offset & 0xFF));
+
+    current_addr += 2;
+    EEPROM.write(current_addr, this->sensor_temperature_type);
+
+    EEPROM.commit();
+};
+
+void Config::load() {
+    int current_addr = OFFSET_EEPROM + 1;
+    this->wifi_enable = (bool)EEPROM.read(current_addr);
+
+    current_addr += 1;
+    char wifi_ssid_buffer[32];
+    for (int i = 0; i < 32; i++) {
+        wifi_ssid_buffer[i] = EEPROM.read(current_addr + i);
+    };
+    this->wifi_ssid = String(wifi_ssid_buffer);
+
+    current_addr += 32;
+    char wifi_password_buffer[64];
+    for (int i = 0; i < 64; i++) {
+        wifi_password_buffer[i] = EEPROM.read(current_addr + i);
+    };
+    this->wifi_password = String(wifi_password_buffer);
+
+    current_addr += 64;
+    this->time_custom = (bool)EEPROM.read(current_addr);
+
+    current_addr += 1;
+    char time_ntp_server_1_buffer[64];
+    for (int i = 0; i < 64; i++) {
+        time_ntp_server_1_buffer[i] = EEPROM.read(current_addr + i);
+    };
+    this->time_ntp_server_1 = String(time_ntp_server_1_buffer);
+
+    current_addr += 64;
+    char time_ntp_server_2_buffer[64];
+    for (int i = 0; i < 64; i++) {
+        time_ntp_server_2_buffer[i] = EEPROM.read(current_addr + i);
+    };
+    this->time_ntp_server_2 = String(time_ntp_server_2_buffer);
+
+    current_addr += 64;
+    this->time_utc_offset = (int)(((uint8_t)EEPROM.read(current_addr + 0) << 8) | (uint8_t)EEPROM.read(current_addr + 1));
+
+    current_addr += 2;
+    this->sensor_temperature_type = (bool)EEPROM.read(current_addr);
+};
+
+bool is_ipl() {
+    bool ipl = false;
+    for (int i = 0; i < OFFSET_EEPROM; i++) {
+        if (EEPROM.read(i) != (uint8_t)EEPROM_DATETIME[i]) {
+            EEPROM.write(i, (uint8_t)EEPROM_DATETIME[i]);
+            ipl = true;
+        };
+    };
+    return ipl;
+}
 
 Config config;
