@@ -45,11 +45,6 @@
                                 <td id="wifi-status_mac"></td>
                             </tr>
                             <tr>
-                                <td>DHCP enable</td>
-                                <td class="ph_10px">:</td>
-                                <td id="wifi-status_dhcp"></td>
-                            </tr>
-                            <tr>
                                 <td>IP address</td>
                                 <td class="ph_10px">:</td>
                                 <td id="wifi-status_ip"></td>
@@ -111,149 +106,6 @@
                                     <input class="text_box" autocomplete="off" type="password" id="wifi_password">
                                     <i id="wifi_password_unhide" class="fa-solid fa-eye-slash"></i>
                                     <i id="wifi_password_hide" class="fa-solid fa-eye"></i>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <hr class="break_block">
-                    <div class="block">
-                        <h1>Network</h1>
-                        <table>
-                            <tr>
-                                <td>DHCP Enable</td>
-                                <td class="ph_10px"></td>
-                                <td>
-                                    <input class="radio_enable_disable" type="radio" name="dhcp_enable" id="network_dhcp-enable">
-                                    <label for="dhcp_enable">Enable</label>
-                                    <input class="radio_enable_disable" type="radio" name="dhcp_enable" id="network_dhcp-disable">
-                                    <label for="dhcp_enable">Disable</label>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="3">
-                                    <div class="pv_2px"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>IP Address</td>
-                                <td class="ph_10px"></td>
-                                <td>
-                                    <input class="text_box network_text-box" autocomplete="off" type="text" id="network_ip"></td>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="3">
-                                    <div class="pv_2px"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>IP Subnet</td>
-                                <td class="ph_10px"></td>
-                                <td>
-                                    <input class="text_box network_text-box" autocomplete="off" type="text" id="network_subnet"></td>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="3">
-                                    <div class="pv_2px"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>IP Gateway</td>
-                                <td class="ph_10px"></td>
-                                <td>
-                                    <input class="text_box network_text-box" autocomplete="off" type="text" id="network_gateway"></td>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="3">
-                                    <div class="pv_2px"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>DNS Primary</td>
-                                <td class="ph_10px"></td>
-                                <td>
-                                    <input class="text_box network_text-box" autocomplete="off" type="text" id="network_dns-1"></td>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="3">
-                                    <div class="pv_2px"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>DNS Secondary</td>
-                                <td class="ph_10px"></td>
-                                <td>
-                                    <input class="text_box network_text-box" autocomplete="off" type="text" id="network_dns-2"></td>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <hr class="break_block">
-                    <div class="block">
-                        <h1>Web Interface</h1>
-                        <table>
-                            <tr>
-                                <td>Custom</td>
-                                <td class="ph_10px"></td>
-                                <td>
-                                    <input class="radio_enable_disable" type="radio" name="web_custom_enable" id="web_custom-enable">
-                                    <label for="web_custom_enable">Enable</label>
-                                    <input class="radio_enable_disable" type="radio" name="web_custom_enable" id="web_custom-disable">
-                                    <label for="web_custom_enable">Disable</label>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="3">
-                                    <div class="pv_2px"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Use Background Image</td>
-                                <td class="ph_10px"></td>
-                                <td>
-                                    <input class="radio_enable_disable" type="radio" name="web_bg" id="web_use-bg-url">
-                                    <label for="web_bg">Enable</label>
-                                    <input class="radio_enable_disable" type="radio" name="web_bg" id="web_no-use-bg-url">
-                                    <label for="web_bg">Disable</label>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="3">
-                                    <div class="pv_2px"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Background Color (Hex Color)</td>
-                                <td class="ph_10px"></td>
-                                <td>
-                                    <input class="text_box web_text-box" autocomplete="off" type="text" id="web_bg-color"></td>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="3">
-                                    <div class="pv_2px"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Background Image (URL)</td>
-                                <td class="ph_10px"></td>
-                                <td>
-                                    <input class="text_box web_text-box" autocomplete="off" type="text" id="web_bg-url"></td>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="3">
-                                    <div class="pv_2px"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Font Color (Hex Color)</td>
-                                <td class="ph_10px"></td>
-                                <td>
-                                    <input class="text_box web_text-box" autocomplete="off" type="text" id="web_font-color"></td>
                                 </td>
                             </tr>
                         </table>
@@ -416,11 +268,6 @@
                                 <td>Version</td>
                                 <td class="ph_10px">:</td>
                                 <td id="info_version"></td>
-                            </tr>
-                            <tr>
-                                <td>Build</td>
-                                <td class="ph_10px">:</td>
-                                <td id="info_build"></td>
                             </tr>
                         </table>
                     </div>

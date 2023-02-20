@@ -5,13 +5,13 @@
 #include <LiquidCrystal_I2C.h>
 
 extern LiquidCrystal_I2C _lcd2004;
-extern bool WIFI_STA_CONNECTED;
-extern bool AP_MODE_ENABLE;
+extern bool DISPLAY_WIFI_STA_ON;
+extern bool DISPLAY_AP_MODE_ON;
 
 namespace display {
     void init();
     void refresh();
-
+    void show_wifi_status();
     void update();
 };
 

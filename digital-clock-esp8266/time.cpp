@@ -1,5 +1,5 @@
 #include "time.hpp"
-#include <ESP8266WiFi.h>
+#include "wifi.hpp"
 #include "config.hpp"
 
 const String DAY[7] = {

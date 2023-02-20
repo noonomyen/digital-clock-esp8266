@@ -9,17 +9,6 @@ class Config {
         bool wifi_enable;
         String wifi_ssid;
         String wifi_password;
-        // bool network_dhcp;
-        // uint8_t network_ip[4];
-        // uint8_t network_subnet[4];
-        // uint8_t network_gateway[4];
-        // uint8_t network_dns_1[4];
-        // uint8_t network_dns_2[4];
-        // bool web_custom;
-        // bool web_background;
-        // String web_background_color;
-        // String web_background_url;
-        // String web_font_color;
         bool time_custom;
         String time_ntp_server_1;
         String time_ntp_server_2;

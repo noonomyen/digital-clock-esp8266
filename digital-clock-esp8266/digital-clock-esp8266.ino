@@ -52,27 +52,30 @@ void loop() {
             };
             btn_a0 = true;
         } else if (btn_a0) {
+            if ((millis() - btn_a0_t_reset) > 3000) {
+                if (ap_mode) {
+                    _lcd2004.clear();
+                    _lcd2004.setCursor(0, 0);
+                    _lcd2004.print("AP mode disable");
+                    ap_mode = false;
+                    wifi::ap_disable();
+                } else {
+                    _lcd2004.clear();
+                    _lcd2004.setCursor(0, 0);
+                    _lcd2004.print("AP mode enable");
+                    ap_mode = true;
+                    wifi::ap_enable();
+                };
+                delay(1000);
+            } else {
+                display::show_wifi_status();
+            };
             digitalWrite(D4, HIGH);
             btn_a0 = false;
-            if (ap_mode) {
-                _lcd2004.clear();
-                _lcd2004.setCursor(0, 0);
-                _lcd2004.print("AP mode disable");
-                AP_MODE_ENABLE = false;
-                ap_mode = false;
-                wifi::ap_disable();
-            } else {
-                _lcd2004.clear();
-                _lcd2004.setCursor(0, 0);
-                _lcd2004.print("AP mode enable");
-                AP_MODE_ENABLE = true;
-                ap_mode = true;
-                wifi::ap_enable();
-            };
-            delay(1000);
         };
     };
 
-    display::update();
+    display::update(); 
     rtc::update();
+    wifi::update();
 };

@@ -15,6 +15,7 @@
     "forceConsistentCasingInFileNames": true,
     "strict": false,
     "alwaysStrict": false,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "removeComments": true
   }
 }
