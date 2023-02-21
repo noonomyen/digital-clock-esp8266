@@ -10,7 +10,7 @@ bool DISPLAY_AP_MODE_ON = false;
 
 const char degree_symbol = char(176);
 const char str_AP[] = "AP";
-const char str_STA[] = "STA";
+const char str_STA[] = "WIFI";
 
 void remove_null_terminated(char *buffer, uint8_t len) {
     for (uint8_t i = 0; i < (len - 1); i++) {
@@ -97,14 +97,15 @@ void display::update() {
         };
 
         if (DISPLAY_WIFI_STA_ON) {
-            L0[19] = str_STA[2];
-            L0[18] = str_STA[1];
-            L0[17] = str_STA[0];
+            L0[19] = str_STA[3];
+            L0[18] = str_STA[2];
+            L0[17] = str_STA[1];
+            L0[16] = str_STA[0];
         };
 
         if (DISPLAY_AP_MODE_ON) {
-            L0[15] = str_AP[1];
-            L0[14] = str_AP[0];
+            L0[14] = str_AP[1];
+            L0[13] = str_AP[0];
         };
 
         remove_null_terminated(L0, 21);
@@ -132,7 +133,8 @@ void display::show_wifi_status() {
         _lcd2004.print("WIFI: Disable");
     };
     _lcd2004.setCursor(0, 1);
-    _lcd2004.printf("SSID: %s", config.wifi_ssid);
+    _lcd2004.print("SSID: ");
+    _lcd2004.print(config.wifi_ssid);
     _lcd2004.setCursor(0, 2);
     String _;
     if (wifi_status == WL_CONNECTED) {
@@ -152,7 +154,7 @@ void display::show_wifi_status() {
     } else {
         _ = "ERROR";
     };
-    _lcd2004.print("->");
+    _lcd2004.print("-> ");
     _lcd2004.print(_);
     _lcd2004.setCursor(0, 3);
     _lcd2004.print("IP: ");

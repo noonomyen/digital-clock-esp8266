@@ -29,6 +29,7 @@ void setup() {
     display::init();
     config.init();
     wifi::init();
+    server_init();
 
     digitalWrite(D4, HIGH);
     btn_a0_t = millis();
@@ -78,4 +79,5 @@ void loop() {
     display::update(); 
     rtc::update();
     wifi::update();
+    server_update();
 };

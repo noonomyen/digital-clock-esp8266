@@ -16,3 +16,6 @@
 [submodule "arduino-library/ESPAsyncTCP"]
 	path = arduino-library/ESPAsyncTCP
 	url = https://github.com/me-no-dev/ESPAsyncTCP
+[submodule "arduino-library/NTPClient"]
+	path = arduino-library/NTPClient
+	url = https://github.com/arduino-libraries/NTPClient

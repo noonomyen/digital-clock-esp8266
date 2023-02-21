@@ -66,8 +66,7 @@ class simulate_config {
         "web.font_color": string | null,
         "web.dark_mode": boolean,
         "time.custom": boolean,
-        "time.ntp_server_1": string | null,
-        "time.ntp_server_2": string | null,
+        "time.ntp_server": string | null,
         "time.utc_offset": number,
         "sensor.temperature_type": boolean,
         [key: string]: any
@@ -91,8 +90,7 @@ class simulate_config {
             "web.font_color": null,
             "web.dark_mode": false,
             "time.custom": false,
-            "time.ntp_server_1": "time.google.com",
-            "time.ntp_server_2": "time.cloudflare.com",
+            "time.ntp_server": "time.google.com",
             "time.utc_offset": 0,
             "sensor.temperature_type": true
         };
@@ -153,8 +151,7 @@ class simulate_config {
         if (
             (this.data["time.custom"] == false) &&
             (
-                (this.data["time.ntp_server_1"] == null) ||
-                (this.data["time.ntp_server_2"] == null) ||
+                (this.data["time.ntp_server"] == null) ||
                 (this.data["time.utc_offset"] == null)
             )
         ) {

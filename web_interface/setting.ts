@@ -50,8 +50,7 @@ function load_and_fill_config(api: adcapi) {
 
             (document.getElementById("time_custom-enable") as HTMLInputElement).checked = res.config["time.custom"];
             (document.getElementById("time_custom-disable") as HTMLInputElement).checked = !res.config["time.custom"];
-            (document.getElementById("time_ntp-1") as HTMLInputElement).value = res.config["time.ntp_server_1"];
-            (document.getElementById("time_ntp-2") as HTMLInputElement).value = res.config["time.ntp_server_2"];
+            (document.getElementById("time_ntp") as HTMLInputElement).value = res.config["time.ntp_server"];
             (document.getElementById("time_utc-offset") as HTMLInputElement).value = res.config["time.utc_offset"].toString();
 
             (document.getElementById("sensor_temp-c") as HTMLInputElement).checked = res.config["sensor.temperature_type"];
@@ -66,14 +65,12 @@ function load_and_fill_config(api: adcapi) {
 function event_change_time_custom() {
     if ((document.getElementById("time_custom-enable") as HTMLInputElement).checked) {
         document.getElementById("time_set").removeAttribute("disabled");
-        document.getElementById("time_ntp-1").setAttribute("disabled", "");
-        document.getElementById("time_ntp-2").setAttribute("disabled", "");
+        document.getElementById("time_ntp").setAttribute("disabled", "");
         document.getElementById("time_utc-offset").setAttribute("disabled", "");
         document.getElementById("time_sync_now").style.visibility = "hidden";
     } else {
         document.getElementById("time_set").setAttribute("disabled", "");
-        document.getElementById("time_ntp-1").removeAttribute("disabled");
-        document.getElementById("time_ntp-2").removeAttribute("disabled");
+        document.getElementById("time_ntp").removeAttribute("disabled");
         document.getElementById("time_utc-offset").removeAttribute("disabled");
         document.getElementById("time_sync_now").style.visibility = "visible";
     };
@@ -162,8 +159,7 @@ async function set_event(api: adcapi) {
         } else {
             tmp["time.custom"] = false;
         };
-        tmp["time.ntp_server_1"] = (document.getElementById("time_ntp-1") as HTMLInputElement).value;
-        tmp["time.ntp_server_2"] = (document.getElementById("time_ntp-2") as HTMLInputElement).value;
+        tmp["time.ntp_server"] = (document.getElementById("time_ntp") as HTMLInputElement).value;
         tmp["time.utc_offset"] = Number((document.getElementById("time_utc-offset") as HTMLInputElement).value);
 
         tmp["sensor.temperature_type"] = (document.getElementById("sensor_temp-c") as HTMLInputElement).checked;

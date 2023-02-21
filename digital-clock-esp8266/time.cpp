@@ -2,6 +2,9 @@
 #include "wifi.hpp"
 #include "config.hpp"
 
+#include <NTPClient.h>
+#include <WiFiUdp.h>
+
 const String DAY[7] = {
     "Sun", // Sunday
     "Mon", // Monday
@@ -51,15 +54,24 @@ String monthAsString(uint8_t mon) {
     };
 };
 
+bool ConfigTimeWait() {
+    if (time(nullptr) > 946688400) {
+        return true;
+    } else {
+        return false;
+    };
+};
+
 void rtc::sync_ntp() {
     char ntp1[64];
     char ntp2[64];
     config.time_ntp_server_1.toCharArray(ntp1, 64);
     config.time_ntp_server_2.toCharArray(ntp2, 64);
+    Serial.println(ntp1);
+    Serial.println(ntp2);
     configTime(config.time_utc_offset, 0, ntp1, ntp2);
     time_t time_now = time(nullptr);
     struct tm* dt = localtime(&time_now);
-    Serial.printf("%d %d %d %d %d %d %d\n", dt->tm_year, dt->tm_mon, dt->tm_mday, dt->tm_hour, dt->tm_min, dt->tm_sec, dt->tm_wday);
 };
 
 void rtc::update() {

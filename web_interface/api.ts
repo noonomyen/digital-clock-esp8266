@@ -134,8 +134,7 @@ namespace adcapi {
         "web.background_url"?: string | null,
         "web.font_color"?: string | null,
         "time.custom"?: boolean,
-        "time.ntp_server_1"?: string | null,
-        "time.ntp_server_2"?: string | null,
+        "time.ntp_server"?: string | null,
         "time.utc_offset"?: number,
         "sensor.temperature_type"?: boolean,
         [key: string]: any

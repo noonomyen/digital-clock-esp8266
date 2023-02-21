@@ -85,13 +85,13 @@ function setup(): void {
     };
 
     console.log("installing arduino core esp8266:esp8266@3.0.2");
-    exec(`${argv.arduino_cli_bin} --verbose --config-file ./arduino-digital-clock/arduino-cli.yaml core update-index`);
-    exec(`${argv.arduino_cli_bin} --verbose --config-file ./arduino-digital-clock/arduino-cli.yaml core install esp8266:esp8266@3.0.2`);
+    exec(`${argv.arduino_cli_bin} --verbose --config-file ./arduino-cli.yaml core update-index`);
+    exec(`${argv.arduino_cli_bin} --verbose --config-file ./arduino-cli.yaml core install esp8266:esp8266@3.0.2`);
 
     console.log("installing arduino library");
     for (let dir of fs.readdirSync("./arduino-library")) {
         console.log(`installing : ${dir}`);
-        exec(`${argv.arduino_cli_bin} --verbose --config-file ./arduino-digital-clock/arduino-cli.yaml lib install --zip-path ${path.join("./tmp", dir + ".zip")}`);
+        exec(`${argv.arduino_cli_bin} --verbose --config-file ./arduino-cli.yaml lib install --zip-path ${path.join("./tmp", dir + ".zip")}`);
     };
 };
 

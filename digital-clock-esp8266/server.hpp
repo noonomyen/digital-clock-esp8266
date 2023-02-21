@@ -7,9 +7,8 @@
 #include <ESPAsyncWebServer.h>
 #include "server.web_page.hpp"
 
-namespace server {
-    void update();
-    void init();
-};
+void server_init();
+
+void server_update();
 
 #endif /* __HTTP_HPP__ */
