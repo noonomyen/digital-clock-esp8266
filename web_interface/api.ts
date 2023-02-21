@@ -89,6 +89,7 @@ class adcapi {
             let time = new Date().getTime();
             let ref = time.toString() + Math.floor(Math.random() * 1000).toString();
             if (("silent" in req) && req["silent"] == true) {
+                delete req["slient"];
                 this.requesting_silent[ref] = [time, callback];
             } else {
                 this.requesting[ref] = [time, callback];

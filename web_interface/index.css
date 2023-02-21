@@ -28,26 +28,26 @@ html, body {
 }
 
 #block_clock * {
-    font-size: 150px;
+    font-size: 9vw;
 }
 
 #block_date {
-    font-size: 40px;
-    margin: 0px 0px 40px 0px;
+    font-size: 3vw;
+    margin: 0px 0px 1vw 0px;
 }
 
 .clock_space {
-    padding: 0px 30px 0px 30px;
+    padding: 0px 0.5vw 0px 0.5vw;
 }
 
 #block_sensor {
-    font-size: 60px;
+    font-size: 3.7vw;
 }
 
 .sensor_text {
-    font-size: 50px;
+    font-size: 3vw;
 }
 
-.gap_h_40px {
-    padding: 0px 20px 0px 20px;
+.gap_h {
+    padding: 0px 0.5vw 0px 0.5vw;
 }

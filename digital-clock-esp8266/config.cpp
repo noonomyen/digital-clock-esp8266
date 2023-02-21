@@ -25,9 +25,6 @@ void Config::init() {
     };
 };
 
-bool Config::parse() {
-};
-
 void Config::set_ip(uint8_t *point, uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4) {
     point[0] = b1;
     point[1] = b2;

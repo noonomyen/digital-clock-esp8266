@@ -18,8 +18,6 @@ class Config {
         Config();
         void init();
         void reset();
-        bool parse();
-        String stringify();
         void set_ip(uint8_t *point, uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4);
         String get_ip_str(uint8_t *point);
         void save();
