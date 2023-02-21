@@ -44,8 +44,7 @@ void Config::reset() {
     this->wifi_ssid = "";
     this->wifi_password = "";
     this->time_custom = false;
-    this->time_ntp_server_1 = "time.google.com";
-    this->time_ntp_server_2 = "time.cloudflare.com";
+    this->time_ntp_server = "time.google.com";
     this->time_utc_offset = 0;
 
     Time t(2000, 1, 1, 0, 0, 0, Time::kSaturday);
@@ -74,17 +73,10 @@ void Config::save() {
     EEPROM.write(current_addr, this->time_custom);
 
     current_addr += 1;
-    char time_ntp_server_1_buffer[64];
-    this->time_ntp_server_1.toCharArray(time_ntp_server_1_buffer, 64);
+    char time_ntp_server_buffer[64];
+    this->time_ntp_server.toCharArray(time_ntp_server_buffer, 64);
     for (int i = 0; i < 64; i++) {
-        EEPROM.write(current_addr + i, time_ntp_server_1_buffer[i]);
-    };
-
-    current_addr += 64;
-    char time_ntp_server_2_buffer[64];
-    this->time_ntp_server_2.toCharArray(time_ntp_server_2_buffer, 64);
-    for (int i = 0; i < 64; i++) {
-        EEPROM.write(current_addr + i, time_ntp_server_2_buffer[i]);
+        EEPROM.write(current_addr + i, time_ntp_server_buffer[i]);
     };
 
     current_addr += 64;
@@ -119,18 +111,11 @@ void Config::load() {
     this->time_custom = (bool)EEPROM.read(current_addr);
 
     current_addr += 1;
-    char time_ntp_server_1_buffer[64];
+    char time_ntp_server_buffer[64];
     for (int i = 0; i < 64; i++) {
-        time_ntp_server_1_buffer[i] = EEPROM.read(current_addr + i);
+        time_ntp_server_buffer[i] = EEPROM.read(current_addr + i);
     };
-    this->time_ntp_server_1 = String(time_ntp_server_1_buffer);
-
-    current_addr += 64;
-    char time_ntp_server_2_buffer[64];
-    for (int i = 0; i < 64; i++) {
-        time_ntp_server_2_buffer[i] = EEPROM.read(current_addr + i);
-    };
-    this->time_ntp_server_2 = String(time_ntp_server_2_buffer);
+    this->time_ntp_server = String(time_ntp_server_buffer);
 
     current_addr += 64;
     this->time_utc_offset = (int)(((uint8_t)EEPROM.read(current_addr + 0) << 8) | (uint8_t)EEPROM.read(current_addr + 1));

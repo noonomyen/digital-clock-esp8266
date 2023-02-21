@@ -65,13 +65,7 @@ bool ConfigTimeWait() {
 void rtc::sync_ntp() {
     char ntp1[64];
     char ntp2[64];
-    config.time_ntp_server_1.toCharArray(ntp1, 64);
-    config.time_ntp_server_2.toCharArray(ntp2, 64);
-    Serial.println(ntp1);
-    Serial.println(ntp2);
-    configTime(config.time_utc_offset, 0, ntp1, ntp2);
-    time_t time_now = time(nullptr);
-    struct tm* dt = localtime(&time_now);
+    config.time_ntp_server.toCharArray(ntp1, 64);
 };
 
 void rtc::update() {

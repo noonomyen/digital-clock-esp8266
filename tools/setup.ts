@@ -1,17 +1,17 @@
 // setup arduino-cli
 
-// https://github.com/arduino/arduino-cli/releases/tag/0.29.0
+// https://github.com/arduino/arduino-cli/releases/tag/0.30.0
 const arduino_cli = {
     "linux": {
-        "x64": "https://github.com/arduino/arduino-cli/releases/download/0.29.0/arduino-cli_0.29.0_Linux_64bit.tar.gz",
-        "arm64": "https://github.com/arduino/arduino-cli/releases/download/0.29.0/arduino-cli_0.29.0_Linux_ARM64.tar.gz"
+        "x64": "https://github.com/arduino/arduino-cli/releases/download/0.30.0/arduino-cli_0.30.0_Linux_64bit.tar.gz",
+        "arm64": "https://github.com/arduino/arduino-cli/releases/download/0.30.0/arduino-cli_0.30.0_Linux_ARM64.tar.gz"
     },
     "win32": {
-        "x64": "https://github.com/arduino/arduino-cli/releases/download/0.29.0/arduino-cli_0.29.0_Windows_64bit.zip",
+        "x64": "https://github.com/arduino/arduino-cli/releases/download/0.30.0/arduino-cli_0.30.0_Windows_64bit.zip",
     },
     "darwin": {
-        "x64": "https://github.com/arduino/arduino-cli/releases/download/0.29.0/arduino-cli_0.29.0_macOS_64bit.tar.gz",
-        "arm64": "https://github.com/arduino/arduino-cli/releases/download/0.29.0/arduino-cli_0.29.0_macOS_ARM64.tar.gz"
+        "x64": "https://github.com/arduino/arduino-cli/releases/download/0.30.0/arduino-cli_0.30.0_macOS_64bit.tar.gz",
+        "arm64": "https://github.com/arduino/arduino-cli/releases/download/0.30.0/arduino-cli_0.30.0_macOS_ARM64.tar.gz"
     }
 } as {
     [key: string]: {

@@ -3,6 +3,7 @@
 
 #include <Arduino.h>
 #include <EEPROM.h>
+#include <ArduinoJson.h>
 
 class Config {
     public:
@@ -10,8 +11,7 @@ class Config {
         String wifi_ssid;
         String wifi_password;
         bool time_custom;
-        String time_ntp_server_1;
-        String time_ntp_server_2;
+        String time_ntp_server;
         int time_utc_offset;
         bool sensor_temperature_type;
 

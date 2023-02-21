@@ -24,11 +24,11 @@ var out = `#ifndef __WEB_PAGE_HPP__
 
 const char api_js[] PROGMEM = R"=====(${src.api_js})=====";
 
-const char index_html[] PROGMEM = R"=====(${src.api_js})=====";
+const char index_html[] PROGMEM = R"=====(${src.index_html})=====";
 
-const char index_css[] PROGMEM = R"=====(${src.api_js})=====";
+const char index_css[] PROGMEM = R"=====(${src.index_css})=====";
 
-const char index_js[] PROGMEM = R"=====(${src.api_js})=====";
+const char index_js[] PROGMEM = R"=====(${src.index_js})=====";
 
 const char setting_html[] PROGMEM = R"=====(${src.setting_html})=====";
 

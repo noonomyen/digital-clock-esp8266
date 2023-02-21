@@ -19,3 +19,6 @@
 [submodule "arduino-library/NTPClient"]
 	path = arduino-library/NTPClient
 	url = https://github.com/arduino-libraries/NTPClient
+[submodule "arduino-library/ArduinoJson"]
+	path = arduino-library/ArduinoJson
+	url = https://github.com/bblanchon/ArduinoJson
