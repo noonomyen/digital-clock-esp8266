@@ -20,6 +20,7 @@ time_t btn_a0_t_reset;
 bool ap_mode;
 
 void setup() {
+    ESP.wdtDisable();
     Serial.begin(115200);
     pinMode(A0, INPUT);
     pinMode(D4, OUTPUT);
@@ -80,4 +81,5 @@ void loop() {
     rtc::update();
     wifi::update();
     server_update();
+    ESP.wdtFeed();
 };

@@ -46,7 +46,7 @@ void display::update() {
         bool sensor_err = false;
         float temp;
         float humi = sensor::humidity();
-        if (true) {
+        if (config.sensor_temperature_type) {
             temp = sensor::celsius_temperature();
             temp_type = char(67);
         } else {

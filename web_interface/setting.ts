@@ -216,18 +216,7 @@ function main(api: adcapi): void {
                 document.getElementById("wifi-status_dns-2").innerText = res.network.dns_2;
             };
         });
-    }, 1000);
-
-    setInterval(() => {
-        api.request({
-            request: "GET_DATETIME",
-            silent: true
-        }, (err: boolean, res: adcapi.Response) => {
-            if (!err && res.response == "OK") {
-                document.getElementById("current_time").innerText = `${new Date(Number(res.timestamp * 1000)).toISOString()}`;
-            };
-        });
-    }, 1000);
+    }, 5000);
 
     load_and_fill_config(api);
 

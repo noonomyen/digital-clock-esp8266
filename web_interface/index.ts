@@ -12,7 +12,6 @@ var set_temp_humi_old = [null, null];
 var loop_datetime: NodeJS.Timer;
 var start_time: number;
 var set_time: number;
-var utc_offset: number;
 
 api.onopen(() => {
     document.getElementById("container").style.display = "block";
@@ -64,10 +63,8 @@ function set_date(y: number, m: number, d: number, dw: number) {
 function set_temp_humi(t: number, h: number, CF: string) {
     if (set_temp_humi_old[0] != t || set_temp_humi_old[1] != h) {
         set_temp_humi_old = [t, h];
-        let T = Math.floor(t);
-        let H = Math.floor(h);
-        document.getElementById("temperature").innerText = `${T}.${((t - T).toString() + "00").slice(0, 2)}°${CF}`;
-        document.getElementById("humidity").innerText = `${H}.${((h - H).toString() + "00").slice(0, 2)}%`;
+        document.getElementById("temperature").innerText = `${t.toFixed(2)}°${CF}`;
+        document.getElementById("humidity").innerText = `${h.toFixed(2)}%`;
     };
 };
 
@@ -78,7 +75,6 @@ function main(api: adcapi): void {
     api.request("GET_DATETIME", (err: boolean, res: adcapi.Response) => {
         start_time = new Date().getTime();
         set_time = res.timestamp * 1000;
-        utc_offset = res.utc_offset;
         loop_datetime = setInterval(() => {
             let ts = new Date();
             let d = new Date((ts.getTime() - start_time) + set_time + (ts.getTimezoneOffset() * 60 * 1000));

@@ -43,6 +43,7 @@ void Config::reset() {
     this->time_custom = false;
     this->time_ntp_server = "time.google.com";
     this->time_utc_offset = 0;
+    this->sensor_temperature_type = true;
 
     Time t(2000, 1, 1, 0, 0, 0, Time::kSaturday);
     _rtc.time(t);
@@ -50,7 +51,7 @@ void Config::reset() {
 
 void Config::save() {
     int current_addr = OFFSET_EEPROM + 1;
-    EEPROM.write(current_addr, this->wifi_enable);
+    EEPROM.write(current_addr, (uint8_t)this->wifi_enable);
 
     current_addr += 1;
     char wifi_ssid_buffer[32];
@@ -67,7 +68,7 @@ void Config::save() {
     };
 
     current_addr += 64;
-    EEPROM.write(current_addr, this->time_custom);
+    EEPROM.write(current_addr, (uint8_t)this->time_custom);
 
     current_addr += 1;
     char time_ntp_server_buffer[64];
@@ -77,13 +78,16 @@ void Config::save() {
     };
 
     current_addr += 64;
-    EEPROM.write(current_addr + 0, (uint8_t)((this->time_utc_offset >> 8) & 0xFF));
-    EEPROM.write(current_addr + 1, (uint8_t)(this->time_utc_offset & 0xFF));
+    EEPROM.write(current_addr + 0, (uint8_t)((this->time_utc_offset >> 24) & 0xFF));
+    EEPROM.write(current_addr + 1, (uint8_t)((this->time_utc_offset >> 16) & 0xFF));
+    EEPROM.write(current_addr + 2, (uint8_t)((this->time_utc_offset >> 8) & 0xFF));
+    EEPROM.write(current_addr + 3, (uint8_t)(this->time_utc_offset & 0xFF));
 
-    current_addr += 2;
-    EEPROM.write(current_addr, this->sensor_temperature_type);
+    current_addr += 4;
+    EEPROM.write(current_addr, (uint8_t)this->sensor_temperature_type);
 
     EEPROM.commit();
+    delay(100);
 };
 
 void Config::load() {
@@ -115,9 +119,13 @@ void Config::load() {
     this->time_ntp_server = String(time_ntp_server_buffer);
 
     current_addr += 64;
-    this->time_utc_offset = (int)(((uint8_t)EEPROM.read(current_addr + 0) << 8) | (uint8_t)EEPROM.read(current_addr + 1));
+    this->time_utc_offset =
+        ((int)(EEPROM.read(current_addr + 0)) << 24) |
+        ((int)(EEPROM.read(current_addr + 1)) << 16) |
+        ((int)(EEPROM.read(current_addr + 2)) << 8) |
+        (int)(EEPROM.read(current_addr + 3));
 
-    current_addr += 2;
+    current_addr += 4;
     this->sensor_temperature_type = (bool)EEPROM.read(current_addr);
 };
 
