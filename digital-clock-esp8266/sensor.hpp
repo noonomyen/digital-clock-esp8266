@@ -14,7 +14,6 @@ namespace sensor {
     float celsius_temperature();
     float fahrenheit_temperature();
     float humidity();
-    float heat_index();
 };
 
 #endif /* __SENSOR_HPP__ */

@@ -35,14 +35,16 @@ function downloadFile(url: string, filename: string, to: string, callback?: Func
             el = "\n";
         };
 
-        process.stdout.clearLine(0);
-        process.stdout.cursorTo(0);
-        process.stdout.write(`downloading ${filename} - `);
-        if (total_bytes) {
-            process.stdout.write(`${(received_bytes / total_bytes * 100).toFixed(2)}%${el}`);
-        } else {
-            process.stdout.write(` - done${el}`);
-        };
+        try {
+            process.stdout.clearLine(0);
+            process.stdout.cursorTo(0);
+            process.stdout.write(`downloading ${filename} - `);
+            if (total_bytes) {
+                process.stdout.write(`${(received_bytes / total_bytes * 100).toFixed(2)}%${el}`);
+            } else {
+                process.stdout.write(` - done${el}`);
+            };
+        } catch {};
     };
 
 

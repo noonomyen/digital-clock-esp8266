@@ -10,7 +10,6 @@ extern bool DISPLAY_AP_MODE_ON;
 
 namespace display {
     void init();
-    void refresh();
     void show_wifi_status();
     void update();
 };

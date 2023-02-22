@@ -21,7 +21,7 @@ npx ts-node ./tools/setup.ts --reset
 ```sh
 npx ts-node ./tools/create_web-page-hpp.ts
 
-./arduino/arduino-cli --verbose --config-file arduino-cli.yaml compile --fqbn esp8266:esp8266:nodemcuv2:xtal=160,vt=flash,exception=disabled,stacksmash=disabled,ssl=all,mmu=4816,non32xfer=fast,eesz=4M,led=2,ip=lm2f,dbg=Disabled,lvl=None____,wipe=none,baud=115200 digital-clock-esp8266
+./arduino/arduino-cli --verbose --config-file arduino-cli.yaml compile --fqbn esp8266:esp8266:nodemcuv2:xtal=160,vt=flash,exception=disabled,stacksmash=disabled,ssl=all,mmu=4816,non32xfer=fast,eesz=4M,led=2,ip=hb2f,dbg=Disabled,lvl=None____,wipe=none,baud=115200 digital-clock-esp8266
 ```
 
 ## Arduino library
@@ -31,3 +31,5 @@ npx ts-node ./tools/create_web-page-hpp.ts
 - https://github.com/msparks/arduino-ds1302
 - https://github.com/me-no-dev/ESPAsyncTCP
 - https://github.com/me-no-dev/ESPAsyncWebServer
+- https://github.com/arduino-libraries/NTPClient
+- https://github.com/bblanchon/ArduinoJson

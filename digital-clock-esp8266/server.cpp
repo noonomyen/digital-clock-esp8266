@@ -168,8 +168,10 @@ void onEvent(AsyncWebSocket *server, AsyncWebSocketClient *client, AwsEventType 
                     res["ref"] = ref;
                     serializeJson(res, JSON);
                     client->printf_P(JSON);
+                    config.reset();
+                    config.save();
                 } else if (strcmp(request, "TIME_SYNC") == 0) {
-                    rtc::sync_ntp();
+                    request_sync_ntp = true;
                     res["response"] = "OK";
                     res["ref"] = ref;
                     serializeJson(res, JSON);
